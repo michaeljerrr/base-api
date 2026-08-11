@@ -125,26 +125,26 @@
                 <i class="material-icons text-xl">close</i>
             </button>
         </div>
-<div class="p-8">
-    <nav>
-        <div class="space-y-2">
-            <a href="/" class="flex items-center py-2 px-4 text-sm border border-gray-200 text-gray-600 hover:border-gray-600">
-                <i class="material-icons text-lg mr-3">dashboard</i> Dashboard
-            </a>
-        </div>
+        <div class="p-8">
+            <nav>
+                <div class="space-y-2">
+                    <a href="/" class="flex items-center py-2 px-4 text-sm border border-gray-200 text-gray-600 hover:border-gray-600">
+                        <i class="material-icons text-lg mr-3">dashboard</i> Dashboard
+                    </a>
+                </div>
 
-        <p class="text-xs text-slate-700 my-4">LINKS.</p>
-        <div class="space-y-2">
-            <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2 px-4 text-sm border border-gray-200 text-gray-600 hover:border-gray-600">
-                <i class="material-icons text-lg mr-3">arrow_outward</i> Contact
-            </a>
-            <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2 px-4 text-sm border border-gray-200 text-gray-600 hover:border-gray-600">
-                <i class="material-icons text-lg mr-3">arrow_outward</i> Channel
-            </a>
+                <p class="text-xs text-slate-700 my-4">LINKS.</p>
+                <div class="space-y-2">
+                    <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2 px-4 text-sm border border-gray-200 text-gray-600 hover:border-gray-600">
+                        <i class="material-icons text-lg mr-3">arrow_outward</i> Contact
+                    </a>
+                    <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2 px-4 text-sm border border-gray-200 text-gray-600 hover:border-gray-600">
+                        <i class="material-icons text-lg mr-3">arrow_outward</i> Channel
+                    </a>
+                </div>
+            </nav>
         </div>
-    </nav>
-</div>
-</aside>
+    </aside>
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 opacity-0 invisible duration-300 ease-in-out z-[90]"></div>
 
@@ -156,8 +156,8 @@
                     <p class="text-xs text-gray-500 leading-none">API Documentation</p>
                 </div>
                 <div class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold">
-                v1.0
-            </div>
+                    v1.0
+                </div>
             </div>
             <button id="sidebarToggle" class="py-2 px-3 text-sm border border-gray-200 text-gray-500 hover:border-gray-600 flex items-center justify-center">
                 <i class="material-icons text-xl">menu</i>
@@ -168,92 +168,45 @@
     <main class="max-w-2xl mx-auto px-8 py-16">
 
         <!-- Notifications Panel -->
-<div class="mb-8">
-    <div class="flex items-center justify-between mb-3">
-        <h2 class="text-lg font-semibold text-slate-900 flex items-center">
-            <span class="material-icons text-xl mr-2 text-slate-500">notifications</span>
-            Informasi
-        </h2>
-        <span id="unread-count" class="text-xs bg-slate-900 text-white px-2 py-1 hidden"></span>
-    </div>
-    <div id="notifications-list" class="space-y-2">
-    </div>
-</div>
-
-<div class="flex items-center justify-between mb-4">
-    <div class="flex-1 relative">
-        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-            <span class="material-icons text-gray-400 text-lg">search</span>
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-semibold text-slate-900 flex items-center">
+                    <span class="material-icons text-xl mr-2 text-slate-500">notifications</span>
+                    Informasi
+                </h2>
+                <span id="unread-count" class="text-xs bg-slate-900 text-white px-2 py-1 hidden"></span>
+            </div>
+            <div id="notifications-list" class="space-y-2"></div>
         </div>
-        <input type="text" id="searchInput" placeholder="Search API endpoints..." class="w-full pl-12 pr-5 py-4 text-sm border border-gray-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:border-gray-600">
-    </div>
-</div>
 
-<div id="content" class="space-y-4">
-    <div id="noResults" class="text-center py-16" style="display: none;">
-        <div class="max-w-md mx-auto">
-            <h3 class="text-xs text-slate-600 mb-2">No result found.</h3>
-        </div>
-    </div>
-
-    <div id="apiList" class="space-y-3">
-        <!-- API list will be loaded here dynamically -->
-    </div>
-</div>
-
-<div class="flex flex-col mt-6 text-center">
-    <p class="text-slate-600 text-xs">© 2025 Zaxius API. | All Rights Reserved.</p>
-</div>
-
-<script>
-async function loadNotifications() {
-    try {
-        // Ambil file notifications.json di folder yang sama dengan HTML
-        const res = await fetch('notifications.json');
-        const notifications = await res.json();
-        const listEl = document.getElementById('notifications-list');
-        listEl.innerHTML = ''; // Clear loader
-
-        if (!notifications.length) {
-            listEl.innerHTML = '<p class="text-xs text-slate-500">No notifications.</p>';
-            return;
-        }
-
-        let unreadCount = 0;
-
-        notifications.forEach(notif => {
-            const notifEl = document.createElement('div');
-            notifEl.className = 'p-3 border border-gray-200 rounded text-sm text-slate-800 bg-gray-50';
-            notifEl.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <span>${notif.message}</span>
-                    <span class="text-xs text-gray-400">${notif.date || ''}</span>
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex-1 relative">
+                <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                    <span class="material-icons text-gray-400 text-lg">search</span>
                 </div>
-            `;
-            if (!notif.read) unreadCount++;
-            listEl.appendChild(notifEl);
-        });
+                <input type="text" id="searchInput" placeholder="Search API endpoints..." class="w-full pl-12 pr-5 py-4 text-sm border border-gray-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:border-gray-600">
+            </div>
+        </div>
 
-        const unreadEl = document.getElementById('unread-count');
-        if (unreadCount > 0) {
-            unreadEl.textContent = unreadCount;
-            unreadEl.classList.remove('hidden');
-        } else {
-            unreadEl.classList.add('hidden');
-        }
+        <div id="content" class="space-y-4">
+            <div id="noResults" class="text-center py-16" style="display: none;">
+                <div class="max-w-md mx-auto">
+                    <h3 class="text-xs text-slate-600 mb-2">No result found.</h3>
+                </div>
+            </div>
 
-    } catch(err) {
-        console.error('Failed to load notifications:', err);
-        document.getElementById('notifications-list').innerHTML =
-            '<p class="text-xs text-red-500">Gagal memuat notifikasi.</p>';
-    }
-}
+            <div id="apiList" class="space-y-3">
+                <!-- API list will be loaded here dynamically -->
+            </div>
+        </div>
 
-// Load on page ready
-document.addEventListener('DOMContentLoaded', loadNotifications);
-</script>
+        <div class="flex flex-col mt-6 text-center">
+            <p class="text-slate-600 text-xs">© 2025 Zaxius API. | All Rights Reserved.</p>
+        </div>
+    </main>
 
     <script>
+        // Sidebar Controls
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebarClose = document.getElementById('sidebarClose');
         const sidebar = document.getElementById('sidebar');
@@ -276,33 +229,26 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
         overlay.addEventListener('click', closeSidebar);
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeSidebar();
-            }
+            if (e.key === 'Escape') closeSidebar();
         });
 
+        // Copy Helper
         async function copyToClipboard(text, buttonElement) {
             if (!buttonElement) return;
             const originalHTML = buttonElement.innerHTML;
             try {
                 await navigator.clipboard.writeText(text);
                 buttonElement.textContent = 'Copied!';
-                setTimeout(() => {
-                    buttonElement.innerHTML = originalHTML;
-                }, 1500);
+                setTimeout(() => { buttonElement.innerHTML = originalHTML; }, 1500);
             } catch (e) {
                 console.error('Copy failed', e);
                 buttonElement.textContent = 'Failed!';
-                setTimeout(() => {
-                    buttonElement.innerHTML = originalHTML;
-                }, 1500);
+                setTimeout(() => { buttonElement.innerHTML = originalHTML; }, 1500);
             }
         }
 
         function hlJSON(el) {
-            if (window.hljs) {
-                hljs.highlightElement(el);
-            }
+            if (window.hljs) hljs.highlightElement(el);
         }
 
         function toggleCategory(index) {
@@ -319,6 +265,7 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
             icon.textContent = isHidden ? 'expand_more' : 'expand_less';
         }
 
+        // Execute API Request
         async function executeRequest(event, catIndex, endpointIndex, method, path) {
             event.preventDefault();
             const form = document.getElementById(`form-${catIndex}-${endpointIndex}`);
@@ -329,14 +276,12 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
             responseDiv.classList.remove('hidden');
 
             const formData = new FormData(form);
-            const fetchOptions = {
-                method: method.toUpperCase()
-            };
+            const fetchOptions = { method: method.toUpperCase() };
 
             let fullPath = path;
             let curlCommand = `curl -X ${fetchOptions.method} "${window.location.origin}${path}"`;
 
-            if (fetchOptions.method === 'POST' || fetchOptions.method === 'PUT' || fetchOptions.method === 'PATCH') {
+            if (['POST', 'PUT', 'PATCH'].includes(fetchOptions.method)) {
                 fetchOptions.body = formData;
                 for (const [key, value] of formData.entries()) {
                     if (value instanceof File && value.name) {
@@ -345,7 +290,7 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
                         curlCommand += ` -F "${key}=${value}"`;
                     }
                 }
-            } else { // GET/DELETE
+            } else {
                 const params = new URLSearchParams();
                 for (const [key, value] of formData.entries()) {
                     if (typeof value === 'string' && value) {
@@ -360,7 +305,6 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
             }
 
             const escapedFullPath = fullPath.replace(/"/g, '&quot;').replace(/'/g, "'");
-            const escapedCurlCommand = curlCommand.replace(/"/g, '&quot;').replace(/'/g, "'");
 
             responseContent.innerHTML = `
                 <div class="space-y-4">
@@ -388,7 +332,7 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
                         </div>
                     </div>
                 </div>
-              `;
+            `;
 
             const responseBodyDiv = document.getElementById(`response-body-${catIndex}-${endpointIndex}`);
 
@@ -419,7 +363,7 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
             } catch (err) {
                 let errMessage = String(err);
                 if (err.message && err.message.startsWith('404')) {
-                    errMessage = `Error 404: Not Found.\n\nEndpoint tidak ditemukan. Pastikan URL dan parameter sudah benar. Jika Anda yakin ini adalah kesalahan, silakan hubungi owner.`;
+                    errMessage = `Error 404: Not Found.\n\nEndpoint tidak ditemukan. Pastikan URL dan parameter sudah benar.`;
                 }
                 responseBodyDiv.innerHTML = `<pre class="text-red-400 max-h-80 overflow-auto">${errMessage}</pre>`;
             }
@@ -441,21 +385,17 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
             }, 200);
         }
 
-        // Function to load and render APIs from OpenAPI spec
+        // Load APIs from OpenAPI Spec
         async function loadApis() {
             const apiList = document.getElementById('apiList');
             try {
                 const response = await fetch('/src/openapi.json');
                 const data = await response.json();
 
-                // Group endpoints by tags
                 const categories = {};
                 if (data.tags) {
                     data.tags.forEach(tag => {
-                        categories[tag.name] = {
-                            name: tag.name,
-                            items: []
-                        };
+                        categories[tag.name] = { name: tag.name, items: [] };
                     });
                 }
 
@@ -466,10 +406,7 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
                         const tagName = endpoint.tags && endpoint.tags.length > 0 ? endpoint.tags[0] : 'Uncategorized';
 
                         if (!categories[tagName]) {
-                            categories[tagName] = {
-                                name: tagName,
-                                items: []
-                            };
+                            categories[tagName] = { name: tagName, items: [] };
                         }
 
                         categories[tagName].items.push({
@@ -506,60 +443,45 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
                     category.items.forEach((item, endpointIndex) => {
                         const method = item.method;
                         const path = item.path;
-
-                        const statusClasses = {
-                            'ready': 'bg-green-200 text-green',
-                            'deprecated': 'bg-yellow-500/20 text-yellow-400',
-                        };
-                        const statusClass = statusClasses[item.status] || 'bg-gray-600';
-
-                        const methodClasses = {
-                            'GET': 'bg-slate-900',
-                            'POST': 'bg-slate-900',
-                            'PUT': 'bg-yellow-600',
-                            'DELETE': 'bg-red-600'
-                        };
-                        const methodClass = methodClasses[method] || 'bg-gray-600';
+                        const statusClass = item.status === 'deprecated' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-green-200 text-green';
+                        const methodClass = method === 'DELETE' ? 'bg-red-600' : (method === 'PUT' ? 'bg-yellow-600' : 'bg-slate-900');
 
                         html += `
-                                    <div id="${item.path.split('/').pop()}" class="border-t border-gray-200 api-item" 
-                                         data-method="${method}"
-                                         data-path="${path}"
-                                         data-alias="${item.name}"
-                                         data-description="${item.desc}"
-                                         data-category="${category.name}">
-                                        <button onclick="toggleEndpoint(${catIndex}, ${endpointIndex})" class="w-full px-4 py-3 text-left flex items-center justify-between transition-colors duration-150">
-                                            <div class="flex items-center min-w-0 flex-1">
-                                                <span class="inline-block px-3 py-1 text-xs font-semibold text-white mr-3 flex-shrink-0 ${methodClass}">
-                                                    ${method}
-                                                </span>
-                                                <div class="flex flex-col min-w-0 flex-1">
-                                                    <span class="font-semibold truncate max-w-[90%] font-mono text-sm text-slate-800" title="${path}">${path}</span>
-                                                    <div class="flex items-center">
-                                                        <span class="text-xs text-slate-600 truncate max-w-[90%]" title="${item.name}">${item.name}</span>
-                                                        <span class="ml-2 px-2 py-0.5 text-xs rounded ${statusClass}">${item.status}</span>
-                                                    </div>
-                                                </div>
+                            <div id="${item.path.split('/').pop()}" class="border-t border-gray-200 api-item" 
+                                 data-method="${method}" data-path="${path}" data-alias="${item.name}" 
+                                 data-description="${item.desc}" data-category="${category.name}">
+                                <button onclick="toggleEndpoint(${catIndex}, ${endpointIndex})" class="w-full px-4 py-3 text-left flex items-center justify-between transition-colors duration-150">
+                                    <div class="flex items-center min-w-0 flex-1">
+                                        <span class="inline-block px-3 py-1 text-xs font-semibold text-white mr-3 flex-shrink-0 ${methodClass}">
+                                            ${method}
+                                        </span>
+                                        <div class="flex flex-col min-w-0 flex-1">
+                                            <span class="font-semibold truncate max-w-[90%] font-mono text-sm text-slate-800" title="${path}">${path}</span>
+                                            <div class="flex items-center">
+                                                <span class="text-xs text-slate-600 truncate max-w-[90%]" title="${item.name}">${item.name}</span>
+                                                <span class="ml-2 px-2 py-0.5 text-xs rounded ${statusClass}">${item.status}</span>
                                             </div>
-                                            <span class="material-icons transition-transform duration-150 flex-shrink-0" id="endpoint-icon-${catIndex}-${endpointIndex}">expand_more</span>
-                                        </button>
-                                        
-                                        <div id="endpoint-${catIndex}-${endpointIndex}" class="hidden bg-gray-50 p-4 border-t border-gray-200 space-y-4">
-                                            <div class="mb-3">
-                                                <div class="text-slate-600 text-xs">${item.desc}</div>
-                                            </div>
-                                            `;
+                                        </div>
+                                    </div>
+                                    <span class="material-icons transition-transform duration-150 flex-shrink-0" id="endpoint-icon-${catIndex}-${endpointIndex}">expand_more</span>
+                                </button>
+                                
+                                <div id="endpoint-${catIndex}-${endpointIndex}" class="hidden bg-gray-50 p-4 border-t border-gray-200 space-y-4">
+                                    <div class="mb-3">
+                                        <div class="text-slate-600 text-xs">${item.desc}</div>
+                                    </div>`;
+
                         if (item.status !== 'deprecated') {
                             html += `
-                                                <div>
-                                                    <div class="text-gray-700 font-bold text-xs mb-2 flex items-center">
-                                                        <span class="material-icons text-sm mr-1">play_arrow</span>
-                                                        TRY IT OUT
-                                                    </div>
-                                                    <div>
-                                                        <form id="form-${catIndex}-${endpointIndex}" onsubmit="executeRequest(event, ${catIndex}, ${endpointIndex}, '${method}', '${path}')">
-                                                            <div class="mb-4 space-y-2">`;
-                            // Query parameters
+                                <div>
+                                    <div class="text-gray-700 font-bold text-xs mb-2 flex items-center">
+                                        <span class="material-icons text-sm mr-1">play_arrow</span>
+                                        TRY IT OUT
+                                    </div>
+                                    <div>
+                                        <form id="form-${catIndex}-${endpointIndex}" onsubmit="executeRequest(event, ${catIndex}, ${endpointIndex}, '${method}', '${path}')">
+                                            <div class="mb-4 space-y-2">`;
+
                             if (item.parameters) {
                                 item.parameters.forEach(param => {
                                     const schema = param.schema || {};
@@ -568,7 +490,6 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
                                     const desc = param.description ? `<div class="text-[10px] text-gray-500 mt-1">${param.description}</div>` : '';
                                     const placeholder = (schema.example ?? schema.default ?? '') + '';
 
-                                    // enum => select
                                     if (Array.isArray(schema.enum) && schema.enum.length) {
                                         html += `
                                             <div>
@@ -579,323 +500,114 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
                                               ${desc}
                                             </div>`;
                                     } else {
-                                        // type-aware inputs
-                                        let type = 'text';
-                                        if (schema.type === 'number' || schema.type === 'integer') type = 'number';
-                                        if (schema.type === 'boolean') {
-                                            html += `
-                                              <div>
-                                                <label class="block text-xs font-medium text-slate-700 mb-2">${label}</label>
-                                                <select name="${param.name}" class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white" ${isReq ? 'required' : ''}>
-                                                  <option value="true">true</option>
-                                                  <option value="false">false</option>
-                                                </select>
-                                                ${desc}
-                                              </div>`;
-                                        } else {
-                                            html += `
-                                              <div>
-                                                <label class="block text-xs font-medium text-slate-700 mb-2">${label}</label>
-                                                <input type="${type}" name="${param.name}"
-                                                  class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white placeholder:text-slate-400"
-                                                  placeholder="${placeholder.replace(/"/g,'&quot;')}" ${isReq ? 'required' : ''}>
-                                                ${desc}
-                                              </div>`;
-                                        }
+                                        let type = (schema.type === 'number' || schema.type === 'integer') ? 'number' : 'text';
+                                        html += `
+                                            <div>
+                                              <label class="block text-xs font-medium text-slate-700 mb-2">${label}</label>
+                                              <input type="${type}" name="${param.name}"
+                                                class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white placeholder:text-slate-400"
+                                                placeholder="${placeholder.replace(/"/g,'&quot;')}" ${isReq ? 'required' : ''}>
+                                              ${desc}
+                                            </div>`;
                                     }
                                 });
                             }
 
-                            // Request body
-                            if (item.requestBody && item.requestBody.content) {
-                                const content = item.requestBody.content;
-
-                                // multipart/form-data
-                                if (content['multipart/form-data']) {
-                                    const schema = content['multipart/form-data'].schema || {
-                                        properties: {}
-                                    };
-                                    const required = schema.required || [];
-                                    Object.keys(schema.properties || {}).forEach(propName => {
-                                        const prop = schema.properties[propName] || {};
-                                        const isRequired = required.includes(propName);
-                                        const label = `${propName} ${isRequired ? '<span class="text-red-500">*</span>' : ''}`;
-                                        const desc = prop.description ? `<div class="text-[10px] text-slate-500 mt-1">${prop.description}</div>` : '';
-                                        const placeholder = (prop.example ?? prop.default ?? '') + '';
-                                        const isFile = prop.format === 'binary';
-
-                                        if (isFile) {
-                                            let accept = '';
-                                            const propDesc = (prop.description || '').toLowerCase();
-                                            if (propName.toLowerCase().includes('image') || propDesc.includes('gambar')) {
-                                                accept = 'accept="image/*"';
-                                            } else if (propName.toLowerCase().includes('video') || propDesc.includes('vidio')) {
-                                                accept = 'accept="video/*"';
-                                            }
-                                            html += `
-                                                <div>
-                                                    <label class="block text-xs font-medium text-slate-700 mb-2">${label}</label>
-                                                    <input type="file" name="${propName}" ${accept}
-                                                        class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white"
-                                                        ${isRequired ? 'required' : ''}>
-                                                    ${desc}
-                                                </div>`;
-                                        } else if (Array.isArray(prop.enum) && prop.enum.length) {
-                                            html += `
-                                                <div>
-                                                    <label class="block text-xs font-medium text-slate-700 mb-2">${label}</label>
-                                                    <select name="${propName}" class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white" ${isRequired ? 'required' : ''}>
-                                                        ${prop.enum.map(v => `<option value="${String(v)}">${String(v)}</option>`).join('')}
-                                                    </select>
-                                                    ${desc}
-                                                </div>`;
-                                        } else if (prop.type === 'boolean') {
-                                            html += `
-                                                <div>
-                                                    <label class="block text-xs font-medium text-slate-700 mb-2">${label}</label>
-                                                    <select name="${propName}" class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white" ${isRequired ? 'required' : ''}>
-                                                        <option value="true">true</option>
-                                                        <option value="false">false</option>
-                                                    </select>
-                                                    ${desc}
-                                                </div>`;
-                                        } else {
-                                            let inputType = 'text';
-                                            if (prop.type === 'number' || prop.type === 'integer') {
-                                                inputType = 'number';
-                                            }
-                                            html += `
-                                                <div>
-                                                    <label class="block text-xs font-medium text-slate-700 mb-2">${label}</label>
-                                                    <input type="${inputType}" name="${propName}"
-                                                        class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white placeholder:text-slate-400"
-                                                        placeholder="${placeholder.replace(/"/g, '&quot;')}" ${isRequired ? 'required' : ''}>
-                                                    ${desc}
-                                                </div>`;
-                                        }
-                                    });
-                                }
-
-                                // RAW JSON
-                                if (content['application/json']) {
-                                    html += `
-                                          <div>
-                                            <label class="block text-xs font-medium text-slate-700 mb-2">Body (application/json)</label>
-                                            <textarea name="__raw_json__" rows="6" class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-gray-600 bg-white font-mono placeholder:text-slate-400" placeholder='{"key":"value"}'></textarea>
-                                            <div class="text-[10px] text-slate-500 mt-1">Masukkan JSON valid. Jika diisi, body lain akan diabaikan.</div>
-                                          </div>`;
-                                }
-                            }
-
                             html += `
-                                                            </div>
-                                                            <button type="submit" class="bg-gray-800 hover:bg-gray-700 font-semibold text-white px-6 py-2 text-xs font-medium transition-colors duration-150">
-                                                                Execute
-                                                            </button>
-                                                            <button type="button" id="clear-${catIndex}-${endpointIndex}" onclick="clearResponse(${catIndex}, ${endpointIndex})" class="hidden bg-white border border-gray-200 hover:border-gray-600 font-semibold text-slate-900 px-6 py-2 text-xs font-medium transition-colors duration-150 ml-2">
-                                                                Clear
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>`;
+                                            </div>
+                                            <button type="submit" class="bg-gray-800 hover:bg-gray-700 font-semibold text-white px-6 py-2 text-xs transition-colors duration-150">Execute</button>
+                                            <button type="button" id="clear-${catIndex}-${endpointIndex}" onclick="clearResponse(${catIndex}, ${endpointIndex})" class="hidden bg-white border border-gray-200 hover:border-gray-600 font-semibold text-slate-900 px-6 py-2 text-xs transition-colors duration-150 ml-2">Clear</button>
+                                        </form>
+                                    </div>
+                                </div>`;
                         } else {
                             html += `<div class="text-yellow-400 text-xs p-3 bg-yellow-500/20 border border-yellow-500/30">Endpoint ini tidak digunakan lagi.</div>`;
                         }
 
                         html += `
-                                            <div id="response-${catIndex}-${endpointIndex}" class="hidden mt-4">
-                                                <div class="text-gray-700 font-bold text-xs mb-2 flex items-center">
-                                                    <span class="material-icons text-sm mr-1">code</span>
-                                                    RESPONSE
-                                                </div>
-                                                <div id="response-content-${catIndex}-${endpointIndex}" class="bg-gray-50 text-xs p-4 border border-gray-200">
-                                                    <!-- Response will be rendered here by executeRequest -->
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mt-4">
-                                                <div class="text-gray-700 font-bold text-xs mb-2 flex items-center">
-                                                    <span class="material-icons text-sm mr-1">list</span>
-                                                    HTTP STATUS CODES
-                                                </div>
-                                                <div class="bg-white border border-gray-200">
-                                                    <div class="overflow-x-auto">
-                                                        <table class="w-full text-xs">
-                                                            <thead class="bg-gray-50 border-b border-gray-200">
-                                                                <tr>
-                                                                    <th class="px-4 py-2 text-left font-semibold text-slate-700">Code</th>
-                                                                    <th class="px-4 py-2 text-left font-semibold text-slate-700">Description</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody class="divide-y divide-gray-200">
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-green-600 text-sm mr-2">check_circle</span>
-                                                                            <span class="font-mono font-semibold text-green-600">200</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">OK - Request successful</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-red-600 text-sm mr-2">error</span>
-                                                                            <span class="font-mono font-semibold text-red-600">400</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Bad Request - Invalid parameters or missing required fields</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-red-600 text-sm mr-2">error</span>
-                                                                            <span class="font-mono font-semibold text-red-600">401</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Unauthorized - Missing or invalid API key</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-red-600 text-sm mr-2">error</span>
-                                                                            <span class="font-mono font-semibold text-red-600">403</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Forbidden - You do not have permission to access this resource</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-red-600 text-sm mr-2">error</span>
-                                                                            <span class="font-mono font-semibold text-red-600">404</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Not Found - The requested resource could not be found</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-red-600 text-sm mr-2">error</span>
-                                                                            <span class="font-mono font-semibold text-red-600">405</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Method Not Allowed - HTTP method not supported for this resource</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-orange-500 text-sm mr-2">warning</span>
-                                                                            <span class="font-mono font-semibold text-orange-500">429</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Too Many Requests - You have hit the rate limit</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-red-600 text-sm mr-2">error</span>
-                                                                            <span class="font-mono font-semibold text-red-600">500</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Internal Server Error - Something went wrong on our end</td>
-                                                                </tr>
-                                                                <tr class="hover:bg-gray-50">
-                                                                    <td class="px-4 py-2">
-                                                                        <div class="flex items-center">
-                                                                            <span class="material-icons text-red-600 text-sm mr-2">error</span>
-                                                                            <span class="font-mono font-semibold text-red-600">503</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="px-4 py-2 text-slate-600">Service Unavailable - The server is temporarily unavailable</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
+                                    <div id="response-${catIndex}-${endpointIndex}" class="hidden mt-4">
+                                        <div class="text-gray-700 font-bold text-xs mb-2 flex items-center">
+                                            <span class="material-icons text-sm mr-1">code</span>
+                                            RESPONSE
                                         </div>
-                                    </div>`;
+                                        <div id="response-content-${catIndex}-${endpointIndex}" class="bg-gray-50 text-xs p-4 border border-gray-200"></div>
+                                    </div>
+                                </div>
+                            </div>`;
                     });
                     html += `</div></div></div>`;
                 });
+
                 apiList.innerHTML = html;
-                const categoriess = apiList.querySelectorAll('.category-group');
-                categoriess.forEach((category, index) => {
+                const categoryGroups = apiList.querySelectorAll('.category-group');
+                categoryGroups.forEach((category, index) => {
                     category.classList.add('will-fade-in', 'fade-in');
                     category.style.animationDelay = `${index * 70}ms`;
                 });
             } catch (error) {
-                apiList.innerHTML = '<p class="text-red-500">Failed to load API data.</p>';
+                apiList.innerHTML = '<p class="text-red-500 text-xs">Failed to load API data.</p>';
                 console.error('Error loading API data:', error);
             }
         }
 
-        // Function to load and render notifications
+        // Load Notifications
         async function loadNotifications() {
-    const notificationsList = document.getElementById('notifications-list');
-    const unreadCountBadge = document.getElementById('unread-count');
+            const notificationsList = document.getElementById('notifications-list');
+            const unreadCountBadge = document.getElementById('unread-count');
 
-    try {
-        // Tambahkan cache-busting untuk selalu ambil versi terbaru
-        const response = await fetch(`/src/notifications.json?t=${Date.now()}`);
-        let notifications = await response.json();
+            try {
+                const response = await fetch(`/api-page/notifications.json?t=${Date.now()}`).catch(() => fetch(`/notifications.json?t=${Date.now()}`));
+                let notifications = await response.json();
 
-        // Pastikan notifications selalu array
-        if (!Array.isArray(notifications)) {
-            notifications = notifications ? [notifications] : [];
+                if (!Array.isArray(notifications)) {
+                    notifications = notifications ? [notifications] : [];
+                }
+
+                notificationsList.innerHTML = '';
+                let unreadCount = 0;
+
+                notifications.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+                notifications.forEach((notif, index) => {
+                    if (!notif.read) unreadCount++;
+
+                    const notifElement = document.createElement('div');
+                    notifElement.className = `bg-white border border-gray-200 p-4 text-xs will-fade-in fade-in ${notif.read ? 'opacity-60' : ''}`;
+                    notifElement.style.animationDelay = `${index * 50}ms`;
+                    notifElement.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <p class="font-bold text-slate-800 mb-1">${notif.title || 'Tanpa Judul'}</p>
+                                <p class="text-slate-600">${notif.message || '-'}</p>
+                            </div>
+                            <div class="flex items-center ml-4 flex-shrink-0">
+                                ${!notif.read ? '<div class="w-2 h-2 bg-green-400 rounded-full mr-2" title="Unread"></div>' : ''}
+                                <span class="text-slate-500">${notif.date ? new Date(notif.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) : '-'}</span>
+                            </div>
+                        </div>
+                    `;
+                    notificationsList.appendChild(notifElement);
+                });
+
+                if (unreadCount > 0) {
+                    unreadCountBadge.textContent = unreadCount;
+                    unreadCountBadge.classList.remove('hidden');
+                } else {
+                    unreadCountBadge.classList.add('hidden');
+                }
+
+                if (notifications.length === 0) {
+                    notificationsList.innerHTML = '<p class="text-center text-slate-500 text-xs py-4">Tidak ada notifikasi</p>';
+                }
+
+            } catch (error) {
+                console.error('Gagal memuat notifikasi:', error);
+                notificationsList.innerHTML = '<p class="text-center text-red-500 text-xs py-4">Gagal memuat notifikasi</p>';
+                unreadCountBadge.classList.add('hidden');
+            }
         }
 
-        notificationsList.innerHTML = ''; // Clear loader
-        let unreadCount = 0;
-
-        // Sort notifications by date, newest first
-        notifications.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
-
-        notifications.forEach((notif, index) => {
-            if (!notif.read) unreadCount++;
-
-            const notifElement = document.createElement('div');
-            notifElement.className = `bg-white border border-gray-200 p-4 text-xs will-fade-in fade-in ${notif.read ? 'opacity-60' : ''}`;
-            notifElement.style.animationDelay = `${index * 50}ms`;
-            notifElement.innerHTML = `
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <p class="font-bold text-slate-800 mb-1">${notif.title || 'Tanpa Judul'}</p>
-                        <p class="text-slate-600">${notif.message || '-'}</p>
-                    </div>
-                    <div class="flex items-center ml-4 flex-shrink-0">
-                        ${!notif.read ? '<div class="w-2 h-2 bg-green-400 rounded-full mr-2" title="Unread"></div>' : ''}
-                        <span class="text-slate-500">${notif.date ? new Date(notif.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) : '-'}</span>
-                    </div>
-                </div>
-            `;
-            notificationsList.appendChild(notifElement);
-        });
-
-        // Update unread badge
-        if (unreadCount > 0) {
-            unreadCountBadge.textContent = unreadCount;
-            unreadCountBadge.classList.remove('hidden');
-        } else {
-            unreadCountBadge.classList.add('hidden');
-        }
-
-        // Jika tidak ada notifikasi
-        if (notifications.length === 0) {
-            notificationsList.innerHTML = '<p class="text-center text-slate-500 text-xs py-4">Tidak ada notifikasi</p>';
-        }
-
-    } catch (error) {
-        console.error('Gagal memuat notifikasi:', error);
-        notificationsList.innerHTML = '<p class="text-center text-red-500 text-xs py-4">Gagal memuat notifikasi</p>';
-        unreadCountBadge.classList.add('hidden');
-    }
-}
-
-
-        // Search functionality
+        // Search Filter
         document.getElementById('searchInput').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const apiItems = document.querySelectorAll('.api-item');
@@ -917,28 +629,18 @@ document.addEventListener('DOMContentLoaded', loadNotifications);
             });
 
             categories.forEach(category => {
-                const visibleItems = category.querySelectorAll('.api-item[style=""]');
-                if (visibleItems.length > 0) {
-                    category.style.display = '';
-                } else {
-                    category.style.display = 'none';
-                }
+                const visibleItems = category.querySelectorAll('.api-item:not([style*="display: none"])');
+                category.style.display = visibleItems.length > 0 ? '' : 'none';
             });
 
-            if (visibleCount === 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
         });
 
-
-        // Initial load
+        // Initialize Page
         document.addEventListener('DOMContentLoaded', () => {
             loadApis();
             loadNotifications();
         });
     </script>
 </body>
-
 </html>
