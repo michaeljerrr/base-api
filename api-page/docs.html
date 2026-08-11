@@ -167,7 +167,12 @@
 
     <main class="max-w-2xl mx-auto px-8 py-16">
 
-        <!-- Notifications Panel (Fixed & Enhanced) -->
+        <!-- Banner 2 (Ditambahkan sesuai posisi kotak merah) -->
+        <div class="mb-6 overflow-hidden border border-gray-200 bg-white shadow-sm">
+            <img src="https://apizaxius.vercel.app/src/banner.jpg" alt="Zaxius API Banner" class="w-full h-auto object-cover block">
+        </div>
+
+        <!-- Notifications Panel -->
         <div class="mb-8">
             <div class="flex items-center justify-between mb-3">
                 <h2 class="text-lg font-semibold text-slate-900 flex items-center">
@@ -554,12 +559,11 @@
             }
         }
 
-        // Enhanced Notification Loader
+        // Notification Loader
         async function loadNotifications() {
             const notificationsList = document.getElementById('notifications-list');
             const unreadCountBadge = document.getElementById('unread-count');
 
-            // Default fallback notification jika file external gagal di-load
             const fallbackNotifications = [
                 {
                     title: "Selamat Datang di Zaxius API v1.0",
@@ -573,7 +577,6 @@
             try {
                 let notifications = [];
                 
-                // Mencoba fetch file notifikasi
                 const res = await fetch(`/notifications.json?t=${Date.now()}`).catch(() => null);
                 if (res && res.ok) {
                     notifications = await res.json();
@@ -598,7 +601,6 @@
                 notifications.forEach((notif, index) => {
                     if (!notif.read) unreadCount++;
 
-                    // Custom styling berdasarkan tipe notifikasi
                     let typeBadge = '';
                     if (notif.type === 'update') {
                         typeBadge = '<span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded mr-2">UPDATE</span>';
@@ -608,7 +610,6 @@
                         typeBadge = '<span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded mr-2">INFO</span>';
                     }
 
-                    // Format tanggal
                     let formattedDate = '-';
                     if (notif.date) {
                         const parsedDate = new Date(notif.date);
