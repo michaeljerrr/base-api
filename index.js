@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // ========== DISCORD WEBHOOK ==========
-const WEBHOOK_URL = process.env.WEBHOOK_URL || "https://discordapp.com/api/webhooks/1536740515012411453/VVwtEJd5Qc8KVaj1Uj643gcO9CwWF_C8a3cMo4L5X8Dh38FOcgiP4lOjTefU7Z_9r8bY"
+const WEBHOOK_URL = process.env.WEBHOOK_URL || "https://discordapp.com/api/webhooks/1536740515012411453/VVwtEJd5Qc8KVaj1Uj643gcO9CwWF_C8a3cMo4L5X8Dh38FOcgiP4lOjTefU7Z_9r8bY";
 const fetch = (...args) => import("node-fetch").then(({ default: f }) => f(...args));
 
 async function sendWebhook(content, embeds = null) {
@@ -75,19 +75,30 @@ app.use("/", express.static(path.join(__dirname, "api-page")));
 app.use("/src", express.static(path.join(__dirname, "src")));
 
 // ========== LOAD OPENAPI ==========
-const openApiPath = path.join(__dirname, "./src/openapi.json");
+const openApiPath = path.join(__dirname, "src", "openapi.json");
 let openApi = {};
 
 try {
-    openApi = JSON.parse(fs.readFileSync(openApiPath));
+    openApi = require(openApiPath);
 } catch {
-    console.warn(chalk.yellow("⚠️ openapi.json not found or invalid."));
+    try {
+        if (fs.existsSync(openApiPath)) {
+            openApi = JSON.parse(fs.readFileSync(openApiPath, "utf8"));
+        }
+    } catch {
+        console.warn(chalk.yellow("⚠️ openapi.json not found or invalid."));
+    }
 }
 
 // ========== /openapi.json route ==========
 app.get("/openapi.json", (req, res) => {
-    if (fs.existsSync(openApiPath)) res.sendFile(openApiPath);
-    else res.status(404).json({ status: false, message: "openapi.json tidak ditemukan" });
+    if (Object.keys(openApi).length > 0) {
+        return res.json(openApi);
+    }
+    if (fs.existsSync(openApiPath)) {
+        return res.sendFile(openApiPath);
+    }
+    return res.status(404).json({ status: false, message: "openapi.json tidak ditemukan" });
 });
 
 // ========== Helper match path OpenAPI ==========
@@ -104,7 +115,7 @@ function matchOpenApiPath(requestPath) {
 app.use((req, res, next) => {
     const original = res.json;
     res.json = function (data) {
-        if (typeof data === "object") {
+        if (typeof data === "object" && data !== null) {
             data = {
                 status: data.status ?? true,
                 creator: openApi.info?.author || "Rynn UI",
@@ -127,7 +138,6 @@ app.use(async (req, res, next) => {
     const start = Date.now();
 
     try {
-        // REQUEST LOG
         if (matchOpenApiPath(endpoint)) {
             sendLog({ ip, method, endpoint, status: "request", query });
             console.log(chalk.yellow(`🟡 [REQUEST] ${method} ${endpoint} | IP: ${ip}`));
@@ -173,8 +183,26 @@ if (fs.existsSync(apiFolder)) {
         if (fs.statSync(subPath).isDirectory()) {
             fs.readdirSync(subPath).forEach((file) => {
                 if (file.endsWith(".js")) {
-                    const route = require(path.join(subPath, file));
-                    if (typeof route === "function") route(app);
+                    const routePath = path.join(subPath, file);
+                    const route = require(routePath);
+                    
+                    const endpointName = path.parse(file).name.toLowerCase();
+                    const routeEndpoint = `/api/${sub}/${endpointName}`;
+
+                    if (typeof route === "function") {
+                        if (route.length === 1) {
+                            route(app);
+                        } else {
+                            app.get(routeEndpoint, route);
+                            app.post(routeEndpoint, route);
+                        }
+                    } else if (typeof route === "object" && route !== null) {
+                        if (typeof route.handler === "function") {
+                            const method = (route.method || "get").toLowerCase();
+                            const customEndpoint = route.endpoint || routeEndpoint;
+                            app[method](customEndpoint, route.handler);
+                        }
+                    }
 
                     totalRoutes++;
                     console.log(chalk.bgYellow.black(`Loaded Route: ${file}`));
