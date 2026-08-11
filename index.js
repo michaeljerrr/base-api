@@ -187,7 +187,7 @@ if (fs.existsSync(apiFolder)) {
                     const route = require(routePath);
                     
                     const endpointName = path.parse(file).name.toLowerCase();
-                    const routeEndpoint = `/api/${sub}/${endpointName}`;
+                    const routeEndpoint = `/${sub}/${endpointName}`;
 
                     if (typeof route === "function") {
                         if (route.length === 1) {
