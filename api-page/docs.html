@@ -167,16 +167,20 @@
 
     <main class="max-w-2xl mx-auto px-8 py-16">
 
-        <!-- Notifications Panel -->
+        <!-- Notifications Panel (Fixed & Enhanced) -->
         <div class="mb-8">
             <div class="flex items-center justify-between mb-3">
                 <h2 class="text-lg font-semibold text-slate-900 flex items-center">
                     <span class="material-icons text-xl mr-2 text-slate-500">notifications</span>
                     Informasi
                 </h2>
-                <span id="unread-count" class="text-xs bg-slate-900 text-white px-2 py-1 hidden"></span>
+                <span id="unread-count" class="text-xs font-bold bg-slate-900 text-white px-2 py-0.5 rounded-full hidden">0</span>
             </div>
-            <div id="notifications-list" class="space-y-2"></div>
+            <div id="notifications-list" class="space-y-2">
+                <div class="p-4 text-center text-xs text-slate-400 bg-white border border-gray-200">
+                    Memuat informasi...
+                </div>
+            </div>
         </div>
 
         <div class="flex items-center justify-between mb-4">
@@ -550,14 +554,37 @@
             }
         }
 
-        // Load Notifications
+        // Enhanced Notification Loader
         async function loadNotifications() {
             const notificationsList = document.getElementById('notifications-list');
             const unreadCountBadge = document.getElementById('unread-count');
 
+            // Default fallback notification jika file external gagal di-load
+            const fallbackNotifications = [
+                {
+                    title: "Selamat Datang di Zaxius API v1.0",
+                    message: "Nikmati dokumentasi interaktif API kami. Silakan coba fitur Try It Out pada endpoint yang tersedia.",
+                    date: "2026-08-12",
+                    type: "info",
+                    read: false
+                }
+            ];
+
             try {
-                const response = await fetch(`/api-page/notifications.json?t=${Date.now()}`).catch(() => fetch(`/notifications.json?t=${Date.now()}`));
-                let notifications = await response.json();
+                let notifications = [];
+                
+                // Mencoba fetch file notifikasi
+                const res = await fetch(`/notifications.json?t=${Date.now()}`).catch(() => null);
+                if (res && res.ok) {
+                    notifications = await res.json();
+                } else {
+                    const fallbackRes = await fetch(`/api-page/notifications.json?t=${Date.now()}`).catch(() => null);
+                    if (fallbackRes && fallbackRes.ok) {
+                        notifications = await fallbackRes.json();
+                    } else {
+                        notifications = fallbackNotifications;
+                    }
+                }
 
                 if (!Array.isArray(notifications)) {
                     notifications = notifications ? [notifications] : [];
@@ -571,18 +598,42 @@
                 notifications.forEach((notif, index) => {
                     if (!notif.read) unreadCount++;
 
+                    // Custom styling berdasarkan tipe notifikasi
+                    let typeBadge = '';
+                    if (notif.type === 'update') {
+                        typeBadge = '<span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded mr-2">UPDATE</span>';
+                    } else if (notif.type === 'warning') {
+                        typeBadge = '<span class="text-[10px] font-bold bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded mr-2">WARNING</span>';
+                    } else if (notif.type === 'info') {
+                        typeBadge = '<span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded mr-2">INFO</span>';
+                    }
+
+                    // Format tanggal
+                    let formattedDate = '-';
+                    if (notif.date) {
+                        const parsedDate = new Date(notif.date);
+                        if (!isNaN(parsedDate.getTime())) {
+                            formattedDate = parsedDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' });
+                        } else {
+                            formattedDate = notif.date;
+                        }
+                    }
+
                     const notifElement = document.createElement('div');
-                    notifElement.className = `bg-white border border-gray-200 p-4 text-xs will-fade-in fade-in ${notif.read ? 'opacity-60' : ''}`;
+                    notifElement.className = `bg-white border border-gray-200 p-4 text-xs will-fade-in fade-in transition-opacity hover:border-gray-400 ${notif.read ? 'opacity-60' : ''}`;
                     notifElement.style.animationDelay = `${index * 50}ms`;
                     notifElement.innerHTML = `
                         <div class="flex justify-between items-start">
-                            <div class="flex-1">
-                                <p class="font-bold text-slate-800 mb-1">${notif.title || 'Tanpa Judul'}</p>
-                                <p class="text-slate-600">${notif.message || '-'}</p>
+                            <div class="flex-1 pr-3">
+                                <div class="flex items-center mb-1">
+                                    ${typeBadge}
+                                    <p class="font-bold text-slate-800">${notif.title || 'Tanpa Judul'}</p>
+                                </div>
+                                <p class="text-slate-600 leading-relaxed">${notif.message || '-'}</p>
                             </div>
-                            <div class="flex items-center ml-4 flex-shrink-0">
-                                ${!notif.read ? '<div class="w-2 h-2 bg-green-400 rounded-full mr-2" title="Unread"></div>' : ''}
-                                <span class="text-slate-500">${notif.date ? new Date(notif.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }) : '-'}</span>
+                            <div class="flex flex-col items-end flex-shrink-0 space-y-1">
+                                <span class="text-[11px] text-slate-400">${formattedDate}</span>
+                                ${!notif.read ? '<span class="inline-block w-2 h-2 bg-emerald-500 rounded-full" title="Belum dibaca"></span>' : ''}
                             </div>
                         </div>
                     `;
@@ -597,12 +648,16 @@
                 }
 
                 if (notifications.length === 0) {
-                    notificationsList.innerHTML = '<p class="text-center text-slate-500 text-xs py-4">Tidak ada notifikasi</p>';
+                    notificationsList.innerHTML = '<p class="text-center text-slate-400 text-xs py-4 bg-white border border-gray-200">Tidak ada notifikasi saat ini.</p>';
                 }
 
             } catch (error) {
                 console.error('Gagal memuat notifikasi:', error);
-                notificationsList.innerHTML = '<p class="text-center text-red-500 text-xs py-4">Gagal memuat notifikasi</p>';
+                notificationsList.innerHTML = `
+                    <div class="p-4 text-center bg-white border border-gray-200">
+                        <p class="text-red-500 text-xs mb-2">Gagal memuat notifikasi</p>
+                        <button onclick="loadNotifications()" class="text-[11px] border border-gray-200 px-3 py-1 hover:border-slate-800 text-slate-700">Coba Lagi</button>
+                    </div>`;
                 unreadCountBadge.classList.add('hidden');
             }
         }
