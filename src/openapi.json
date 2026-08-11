@@ -361,6 +361,30 @@
         }
       }
     },
+    "/search/lyrics": {
+  "get": {
+    "summary": "Lyrics Search",
+    "description": "Mencari lirik lagu berdasarkan kueri dari Lyrics.com",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Judul lagu atau kata kunci lirik yang dicari",
+        "schema": {
+          "type": "string",
+          "example": "bulan madu"
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan data lirik" },
+      "400": { "description": "Parameter 'q' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
     "/image/bluearchive": {
       "get": {
         "summary": "Blue Archive",
