@@ -361,7 +361,7 @@
         }
       }
     },
-    "/download/vidssave": {
+    "/download/aoi": {
       "get": {
         "summary": "VidsSave All-in-One Downloader",
         "description": "Download media dari TikTok, Instagram, YouTube, Facebook, dll via VidsSave",
