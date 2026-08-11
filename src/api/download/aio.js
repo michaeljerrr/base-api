@@ -1,9 +1,5 @@
-/**
- * All-in-One Downloader (TikTok, Instagram, YouTube, Facebook, dll)
- * base      : vidssave.com
- * by        : febry.is-a.dev (please do not remove the wm, respect)
- * Date      : 25-07-2026
- */
+const path = require('path');
+const fs = require('fs');
 
 class VidsSave {
   constructor() {
@@ -13,7 +9,7 @@ class VidsSave {
   }
 
   async download(url) {
-    if (!url) throw new Error("URL parameter 'url' is required");
+    if (!url) throw new Error("URL is required");
 
     const payload = new URLSearchParams({
       auth: this.auth,
