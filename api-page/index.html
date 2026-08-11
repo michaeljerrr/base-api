@@ -1,5 +1,4 @@
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
@@ -222,20 +221,26 @@
 
     <main class="max-w-2xl mx-auto px-8 py-10">
         <div class="text-left mb-6">
-            <p class="text-muted-foreground text-xs mb-4 animate-on-load" style="animation-delay: 0.1s;">Hi Developer! Welcome To</p>
+            <p class="text-muted-foreground text-xs mb-3 animate-on-load" style="animation-delay: 0.1s;">Hi Developer! Welcome To</p>
+            
+            <!-- Banner Image Added Here -->
+            <div class="mb-4 animate-on-load overflow-hidden border border-default shadow-sm rounded-lg" style="animation-delay: 0.15s;">
+                <img src="https://apizaxius.vercel.app/src/banner.jpg" alt="Zaxius APIs Banner" class="w-full h-auto object-cover block">
+            </div>
+
             <h2 class="flex flex-wrap items-center gap-1 text-3xl text-foreground font-bold mb-1.5 animate-on-load" style="animation-delay: 0.2s;">
-    <span class="flex-grow text-black">Zaxius APIs</span>
-    <span class="text-xs font-bold text-white bg-black px-3 py-1 whitespace-nowrap">
-        v1.0
-    </span>
-</h2>
+                <span class="flex-grow text-black">Zaxius APIs</span>
+                <span class="text-xs font-bold text-white bg-black px-3 py-1 whitespace-nowrap">
+                    v1.0
+                </span>
+            </h2>
             <p class="text-muted-foreground text-xs mx-auto mb-4 animate-on-load" style="animation-delay: 0.3s;">Powerful API platform for modern applications</p>
 
             <div class="mb-4 animate-on-load" style="animation-delay: 0.4s;">
-    <a href="/docs" class="inline-block bg-black text-white px-6 py-2 rounded text-sm font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-        <i class="fas fa-rocket mr-2"></i>START
-    </a>
-</div>
+                <a href="/docs" class="inline-block bg-black text-white px-6 py-2 rounded text-sm font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                    <i class="fas fa-rocket mr-2"></i>START
+                </a>
+            </div>
 
             <div class="text-xs space-y-1 animate-on-load" style="animation-delay: 0.5s;">
                 <div>
@@ -256,153 +261,154 @@
                 </div>
             </div>
         </div>
-<div class="bg-card border-default p-4 my-3 animate-on-scroll">
-    <div class="grid grid-cols-3 gap-4">
-        <div class="text-center stat-item">
-            <div id="total-endpoints" class="text-lg font-bold text-foreground">0</div>
-            <div class="text-xs text-muted-foreground">Endpoints</div>
+
+        <div class="bg-card border-default p-4 my-3 animate-on-scroll">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center stat-item">
+                    <div id="total-endpoints" class="text-lg font-bold text-foreground">0</div>
+                    <div class="text-xs text-muted-foreground">Endpoints</div>
+                </div>
+                <div class="text-center stat-item">
+                    <div id="total-categories" class="text-lg font-bold text-foreground">0</div>
+                    <div class="text-xs text-muted-foreground">Categories</div>
+                </div>
+                <div class="text-center stat-item">
+                    <div class="text-lg font-bold text-foreground">24/7</div>
+                    <div class="text-xs text-muted-foreground">Support</div>
+                </div>
+            </div>
         </div>
-        <div class="text-center stat-item">
-            <div id="total-categories" class="text-lg font-bold text-foreground">0</div>
-            <div class="text-xs text-muted-foreground">Categories</div>
-        </div>
-        <div class="text-center stat-item">
-            <div class="text-lg font-bold text-foreground">24/7</div>
-            <div class="text-xs text-muted-foreground">Support</div>
-        </div>
-    </div>
-</div>
 
-<script>
-async function updateStats() {
-    try {
-        // Load JSON OpenAPI
-        const response = await fetch('/src/openapi.json');
-        const data = await response.json();
+        <script>
+        async function updateStats() {
+            try {
+                // Load JSON OpenAPI
+                const response = await fetch('/src/openapi.json');
+                const data = await response.json();
 
-        // Total endpoints
-        const totalEndpoints = Object.keys(data.paths || {}).length;
+                // Total endpoints
+                const totalEndpoints = Object.keys(data.paths || {}).length;
 
-        // Total kategori unik
-        const categories = new Set((data.tags || []).map(tag => tag.name));
-        const totalCategories = categories.size;
+                // Total kategori unik
+                const categories = new Set((data.tags || []).map(tag => tag.name));
+                const totalCategories = categories.size;
 
-        // Update HTML
-        document.getElementById('total-endpoints').textContent = totalEndpoints;
-        document.getElementById('total-categories').textContent = totalCategories;
-    } catch (err) {
-        console.error('Gagal load openapi.json', err);
-    }
-}
+                // Update HTML
+                document.getElementById('total-endpoints').textContent = totalEndpoints;
+                document.getElementById('total-categories').textContent = totalCategories;
+            } catch (err) {
+                console.error('Gagal load openapi.json', err);
+            }
+        }
 
-// Jalankan saat halaman siap
-updateStats();
-</script>
+        // Jalankan saat halaman siap
+        updateStats();
+        </script>
 
         <div class="space-y-3" id="features">
-    <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll">
-        <div class="px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center min-w-0 flex-1">
-                <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                    <i class="fas fa-bolt text-black text-sm"></i>
+            <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll">
+                <div class="px-4 py-4 flex items-center justify-between">
+                    <div class="flex items-center min-w-0 flex-1">
+                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-bolt text-black text-sm"></i>
+                        </div>
+                        <div class="flex flex-col min-w-0 flex-1">
+                            <h3 class="font-bold text-sm text-foreground truncate">Fast & Reliable</h3>
+                            <p class="text-xs text-muted-foreground">High-performance API endpoints with low latency</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col min-w-0 flex-1">
-                    <h3 class="font-bold text-sm text-foreground truncate">Fast & Reliable</h3>
-                    <p class="text-xs text-muted-foreground">High-performance API endpoints with low latency</p>
+            </div>
+
+            <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.1s;">
+                <div class="px-4 py-4 flex items-center justify-between">
+                    <div class="flex items-center min-w-0 flex-1">
+                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-shield-alt text-black text-sm"></i>
+                        </div>
+                        <div class="flex flex-col min-w-0 flex-1">
+                            <h3 class="font-bold text-sm text-foreground truncate">Secure</h3>
+                            <p class="text-xs text-muted-foreground">Enterprise-grade security and encryption</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.2s;">
+                <div class="px-4 py-4 flex items-center justify-between">
+                    <div class="flex items-center min-w-0 flex-1">
+                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-code text-black text-sm"></i>
+                        </div>
+                        <div class="flex flex-col min-w-0 flex-1">
+                            <h3 class="font-bold text-sm text-foreground truncate">Easy Integration</h3>
+                            <p class="text-xs text-muted-foreground">Simple REST API with clear documentation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.3s;">
+                <div class="px-4 py-4 flex items-center justify-between">
+                    <div class="flex items-center min-w-0 flex-1">
+                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-chart-line text-black text-sm"></i>
+                        </div>
+                        <div class="flex flex-col min-w-0 flex-1">
+                            <h3 class="font-bold text-sm text-foreground truncate">Analytics</h3>
+                            <p class="text-xs text-muted-foreground">Detailed usage analytics and monitoring</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.1s;">
-        <div class="px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center min-w-0 flex-1">
-                <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                    <i class="fas fa-shield-alt text-black text-sm"></i>
-                </div>
-                <div class="flex flex-col min-w-0 flex-1">
-                    <h3 class="font-bold text-sm text-foreground truncate">Secure</h3>
-                    <p class="text-xs text-muted-foreground">Enterprise-grade security and encryption</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <div class="my-8"></div>
+        <div class="bg-card border-default p-6 mb-6 rounded-none animate-on-scroll">
+            <h3 class="flex items-center gap-2 font-bold text-lg text-foreground mb-5">
+                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                Getting Started
+            </h3>
 
-    <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.2s;">
-        <div class="px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center min-w-0 flex-1">
-                <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                    <i class="fas fa-code text-black text-sm"></i>
+            <div class="space-y-4">
+                <div class="flex items-start gap-4 step-item">
+                    <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">1</div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-sm text-foreground mb-1">Choose Your Category</h4>
+                        <p class="text-xs text-muted-foreground">Browse through available API categories on sidebar and select what you need.</p>
+                    </div>
                 </div>
-                <div class="flex flex-col min-w-0 flex-1">
-                    <h3 class="font-bold text-sm text-foreground truncate">Easy Integration</h3>
-                    <p class="text-xs text-muted-foreground">Simple REST API with clear documentation</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.3s;">
-        <div class="px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center min-w-0 flex-1">
-                <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                    <i class="fas fa-chart-line text-black text-sm"></i>
+                <div class="flex items-start gap-4 step-item">
+                    <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">2</div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-sm text-foreground mb-1">Read the Docs</h4>
+                        <p class="text-xs text-muted-foreground">Check endpoint parameters, response format, and example usage.</p>
+                    </div>
                 </div>
-                <div class="flex flex-col min-w-0 flex-1">
-                    <h3 class="font-bold text-sm text-foreground truncate">Analytics</h3>
-                    <p class="text-xs text-muted-foreground">Detailed usage analytics and monitoring</p>
+
+                <div class="flex items-start gap-4 step-item">
+                    <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">3</div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-sm text-foreground mb-1">Make Your Request</h4>
+                        <p class="text-xs text-muted-foreground">Send HTTP requests and integrate the JSON response into your app.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="my-8"></div>
-<div class="bg-card border-default p-6 mb-6 rounded-none animate-on-scroll">
-    <h3 class="flex items-center gap-2 font-bold text-lg text-foreground mb-5">
-        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
-        Getting Started
-    </h3>
-
-    <div class="space-y-4">
-        <div class="flex items-start gap-4 step-item">
-            <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">1</div>
-            <div class="flex-1">
-                <h4 class="font-bold text-sm text-foreground mb-1">Choose Your Category</h4>
-                <p class="text-xs text-muted-foreground">Browse through available API categories on sidebar and select what you need.</p>
-            </div>
+        <div class="flex flex-col mt-10 text-center space-y-2 animate-on-scroll">
+          <p class="text-muted-foreground" style="font-size: 0.7rem; line-height: 1rem;">
+            © <span id="year"></span> Zaxius APIs — All Rights Reserved.
+          </p>
+          <p class="text-muted-foreground space-x-3" style="font-size: 0.7rem; line-height: 1rem;">
+            <a href="/privacy-policy" class="hover:underline hover:text-black">Privacy Policy</a>
+            <span aria-hidden="true">|</span>
+            <a href="/terms-of-service" class="hover:underline hover:text-black">Terms of Service</a>
+          </p>
         </div>
-
-        <div class="flex items-start gap-4 step-item">
-            <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">2</div>
-            <div class="flex-1">
-                <h4 class="font-bold text-sm text-foreground mb-1">Read the Docs</h4>
-                <p class="text-xs text-muted-foreground">Check endpoint parameters, response format, and example usage.</p>
-            </div>
-        </div>
-
-        <div class="flex items-start gap-4 step-item">
-            <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">3</div>
-            <div class="flex-1">
-                <h4 class="font-bold text-sm text-foreground mb-1">Make Your Request</h4>
-                <p class="text-xs text-muted-foreground">Send HTTP requests and integrate the JSON response into your app.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="flex flex-col mt-10 text-center space-y-2 animate-on-scroll">
-  <p class="text-muted-foreground" style="font-size: 0.7rem; line-height: 1rem;">
-    © <span id="year"></span> Zaxius APIs — All Rights Reserved.
-  </p>
-  <p class="text-muted-foreground space-x-3" style="font-size: 0.7rem; line-height: 1rem;">
-    <a href="/privacy-policy" class="hover:underline hover:text-black">Privacy Policy</a>
-    <span aria-hidden="true">|</span>
-    <a href="/terms-of-service" class="hover:underline hover:text-black">Terms of Service</a>
-  </p>
-</div>
     </main>
 
     <script>
