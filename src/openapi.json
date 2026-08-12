@@ -16,6 +16,7 @@
     { "name": "Search" },
     { "name": "Image" },
     { "name": "Maker" },
+    { "name": "Tools" },
     { "name": "Stalker" },
     { "name": "News" }
   ],
@@ -456,6 +457,40 @@
         }
       },
       "400": { "description": "Parameter 'text' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
+    "/tools/ssweb": {
+  "get": {
+    "summary": "Screenshot Web FullPage",
+    "description": "Mengambil screenshot halaman web secara penuh (full page)",
+    "tags": ["Tools"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL website yang ingin di-screenshot (contoh: https://google.com)",
+        "schema": {
+          "type": "string",
+          "example": "https://google.com"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mengambil screenshot web",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter 'url' tidak diisi" },
       "500": { "description": "Gagal memproses request" }
     }
   }
