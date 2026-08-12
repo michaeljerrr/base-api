@@ -15,6 +15,7 @@
     { "name": "Downloader" },
     { "name": "Search" },
     { "name": "Image" },
+    { "name": "Maker" },
     { "name": "Stalker" },
     { "name": "News" }
   ],
@@ -425,6 +426,40 @@
         }
       }
     },
+    "/maker/brat": {
+  "get": {
+    "summary": "Brat Generator",
+    "description": "Membuat gambar teks berlayar putih ala gaya Brat",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "text",
+        "in": "query",
+        "required": true,
+        "description": "Teks yang ingin dijadikan gambar Brat",
+        "schema": {
+          "type": "string",
+          "example": "Zaxius API"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil menghasilkan gambar Brat",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter 'text' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
     "/stalker/pinterest": {
   "get": {
     "summary": "Pinterest Profile Stalker",
