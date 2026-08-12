@@ -13,8 +13,9 @@
     { "name": "AI" },
     { "name": "Anime" },
     { "name": "Downloader" },
-     { "name": "Search" },
+    { "name": "Search" },
     { "name": "Image" },
+    { "name": "Stalker" },
     { "name": "News" }
   ],
   "paths": {
@@ -424,6 +425,30 @@
         }
       }
     },
+    "/stalker/pinterest": {
+  "get": {
+    "summary": "Pinterest Profile Stalker",
+    "description": "Menganalisis dan mengambil profil Pinterest pengguna",
+    "tags": ["Stalker"],
+    "parameters": [
+      {
+        "name": "username",
+        "in": "query",
+        "required": true,
+        "description": "Username Pinterest yang ingin di-stalk",
+        "schema": {
+          "type": "string",
+          "example": "yuliii___"
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan data profil" },
+      "400": { "description": "Parameter 'username' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
     "/news/detik": {
       "get": {
         "summary": "Detik News",
