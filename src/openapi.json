@@ -439,7 +439,7 @@
         "description": "Teks yang ingin dijadikan gambar Brat",
         "schema": {
           "type": "string",
-          "example": "Zaxius API"
+          "example": "Hello Dunia"
         }
       }
     ],
