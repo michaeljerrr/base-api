@@ -27,6 +27,7 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -54,6 +55,31 @@
             --radius: 0.5rem;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.12);
+            --spotlight-color: rgba(52, 152, 219, 0.08);
+            --badge-bg: #000000;
+            --badge-text: #ffffff;
+            --icon-color: #000000;
+        }
+
+        /* Penambahan Variabel Warna Dark Mode */
+        body.dark {
+            --background: #0f172a;
+            --foreground: #f8fafc;
+            --card: #1e293b;
+            --card-foreground: #f8fafc;
+            --primary: #38bdf8;
+            --primary-foreground: #0f172a;
+            --secondary: #0284c7;
+            --accent: #38bdf8;
+            --muted: #334155;
+            --muted-foreground: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.5);
+            --spotlight-color: rgba(56, 189, 248, 0.06);
+            --badge-bg: #ffffff;
+            --badge-text: #000000;
+            --icon-color: #ffffff;
         }
 
         body {
@@ -62,6 +88,7 @@
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         #mouse-spotlight {
@@ -72,7 +99,7 @@
             height: 100%;
             pointer-events: none;
             z-index: -1;
-            background: radial-gradient(600px circle at 0px 0px, rgba(52, 152, 219, 0.08), transparent 80%);
+            background: radial-gradient(600px circle at 0px 0px, var(--spotlight-color), transparent 80%);
             transition: background 0.1s ease-out;
         }
 
@@ -80,6 +107,7 @@
             background-color: var(--card) !important;
             border-color: var(--border) !important;
             box-shadow: var(--shadow);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .bg-card-hover:hover {
@@ -173,7 +201,11 @@
         }
 
         .feature-icon {
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            border-color: var(--icon-color) !important;
+        }
+        .feature-icon i {
+            color: var(--icon-color) !important;
         }
         .bg-card-hover:hover .feature-icon {
             transform: scale(1.1) rotate(-5deg);
@@ -198,10 +230,28 @@
         }
         .step-number {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-color: var(--icon-color) !important;
+            color: var(--icon-color) !important;
         }
         .step-item:hover .step-number {
              transform: scale(1.1);
              box-shadow: var(--shadow);
+        }
+
+        /* Styling Tambahan Penyesuaian Dark Mode */
+        .dynamic-badge {
+            background-color: var(--badge-bg) !important;
+            color: var(--badge-text) !important;
+        }
+        .dynamic-title {
+            color: var(--foreground) !important;
+        }
+        .dynamic-btn {
+            background-color: var(--badge-bg) !important;
+            color: var(--badge-text) !important;
+        }
+        .dynamic-icon {
+            color: var(--icon-color) !important;
         }
     </style>
 </head>
@@ -215,7 +265,13 @@
     <header class="sticky top-0 z-40 bg-card border-b py-5">
         <div class="max-w-2xl mx-auto px-8 flex justify-between items-center">
             <div class="flex items-center"></div>
-            <div class="flex items-center space-x-4"></div>
+            <!-- Penambahan Tombol Switch Dark Mode / Light Mode -->
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" type="button" class="p-2 text-sm text-muted-foreground hover:text-foreground border border-default rounded-md focus:outline-none transition-colors duration-200">
+                    <i id="theme-toggle-dark-icon" class="fas font-solid fa-moon hidden"></i>
+                    <i id="theme-toggle-light-icon" class="fas font-solid fa-sun hidden"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -229,15 +285,15 @@
             </div>
 
             <h2 class="flex flex-wrap items-center gap-1 text-3xl text-foreground font-bold mb-1.5 animate-on-load" style="animation-delay: 0.2s;">
-                <span class="flex-grow text-black">Zaxius APIs</span>
-                <span class="text-xs font-bold text-white bg-black px-3 py-1 whitespace-nowrap">
+                <span class="flex-grow dynamic-title">Zaxius APIs</span>
+                <span class="text-xs font-bold dynamic-badge px-3 py-1 whitespace-nowrap">
                     v1.0
                 </span>
             </h2>
             <p class="text-muted-foreground text-xs mx-auto mb-4 animate-on-load" style="animation-delay: 0.3s;">Powerful API platform for modern applications</p>
 
             <div class="mb-4 animate-on-load" style="animation-delay: 0.4s;">
-                <a href="/docs" class="inline-block bg-black text-white px-6 py-2 rounded text-sm font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                <a href="/docs" class="inline-block dynamic-btn px-6 py-2 rounded text-sm font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                     <i class="fas fa-rocket mr-2"></i>Explore Docs
                 </a>
             </div>
@@ -309,8 +365,8 @@
             <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll">
                 <div class="px-4 py-4 flex items-center justify-between">
                     <div class="flex items-center min-w-0 flex-1">
-                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                            <i class="fas fa-bolt text-black text-sm"></i>
+                        <div class="feature-icon border-2 w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-bolt text-sm"></i>
                         </div>
                         <div class="flex flex-col min-w-0 flex-1">
                             <h3 class="font-bold text-sm text-foreground truncate">Fast & Reliable</h3>
@@ -323,8 +379,8 @@
             <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.1s;">
                 <div class="px-4 py-4 flex items-center justify-between">
                     <div class="flex items-center min-w-0 flex-1">
-                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                            <i class="fas fa-shield-alt text-black text-sm"></i>
+                        <div class="feature-icon border-2 w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-shield-alt text-sm"></i>
                         </div>
                         <div class="flex flex-col min-w-0 flex-1">
                             <h3 class="font-bold text-sm text-foreground truncate">Secure</h3>
@@ -337,8 +393,8 @@
             <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.2s;">
                 <div class="px-4 py-4 flex items-center justify-between">
                     <div class="flex items-center min-w-0 flex-1">
-                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                            <i class="fas fa-code text-black text-sm"></i>
+                        <div class="feature-icon border-2 w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-code text-sm"></i>
                         </div>
                         <div class="flex flex-col min-w-0 flex-1">
                             <h3 class="font-bold text-sm text-foreground truncate">Easy Integration</h3>
@@ -351,8 +407,8 @@
             <div class="bg-card border-default bg-card-hover transition-all duration-300 rounded-none animate-on-scroll" style="--delay: 0.3s;">
                 <div class="px-4 py-4 flex items-center justify-between">
                     <div class="flex items-center min-w-0 flex-1">
-                        <div class="feature-icon border-2 border-black w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
-                            <i class="fas fa-chart-line text-black text-sm"></i>
+                        <div class="feature-icon border-2 w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4">
+                            <i class="fas fa-chart-line text-sm"></i>
                         </div>
                         <div class="flex flex-col min-w-0 flex-1">
                             <h3 class="font-bold text-sm text-foreground truncate">Analytics</h3>
@@ -366,7 +422,7 @@
         <div class="my-8"></div>
         <div class="bg-card border-default p-6 mb-6 rounded-none animate-on-scroll">
             <h3 class="flex items-center gap-2 font-bold text-lg text-foreground mb-5">
-                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 dynamic-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                 </svg>
                 Getting Started
@@ -374,7 +430,7 @@
 
             <div class="space-y-4">
                 <div class="flex items-start gap-4 step-item">
-                    <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">1</div>
+                    <div class="step-number border-2 border-dashed w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">1</div>
                     <div class="flex-1">
                         <h4 class="font-bold text-sm text-foreground mb-1">Choose Your Category</h4>
                         <p class="text-xs text-muted-foreground">Browse through available API categories on sidebar and select what you need.</p>
@@ -382,7 +438,7 @@
                 </div>
 
                 <div class="flex items-start gap-4 step-item">
-                    <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">2</div>
+                    <div class="step-number border-2 border-dashed w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">2</div>
                     <div class="flex-1">
                         <h4 class="font-bold text-sm text-foreground mb-1">Read the Docs</h4>
                         <p class="text-xs text-muted-foreground">Check endpoint parameters, response format, and example usage.</p>
@@ -390,7 +446,7 @@
                 </div>
 
                 <div class="flex items-start gap-4 step-item">
-                    <div class="step-number border-2 border-dashed border-black text-black w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">3</div>
+                    <div class="step-number border-2 border-dashed w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-sm rounded-none">3</div>
                     <div class="flex-1">
                         <h4 class="font-bold text-sm text-foreground mb-1">Make Your Request</h4>
                         <p class="text-xs text-muted-foreground">Send HTTP requests and integrate the JSON response into your app.</p>
@@ -404,9 +460,9 @@
             © <span id="year"></span> Zaxius APIs — All Rights Reserved.
           </p>
           <p class="text-muted-foreground space-x-3" style="font-size: 0.7rem; line-height: 1rem;">
-            <a href="/privacy-policy" class="hover:underline hover:text-black">Privacy Policy</a>
+            <a href="/privacy-policy" class="hover:underline hover:text-foreground">Privacy Policy</a>
             <span aria-hidden="true">|</span>
-            <a href="/terms-of-service" class="hover:underline hover:text-black">Terms of Service</a>
+            <a href="/terms-of-service" class="hover:underline hover:text-foreground">Terms of Service</a>
           </p>
         </div>
     </main>
@@ -421,7 +477,9 @@
             const spotlight = document.getElementById('mouse-spotlight');
             if (spotlight) {
                 document.addEventListener('mousemove', (e) => {
-                    spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(52, 152, 219, 0.08), transparent 80%)`;
+                    const isDark = document.body.classList.contains('dark');
+                    const color = isDark ? 'rgba(56, 189, 248, 0.06)' : 'rgba(52, 152, 219, 0.08)';
+                    spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, ${color}, transparent 80%)`;
                 });
             }
 
@@ -458,6 +516,37 @@
                         });
                     }
                 });
+            });
+
+            // Penambahan JavaScript Logika Dark Mode / Light Mode
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+            const themeToggleBtn = document.getElementById('theme-toggle');
+
+            // Cek tema awal dari LocalStorage atau Preferensi Sistem OS
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark');
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                document.body.classList.remove('dark');
+                document.documentElement.classList.remove('dark');
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                if (document.body.classList.contains('dark')) {
+                    document.body.classList.remove('dark');
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.body.classList.add('dark');
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
             });
         });
     </script>
