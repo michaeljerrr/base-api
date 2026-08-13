@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/json.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/javascript.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -46,38 +48,6 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
         
-        .loader {
-            width: 28px;
-            height: 28px;
-            border: 2px solid #e2e8f0;
-            border-top: 2px solid #4a5568;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #334155 0%, #0f172a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .btn-gradient {
-            background: linear-gradient(135deg, #e2e8f0 0%, #4a5568 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-gradient:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 25px -5px rgba(235, 235, 235, 0.4);
-        }
-        
         .copy-btn {
             @apply text-gray-500 hover:text-black dark:hover:text-white p-1 rounded-md hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-150;
         }
@@ -87,37 +57,37 @@
         }
         
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(5px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .will-fade-in {
-            opacity: 0;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
+        .will-fade-in { opacity: 0; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         
         @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: scale(0.98);
-            }
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.98); }
         }
         
-        .fade-out {
-            animation: fadeOut 0.2s ease-out forwards;
+        .fade-out { animation: fadeOut 0.2s ease-out forwards; }
+
+        /* Skeleton Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        html.dark .skeleton {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .tab-active {
+            @apply bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 font-bold;
         }
     </style>
 </head>
@@ -153,7 +123,7 @@
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 opacity-0 invisible duration-300 ease-in-out z-[90]"></div>
 
-    <!-- HEADER TUNGGAL -->
+    <!-- HEADER -->
     <header class="glass sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800">
         <div class="max-w-2xl mx-auto px-8 py-4 flex items-center justify-between">
             <div class="flex gap-4 items-center">
@@ -167,7 +137,6 @@
             </div>
             
             <div class="flex items-center space-x-2">
-                <!-- Toggle Dark Mode Button -->
                 <button id="themeToggle" class="py-2 px-3 text-sm border border-gray-200 dark:border-slate-700 text-gray-500 dark:text-slate-300 hover:border-gray-600 flex items-center justify-center">
                     <i id="themeToggleDarkIcon" class="material-icons text-xl hidden">dark_mode</i>
                     <i id="themeToggleLightIcon" class="material-icons text-xl hidden">light_mode</i>
@@ -197,19 +166,31 @@
                 <span id="unread-count" class="text-xs font-bold bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white px-2 py-0.5 rounded-full hidden">0</span>
             </div>
             <div id="notifications-list" class="space-y-2">
-                <div class="p-4 text-center text-xs text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800">
-                    Memuat informasi...
+                <!-- Skeleton Loading Notification -->
+                <div class="p-4 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 space-y-2">
+                    <div class="h-3 w-1/3 skeleton rounded"></div>
+                    <div class="h-2 w-3/4 skeleton rounded"></div>
                 </div>
             </div>
         </div>
 
-        <!-- SEARCH INPUT -->
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex-1 relative">
+        <!-- SEARCH INPUT & QUICK FILTERS -->
+        <div class="mb-6 space-y-3">
+            <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                     <span class="material-icons text-gray-400 text-lg">search</span>
                 </div>
                 <input type="text" id="searchInput" placeholder="Search API endpoints..." class="w-full pl-12 pr-5 py-4 text-sm border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-gray-600">
+            </div>
+
+            <!-- Quick Filter Tags -->
+            <div class="flex items-center gap-1.5 overflow-x-auto py-1 text-xs" id="quickFilters">
+                <span class="text-slate-400 text-[10px] uppercase font-bold mr-1 flex items-center"><i class="material-icons text-xs mr-1">filter_list</i> Tags:</span>
+                <button onclick="applyQuickFilter('')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">ALL</button>
+                <button onclick="applyQuickFilter('tools')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">TOOLS</button>
+                <button onclick="applyQuickFilter('stalker')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">STALKER</button>
+                <button onclick="applyQuickFilter('news')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">NEWS</button>
+                <button onclick="applyQuickFilter('ai')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">AI</button>
             </div>
         </div>
 
@@ -222,7 +203,12 @@
             </div>
 
             <div id="apiList" class="space-y-3">
-                <!-- API list akan terload dinamis di sini -->
+                <!-- Skeleton Loading API List -->
+                <div class="p-4 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 space-y-3">
+                    <div class="h-4 w-1/4 skeleton rounded"></div>
+                    <div class="h-8 w-full skeleton rounded"></div>
+                    <div class="h-8 w-full skeleton rounded"></div>
+                </div>
             </div>
         </div>
 
@@ -273,7 +259,7 @@
             }
         }
 
-        function hlJSON(el) {
+        function hlHighlight(el) {
             if (window.hljs) hljs.highlightElement(el);
         }
 
@@ -291,6 +277,53 @@
             icon.textContent = isHidden ? 'expand_more' : 'expand_less';
         }
 
+        // Quick Filter Function
+        function applyQuickFilter(query) {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = query;
+            searchInput.dispatchEvent(new Event('input'));
+        }
+
+        // Snippet Switcher Generator
+        function generateCodeSnippets(method, fullUrl, formData) {
+            const url = `${window.location.origin}${fullUrl}`;
+            
+            // cURL
+            let curl = `curl -X ${method} "${url}"`;
+            
+            // JavaScript Fetch
+            let js = `fetch("${url}", {\n  method: "${method}"\n})`;
+            
+            // Python Requests
+            let py = `import requests\n\nresponse = requests.${method.toLowerCase()}("${url}")\nprint(response.json())`;
+
+            // Node.js Axios
+            let node = `const axios = require('axios');\n\naxios.${method.toLowerCase()}('${url}')\n  .then(res => console.log(res.data))\n  .catch(err => console.error(err));`;
+
+            return { curl, js, py, node };
+        }
+
+        function switchSnippetTab(catIndex, endpointIndex, lang) {
+            const snippetBox = document.getElementById(`snippet-code-${catIndex}-${endpointIndex}`);
+            const tabs = document.querySelectorAll(`.tab-btn-${catIndex}-${endpointIndex}`);
+            
+            tabs.forEach(tab => tab.classList.remove('tab-active'));
+            document.getElementById(`tab-${lang}-${catIndex}-${endpointIndex}`).classList.add('tab-active');
+
+            const codeData = snippetBox.dataset;
+            let codeText = '';
+            let langClass = 'language-bash';
+
+            if (lang === 'curl') { codeText = codeData.curl; langClass = 'language-bash'; }
+            else if (lang === 'js') { codeText = codeData.js; langClass = 'language-javascript'; }
+            else if (lang === 'py') { codeText = codeData.py; langClass = 'language-python'; }
+            else if (lang === 'node') { codeText = codeData.node; langClass = 'language-javascript'; }
+
+            snippetBox.className = langClass;
+            snippetBox.textContent = codeText;
+            hlHighlight(snippetBox);
+        }
+
         // Execute API Request
         async function executeRequest(event, catIndex, endpointIndex, method, path) {
             event.preventDefault();
@@ -305,17 +338,9 @@
             const fetchOptions = { method: method.toUpperCase() };
 
             let fullPath = path;
-            let curlCommand = `curl -X ${fetchOptions.method} "${window.location.origin}${path}"`;
 
             if (['POST', 'PUT', 'PATCH'].includes(fetchOptions.method)) {
                 fetchOptions.body = formData;
-                for (const [key, value] of formData.entries()) {
-                    if (value instanceof File && value.name) {
-                        curlCommand += ` -F "${key}=@${value.name}"`;
-                    } else if (typeof value === 'string') {
-                        curlCommand += ` -F "${key}=${value}"`;
-                    }
-                }
             } else {
                 const params = new URLSearchParams();
                 for (const [key, value] of formData.entries()) {
@@ -327,34 +352,37 @@
                 if (queryString) {
                     fullPath += (path.includes('?') ? '&' : '?') + queryString;
                 }
-                curlCommand = `curl -X ${fetchOptions.method} "${window.location.origin}${fullPath}"`;
             }
 
-            const escapedFullPath = fullPath.replace(/"/g, '&quot;').replace(/'/g, "'");
+            const snippets = generateCodeSnippets(fetchOptions.method, fullPath, formData);
 
             responseContent.innerHTML = `
                 <div class="space-y-4">
                     <div>
                         <h4 class="block-title">
-                            <span><span class="material-icons text-sm mr-2 align-middle">link</span>REQUEST URL</span>
-                            <button onclick="copyToClipboard('${window.location.origin}${escapedFullPath}', this)" class="copy-btn"><span class="material-icons text-base align-middle">content_copy</span></button>
+                            <span><span class="material-icons text-sm mr-2 align-middle">code</span>CODE SNIPPETS</span>
+                            <button onclick="copyToClipboard(document.getElementById('snippet-code-${catIndex}-${endpointIndex}').innerText, this)" class="copy-btn"><span class="material-icons text-base align-middle">content_copy</span></button>
                         </h4>
-                        <pre class="bg-gray-900 text-white p-2 text-xs overflow-auto"><code>${window.location.origin}${fullPath}</code></pre>
+                        <!-- Snippet Tabs -->
+                        <div class="flex items-center gap-1 mb-2 text-[11px] border-b border-gray-700">
+                            <button type="button" id="tab-curl-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'curl')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 border-t border-x border-gray-700 tab-active">cURL</button>
+                            <button type="button" id="tab-js-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'js')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 border-t border-x border-gray-700">JS Fetch</button>
+                            <button type="button" id="tab-py-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'py')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 border-t border-x border-gray-700">Python</button>
+                            <button type="button" id="tab-node-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'node')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 border-t border-x border-gray-700">Node.js</button>
+                        </div>
+                        <pre class="bg-gray-900 text-white p-2 text-xs overflow-auto"><code id="snippet-code-${catIndex}-${endpointIndex}" class="language-bash" data-curl="${snippets.curl.replace(/"/g, '&quot;')}" data-js="${snippets.js.replace(/"/g, '&quot;')}" data-py="${snippets.py.replace(/"/g, '&quot;')}" data-node="${snippets.node.replace(/"/g, '&quot;')}">${snippets.curl}</code></pre>
                     </div>
-                    <div>
-                        <h4 class="block-title">
-                            <span><span class="material-icons text-sm mr-2 align-middle">terminal</span>CURL COMMAND</span>
-                            <button onclick="copyToClipboard(this.parentElement.nextElementSibling.innerText, this)" class="copy-btn"><span class="material-icons text-base align-middle">content_copy</span></button>
-                        </h4>
-                        <pre class="bg-gray-900 text-white p-2 text-xs overflow-auto"><code>${curlCommand}</code></pre>
-                    </div>
+
                     <div>
                         <h4 class="block-title">
                              <span><span class="material-icons text-sm mr-2 align-middle">storage</span>SERVER RESPONSE</span>
                              <button onclick="copyToClipboard(document.getElementById('response-body-${catIndex}-${endpointIndex}').innerText, this)" class="copy-btn"><span class="material-icons text-base align-middle">content_copy</span></button>
                         </h4>
                         <div id="response-body-${catIndex}-${endpointIndex}" class="bg-gray-900 text-white p-2 text-xs">
-                            Loading...
+                            <div class="p-2 space-y-2">
+                                <div class="h-3 w-1/3 skeleton rounded"></div>
+                                <div class="h-3 w-2/3 skeleton rounded"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -375,7 +403,7 @@
                 if (contentType.includes('application/json')) {
                     const data = await response.json();
                     responseBodyContent = `<pre class="max-h-80 overflow-auto"><code class="language-json">${JSON.stringify(data, null, 2)}</code></pre>`;
-                    setTimeout(() => hlJSON(responseBodyDiv.querySelector('code')), 0);
+                    setTimeout(() => hlHighlight(responseBodyDiv.querySelector('code')), 0);
                 } else if (contentType.startsWith('image/')) {
                     const blob = await response.blob();
                     const imageUrl = URL.createObjectURL(blob);
@@ -640,10 +668,6 @@
 
                         html += `
                                     <div id="response-${catIndex}-${endpointIndex}" class="hidden mt-4">
-                                        <div class="text-gray-700 dark:text-slate-300 font-bold text-xs mb-2 flex items-center">
-                                            <span class="material-icons text-sm mr-1">code</span>
-                                            RESPONSE
-                                        </div>
                                         <div id="response-content-${catIndex}-${endpointIndex}" class="bg-gray-50 dark:bg-slate-900 text-xs p-4 border border-gray-200 dark:border-slate-800"></div>
                                     </div>
 
@@ -883,8 +907,9 @@
                 const path = item.dataset.path.toLowerCase();
                 const alias = item.dataset.alias.toLowerCase();
                 const description = item.dataset.description.toLowerCase();
+                const category = item.dataset.category.toLowerCase();
 
-                if (path.includes(searchTerm) || alias.includes(searchTerm) || description.includes(searchTerm)) {
+                if (path.includes(searchTerm) || alias.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
                     item.style.display = '';
                     visibleCount++;
                 } else {
