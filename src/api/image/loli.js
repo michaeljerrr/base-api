@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 module.exports = function (app) {
-  app.get("/anime/waifu", async (req, res) => {
+  app.get("/image/loli", async (req, res) => {
     try {
       // Ambil data JSON dari API waifu.pics
       const { data } = await axios.get("https://api.nexray.eu.cc/random/loli");
