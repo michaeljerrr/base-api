@@ -45,6 +45,40 @@
     }
   }
 },
+    "/ai/feelbetter": {
+  "get": {
+    "summary": "FeelBetterBot AI Chat",
+    "description": "Kirim percakapan ke FeelBetterBot AI dengan kustomisasi pesan/system prompt",
+    "tags": ["AI"],
+    "parameters": [
+      {
+        "name": "message",
+        "in": "query",
+        "required": true,
+        "description": "Pesan atau pertanyaan dari user",
+        "schema": {
+          "type": "string",
+          "example": "Hi, I feel tired today"
+        }
+      },
+      {
+        "name": "system",
+        "in": "query",
+        "required": false,
+        "description": "Instruksi/peran AI (opsional, jika kosong akan menggunakan default FeelBetterBot)",
+        "schema": {
+          "type": "string",
+          "example": "Kamu adalah asisten ramah berbahasa Indonesia."
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan respon dari FeelBetterBot AI" },
+      "400": { "description": "Parameter 'message' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+    },
     "/anime/waifu": {
       "get": {
         "summary": "Waifu",
