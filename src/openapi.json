@@ -325,32 +325,26 @@
       }
     },
     "/image/loli": {
-      "get": {
-        "summary": "loli",
-        "description": "Loli Random Images",
-        "tags": ["Image"],
-        "responses": {
-          "200": {
-            "description": "Respon berhasil",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "images": {
-                      "type": "array",
-                      "items": { "type": "string", "format": "uri" }
-                    }
-                  }
-                }
-              }
+  "get": {
+    "summary": "Random loli",
+    "description": "Loli image",
+    "tags": ["Image"],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan gambar loli",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
             }
-          },
-          "500": { "description": "Gagal memproses request" }
+          }
         }
-      }
-    },
+      },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
     "/image/mpls": {
       "get": {
         "summary": "Mpls Generator",
