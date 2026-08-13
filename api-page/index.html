@@ -284,10 +284,15 @@
                 <img src="https://apizaxius.vercel.app/src/banner.jpg" alt="Zaxius APIs Banner" class="w-full h-auto object-cover block">
             </div>
 
-            <h2 class="flex flex-wrap items-center gap-1 text-3xl text-foreground font-bold mb-1.5 animate-on-load" style="animation-delay: 0.2s;">
-                <span class="flex-grow dynamic-title">Zaxius APIs</span>
+            <h2 class="flex flex-wrap items-center gap-2 text-3xl text-foreground font-bold mb-1.5 animate-on-load" style="animation-delay: 0.2s;">
+                <span class="dynamic-title">Zaxius APIs</span>
                 <span class="text-xs font-bold dynamic-badge px-3 py-1 whitespace-nowrap">
                     v1.0
+                </span>
+                <!-- FITUR TAMBAHAN 1: Live Status Indicator -->
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                    <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                    Operational
                 </span>
             </h2>
             <p class="text-muted-foreground text-xs mx-auto mb-4 animate-on-load" style="animation-delay: 0.3s;">Powerful API platform for modern applications</p>
@@ -419,6 +424,23 @@
             </div>
         </div>
 
+        <!-- FITUR TAMBAHAN 2: Quick Code Preview Section -->
+        <div class="my-6 bg-card border-default p-4 animate-on-scroll">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-bold text-foreground flex items-center gap-2">
+                    <i class="fas fa-terminal text-primary"></i> Example Response
+                </span>
+                <span class="text-[10px] text-muted-foreground font-mono">JSON</span>
+            </div>
+            <pre class="bg-slate-900 text-emerald-400 p-3 rounded text-xs font-mono overflow-x-auto border border-slate-800"><code>{
+  "status": true,
+  "creator": "Zaxius API",
+  "result": {
+    "message": "Welcome to Zaxius API Services!"
+  }
+}</code></pre>
+        </div>
+
         <div class="my-8"></div>
         <div class="bg-card border-default p-6 mb-6 rounded-none animate-on-scroll">
             <h3 class="flex items-center gap-2 font-bold text-lg text-foreground mb-5">
@@ -455,6 +477,23 @@
             </div>
         </div>
 
+        <!-- FITUR TAMBAHAN 3: FAQ Section -->
+        <div class="bg-card border-default p-6 mb-6 rounded-none animate-on-scroll">
+            <h3 class="flex items-center gap-2 font-bold text-lg text-foreground mb-4">
+                <i class="fas fa-question-circle text-primary text-base"></i> Frequently Asked Questions
+            </h3>
+            <div class="space-y-3 text-xs">
+                <div class="border-b border-default pb-2">
+                    <p class="font-bold text-foreground mb-1">Q: Apakah API ini gratis digunakan?</p>
+                    <p class="text-muted-foreground">A: Ya, endpoint publik dapat diakses secara gratis oleh developer.</p>
+                </div>
+                <div class="border-b border-default pb-2">
+                    <p class="font-bold text-foreground mb-1">Q: Bagaimana cara menguji endpoint-nya?</p>
+                    <p class="text-muted-foreground">A: Kamu bisa langsung mencoba fitur 'Try It Out' interaktif di halaman Explore Docs.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="flex flex-col mt-10 text-center space-y-2 animate-on-scroll">
           <p class="text-muted-foreground" style="font-size: 0.7rem; line-height: 1rem;">
             © <span id="year"></span> Zaxius APIs — All Rights Reserved.
@@ -466,6 +505,11 @@
           </p>
         </div>
     </main>
+
+    <!-- FITUR TAMBAHAN 4: Floating Scroll To Top Button -->
+    <button id="scrollToTopBtn" type="button" class="fixed bottom-6 right-6 p-3 bg-card border border-default text-foreground rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:scale-110 z-50">
+        <i class="fas fa-arrow-up text-xs"></i>
+    </button>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -547,6 +591,23 @@
                     document.documentElement.classList.add('dark');
                     localStorage.setItem('color-theme', 'dark');
                 }
+            });
+
+            // LOGIKA TAMBAHAN: Scroll to Top Button
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                } else {
+                    scrollToTopBtn.classList.add('opacity-0', 'invisible');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
