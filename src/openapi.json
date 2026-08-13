@@ -226,6 +226,30 @@
         }
       }
     },
+    "/download/youtube": {
+  "get": {
+    "summary": "YouTube Downloader Fast",
+    "description": "Mengambil info dan link download video/audio YouTube via Clipto",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video YouTube yang ingin diunduh",
+        "schema": {
+          "type": "string",
+          "example": "https://youtu.be/M7y9sIvMGjw"
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan link download YouTube" },
+      "400": { "description": "Parameter 'url' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+    },
     "/search/lyrics": {
   "get": {
     "summary": "Lyrics Search",
