@@ -174,23 +174,13 @@
             </div>
         </div>
 
-        <!-- SEARCH INPUT & QUICK FILTERS -->
-        <div class="mb-6 space-y-3">
+        <!-- SEARCH INPUT -->
+        <div class="mb-6">
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                     <span class="material-icons text-gray-400 text-lg">search</span>
                 </div>
                 <input type="text" id="searchInput" placeholder="Search API endpoints..." class="w-full pl-12 pr-5 py-4 text-sm border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-gray-600">
-            </div>
-
-            <!-- Quick Filter Tags -->
-            <div class="flex items-center gap-1.5 overflow-x-auto py-1 text-xs" id="quickFilters">
-                <span class="text-slate-400 text-[10px] uppercase font-bold mr-1 flex items-center"><i class="material-icons text-xs mr-1">filter_list</i> Tags:</span>
-                <button onclick="applyQuickFilter('')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">ALL</button>
-                <button onclick="applyQuickFilter('tools')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">TOOLS</button>
-                <button onclick="applyQuickFilter('stalker')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">STALKER</button>
-                <button onclick="applyQuickFilter('news')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">NEWS</button>
-                <button onclick="applyQuickFilter('ai')" class="quick-tag-btn px-2.5 py-1 border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-600 transition-colors">AI</button>
             </div>
         </div>
 
@@ -277,15 +267,8 @@
             icon.textContent = isHidden ? 'expand_more' : 'expand_less';
         }
 
-        // Quick Filter Function
-        function applyQuickFilter(query) {
-            const searchInput = document.getElementById('searchInput');
-            searchInput.value = query;
-            searchInput.dispatchEvent(new Event('input'));
-        }
-
         // Snippet Switcher Generator
-        function generateCodeSnippets(method, fullUrl, formData) {
+        function generateCodeSnippets(method, fullUrl) {
             const url = `${window.location.origin}${fullUrl}`;
             
             // cURL
@@ -354,7 +337,7 @@
                 }
             }
 
-            const snippets = generateCodeSnippets(fetchOptions.method, fullPath, formData);
+            const snippets = generateCodeSnippets(fetchOptions.method, fullPath);
 
             responseContent.innerHTML = `
                 <div class="space-y-4">
