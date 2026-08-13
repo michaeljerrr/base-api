@@ -251,7 +251,7 @@
     },
     "/download/youtube": {
   "get": {
-    "summary": "YouTube Downloader Fast",
+    "summary": "YouTube Downloader",
     "description": "Mengambil info dan link download video/audio YouTube via Clipto",
     "tags": ["Downloader"],
     "parameters": [
@@ -508,6 +508,40 @@
     }
   }
 },
+    "/maker/fakedana": {
+  "get": {
+    "summary": "Fake DANA Generator",
+    "description": "Membuat gambar tampilan saldo DANA palsu berdasarkan nominal yang ditentukan",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "nominal",
+        "in": "query",
+        "required": true,
+        "description": "Nominal saldo DANA yang ingin ditampilkan (contoh: 10000)",
+        "schema": {
+          "type": "string",
+          "example": "10000"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil menghasilkan gambar Fake DANA",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter 'nominal' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+    },
     "/tools/ssweb": {
   "get": {
     "summary": "Screenshot Web FullPage",
