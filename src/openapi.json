@@ -21,7 +21,30 @@
     { "name": "News" }
   ],
   "paths": {
-
+"/ai/quillbot": {
+  "get": {
+    "summary": "QuillBot AI Chat",
+    "description": "Kirim pertanyaan atau percakapan ke QuillBot AI Chat",
+    "tags": ["AI"],
+    "parameters": [
+      {
+        "name": "message",
+        "in": "query",
+        "required": true,
+        "description": "Pesan atau pertanyaan yang ingin dikirim ke QuillBot AI",
+        "schema": {
+          "type": "string",
+          "example": "Hai perkenalkan dirimu"
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan jawaban dari QuillBot AI" },
+      "400": { "description": "Parameter 'message' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
     "/anime/waifu": {
       "get": {
         "summary": "Waifu",
