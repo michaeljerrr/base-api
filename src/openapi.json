@@ -252,7 +252,7 @@
     "/download/youtube": {
   "get": {
     "summary": "YouTube Downloader",
-    "description": "Mengambil info dan link download video/audio YouTube via Clipto",
+    "description": "Mengambil info dan link download video/audio YouTube",
     "tags": ["Downloader"],
     "parameters": [
       {
@@ -273,10 +273,34 @@
     }
   }
     },
+    "/download/instagram": {
+  "get": {
+    "summary": "Instagram Downloader",
+    "description": "Mengambil video dan thumbnail Instagram",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video/reel Instagram yang ingin diunduh",
+        "schema": {
+          "type": "string",
+          "example": "https://www.instagram.com/reel/DarifkCPcVA/"
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan media Instagram" },
+      "400": { "description": "Parameter 'url' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+    },
     "/search/lyrics": {
   "get": {
     "summary": "Lyrics Search",
-    "description": "Mencari lirik lagu berdasarkan kueri dari Lyrics.com",
+    "description": "Mencari lirik lagu",
     "tags": ["Search"],
     "parameters": [
       {
