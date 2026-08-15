@@ -16,7 +16,6 @@
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.19",
-    "iqc-canvas": "latest"
     "dotenv": "^16.3.1",
     "express": "^4.19.2",
     "express-fileupload": "^1.5.2",
