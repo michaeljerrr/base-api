@@ -39,15 +39,15 @@ module.exports = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      status: true,
-      result: data
+    return res.status(400).json({
+      status: false,
+      message: "Gagal mengambil media Instagram."
     });
 
   } catch (error) {
     return res.status(500).json({
       status: false,
-      message: error.response?.data?.message || error.message || "Gagal mengunduh video Instagram"
+      message: error.response?.data?.message || error.message || "Gagal memproses request"
     });
   }
 };
