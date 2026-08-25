@@ -321,6 +321,41 @@
     }
   }
 },
+    "/search/pinterest": {
+  "get": {
+    "summary": "Pinterest Image Search",
+    "description": "Mencari gambar di Pinterest berdasarkan kata kunci",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci pencarian (contoh: cat, anime, landscape)",
+        "schema": {
+          "type": "string",
+          "example": "cat"
+        }
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "Jumlah gambar yang ingin diambil (default: 5)",
+        "schema": {
+          "type": "integer",
+          "default": 5,
+          "example": 5
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan daftar URL gambar Pinterest" },
+      "400": { "description": "Parameter 'q' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
     "/image/bluearchive": {
       "get": {
         "summary": "Blue Archive",
