@@ -55,7 +55,7 @@ async function sendLog({ ip, method, endpoint, status, query, duration }) {
                 { name: "Duration", value: `${duration ?? "-"}ms`, inline: true },
                 { name: "Time", value: new Date().toISOString() }
             ],
-            footer: { text: "Theresa API's Log System ✨" },
+            footer: { text: "Zaxius API's Log System ✨" },
             timestamp: new Date()
         }
     ];
