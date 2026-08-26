@@ -595,6 +595,40 @@
     }
   }
     },
+    "/maker/iqc": {
+  "get": {
+    "summary": "iPhone Fake Chat (IQC)",
+    "description": "Membuat gambar tampilan pesan gaya iPhone Fake Chat ",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "text",
+        "in": "query",
+        "required": true,
+        "description": "Teks pesan yang ingin ditampilkan pada gambar",
+        "schema": {
+          "type": "string",
+          "example": "halo"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil menghasilkan gambar IQC",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter 'text' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+    },
     "/tools/ssweb": {
   "get": {
     "summary": "Screenshot Web FullPage",
