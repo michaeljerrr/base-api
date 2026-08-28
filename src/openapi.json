@@ -561,6 +561,40 @@
     }
   }
 },
+      "/maker/brathd": {
+  "get": {
+    "summary": "Brat HD Generator",
+    "description": "Membuat gambar teks berlayar putih ala gaya Brat dengan kualitas HD",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "text",
+        "in": "query",
+        "required": true,
+        "description": "Teks yang ingin dijadikan gambar Brat HD",
+        "schema": {
+          "type": "string",
+          "example": "hai"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil menghasilkan gambar Brat HD",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter 'text' tidak diisi" },
+      "500": { "description": "Gagal memproses request" }
+    }
+  }
+},
     "/maker/fakedana": {
   "get": {
     "summary": "Fake DANA Generator",
@@ -629,40 +663,7 @@
     }
   }
     },
-    "/maker/brathd": {
-  "get": {
-    "summary": "Brat HD Generator",
-    "description": "Membuat gambar teks berlayar putih ala gaya Brat dengan kualitas HD",
-    "tags": ["Maker"],
-    "parameters": [
-      {
-        "name": "text",
-        "in": "query",
-        "required": true,
-        "description": "Teks yang ingin dijadikan gambar Brat HD",
-        "schema": {
-          "type": "string",
-          "example": "hai"
-        }
-      }
-    ],
-    "responses": {
-      "200": {
-        "description": "Berhasil menghasilkan gambar Brat HD",
-        "content": {
-          "image/png": {
-            "schema": {
-              "type": "string",
-              "format": "binary"
-            }
-          }
-        }
-      },
-      "400": { "description": "Parameter 'text' tidak diisi" },
-      "500": { "description": "Gagal memproses request" }
-    }
-  }
-},
+  
     "/tools/ssweb": {
   "get": {
     "summary": "Screenshot Web FullPage",
