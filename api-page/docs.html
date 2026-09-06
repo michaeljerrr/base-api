@@ -140,7 +140,7 @@
 
     <div id="mouse-spotlight"></div>
 
-    <!-- SIDEBAR DRAWER (NAVIGASI GARIS 3) -->
+    <!-- MAIN SIDEBAR DRAWER (NAVIGASI GARIS 3) -->
     <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 glass-card rounded-none border-r border-y-0 border-l-0 transform -translate-x-full duration-300 ease-in-out z-[100] flex flex-col shadow-2xl">
         <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -156,11 +156,11 @@
                 <div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Main Navigation</p>
                     <div class="space-y-2">
-                        <a href="/" class="flex items-center py-3 px-4 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm transition">
-                            <i class="material-icons text-base mr-3">api</i> API Documentation
-                        </a>
                         <a href="/" class="flex items-center py-3 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
                             <i class="material-icons text-base mr-3">dashboard</i> Dashboard
+                        </a>
+                        <a href="/docs" class="flex items-center py-3 px-4 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm transition">
+                            <i class="material-icons text-base mr-3">api</i> API Documentation
                         </a>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
             </nav>
         </div>
         <div class="p-6 border-t border-slate-200 dark:border-slate-800">
-            <p class="text-[10px] text-slate-400 text-center">Zaxius API Docs &copy; 2026</p>
+            <p class="text-[10px] text-slate-400 text-center">Zaxius API &copy; 2026</p>
         </div>
     </aside>
 
@@ -187,9 +187,8 @@
 
     <!-- HEADER NAVIGATION -->
     <header class="glass-header sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- NAVIGASI GARIS 3 (HAMBURGER) -->
                 <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition flex items-center justify-center">
                     <i class="material-icons text-xl block">menu</i>
                 </button>
@@ -218,60 +217,81 @@
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 py-8 space-y-6">
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- TWO COLUMN LAYOUT (SIDEBAR CATEGORIES + ENDPOINTS CONTENT) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        <!-- LAYOUT GRID BANNER & NOTIFIKASI -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <!-- BANNER HERO -->
-            <div class="md:col-span-7 overflow-hidden border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg bg-white dark:bg-slate-900 relative group flex items-center justify-center min-h-[160px]">
-                <img src="https://apizaxius.vercel.app/src/banner2.jpg" alt="Zaxius API Banner" class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500">
+            <!-- LEFT SIDEBAR: NAVIGASI FOLDER / KATEGORI -->
+            <div class="lg:col-span-3 space-y-4">
+                <div class="glass-card p-4 sticky top-24 space-y-4">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                            <i class="material-icons text-base text-slate-400">folder_open</i>
+                            Categories
+                        </span>
+                        <span id="total-categories" class="text-[10px] font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full">0</span>
+                    </div>
+
+                    <!-- SEARCH BAR DALAM SIDEBAR NAVIGASI -->
+                    <div class="relative">
+                        <i class="material-icons text-slate-400 text-sm absolute left-3 top-2.5">search</i>
+                        <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 dark:border-slate-800 rounded-lg bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none">
+                    </div>
+
+                    <!-- LIST NAVIGASI KATEGORI -->
+                    <nav id="folder-nav-list" class="space-y-1 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
+                        <!-- Dynamic Categories will be injected here -->
+                        <div class="h-8 w-full skeleton rounded-lg mb-1"></div>
+                        <div class="h-8 w-full skeleton rounded-lg mb-1"></div>
+                        <div class="h-8 w-full skeleton rounded-lg"></div>
+                    </nav>
+                </div>
             </div>
 
-            <!-- INFORMATION CENTER -->
-            <div class="md:col-span-5 glass-card p-5 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-xs font-extrabold text-slate-900 dark:text-slate-100 flex items-center tracking-wider uppercase">
-                            <i class="material-icons text-sm mr-2 text-slate-500">notifications</i>
-                            Information Center
-                        </h2>
-                        <span id="unread-count" class="text-[9px] font-bold bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white px-2 py-0.5 rounded-full hidden">0</span>
+            <!-- RIGHT CONTENT: BANNER, NOTIFIKASI, & API ENDPOINTS -->
+            <div class="lg:col-span-9 space-y-6">
+
+                <!-- BANNER HERO & INFO -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="md:col-span-7 overflow-hidden border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg bg-white dark:bg-slate-900 relative group flex items-center justify-center min-h-[140px]">
+                        <img src="https://apizaxius.vercel.app/src/banner2.jpg" alt="Zaxius API Banner" class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500">
                     </div>
-                    <div id="notifications-list" class="space-y-2.5 max-h-40 overflow-y-auto pr-1">
-                        <!-- Skeleton Loader Notification -->
-                        <div class="p-3 glass-card space-y-2">
-                            <div class="h-3 w-1/3 skeleton rounded-lg"></div>
-                            <div class="h-2 w-3/4 skeleton rounded-lg"></div>
+
+                    <div class="md:col-span-5 glass-card p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h2 class="text-xs font-extrabold text-slate-900 dark:text-slate-100 flex items-center tracking-wider uppercase">
+                                    <i class="material-icons text-sm mr-2 text-slate-500">notifications</i>
+                                    Information
+                                </h2>
+                                <span id="unread-count" class="text-[9px] font-bold bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white px-2 py-0.5 rounded-full hidden">0</span>
+                            </div>
+                            <div id="notifications-list" class="space-y-2 max-h-32 overflow-y-auto pr-1">
+                                <div class="p-2.5 glass-card space-y-1">
+                                    <div class="h-2.5 w-1/3 skeleton rounded-lg"></div>
+                                    <div class="h-2 w-3/4 skeleton rounded-lg"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- SEARCH BAR & FILTER STATUS -->
-        <div class="glass-card p-2 flex items-center justify-between gap-3">
-            <div class="relative flex-1">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <i class="material-icons text-slate-400 text-lg">search</i>
+                <!-- DAFTAR ENDPOINT API -->
+                <div id="content" class="space-y-4">
+                    <div id="noResults" class="glass-card text-center py-12" style="display: none;">
+                        <i class="material-icons text-3xl text-slate-400 mb-2">search_off</i>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">No matching API endpoints found.</p>
+                    </div>
+
+                    <div id="apiList" class="space-y-4">
+                        <div class="glass-card p-5 space-y-3">
+                            <div class="h-4 w-1/4 skeleton rounded-lg"></div>
+                            <div class="h-10 w-full skeleton rounded-xl"></div>
+                            <div class="h-10 w-full skeleton rounded-xl"></div>
+                        </div>
+                    </div>
                 </div>
-                <input type="text" id="searchInput" placeholder="Search endpoint path, parameters, or categories..." class="w-full pl-11 pr-4 py-2.5 text-xs border-0 bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none">
-            </div>
-        </div>
 
-        <!-- DAFTAR ENDPOINT API -->
-        <div id="content" class="space-y-4">
-            <div id="noResults" class="glass-card text-center py-12" style="display: none;">
-                <i class="material-icons text-3xl text-slate-400 mb-2">search_off</i>
-                <p class="text-xs text-slate-500 dark:text-slate-400">No matching API endpoints found.</p>
-            </div>
-
-            <div id="apiList" class="space-y-4">
-                <!-- Skeleton Loading API List -->
-                <div class="glass-card p-5 space-y-3">
-                    <div class="h-4 w-1/4 skeleton rounded-lg"></div>
-                    <div class="h-10 w-full skeleton rounded-xl"></div>
-                    <div class="h-10 w-full skeleton rounded-xl"></div>
-                </div>
             </div>
         </div>
 
@@ -341,14 +361,25 @@
             const category = document.getElementById(`category-${index}`);
             const icon = document.getElementById(`category-icon-${index}`);
             const isHidden = category.classList.toggle('hidden');
-            icon.textContent = isHidden ? 'expand_more' : 'expand_less';
+            if (icon) icon.textContent = isHidden ? 'expand_more' : 'expand_less';
         }
 
         function toggleEndpoint(catIndex, endpointIndex) {
             const endpoint = document.getElementById(`endpoint-${catIndex}-${endpointIndex}`);
             const icon = document.getElementById(`endpoint-icon-${catIndex}-${endpointIndex}`);
             const isHidden = endpoint.classList.toggle('hidden');
-            icon.textContent = isHidden ? 'expand_more' : 'expand_less';
+            if (icon) icon.textContent = isHidden ? 'expand_more' : 'expand_less';
+        }
+
+        function scrollToCategory(catIndex) {
+            const el = document.getElementById(`cat-group-${catIndex}`);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const catContent = document.getElementById(`category-${catIndex}`);
+                if (catContent && catContent.classList.contains('hidden')) {
+                    toggleCategory(catIndex);
+                }
+            }
         }
 
         // Snippet Switcher Generator
@@ -501,6 +532,9 @@
         // Load APIs dari OpenAPI Spec
         async function loadApis() {
             const apiList = document.getElementById('apiList');
+            const folderNavList = document.getElementById('folder-nav-list');
+            const totalCatCount = document.getElementById('total-categories');
+
             try {
                 const response = await fetch('/src/openapi.json');
                 const data = await response.json();
@@ -535,11 +569,26 @@
                 });
 
                 let html = '';
-                Object.values(categories).forEach((category, catIndex) => {
-                    if (category.items.length === 0) return;
+                let navHtml = '';
+                const categoryList = Object.values(categories).filter(cat => cat.items.length > 0);
 
+                totalCatCount.textContent = categoryList.length;
+
+                categoryList.forEach((category, catIndex) => {
+                    // Inject Left Nav Item
+                    navHtml += `
+                        <button onclick="scrollToCategory(${catIndex})" class="w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/40 hover:text-slate-900 dark:hover:text-slate-100 transition">
+                            <span class="flex items-center gap-2 truncate">
+                                <i class="material-icons text-sm text-slate-400">folder</i>
+                                ${category.name}
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-400">(${category.items.length})</span>
+                        </button>
+                    `;
+
+                    // Inject Main Content Category Group
                     html += `
-                    <div class="category-group" data-category="${category.name}">
+                    <div id="cat-group-${catIndex}" class="category-group" data-category="${category.name}">
                         <div class="glass-card overflow-hidden transition-all duration-300">
                             <button onclick="toggleCategory(${catIndex})" class="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-slate-100/30 dark:hover:bg-slate-800/20 transition-colors">
                                 <h2 class="font-bold flex items-center text-slate-800 dark:text-slate-100 text-xs tracking-wider uppercase">
@@ -768,7 +817,9 @@
                     html += `</div></div></div>`;
                 });
 
+                folderNavList.innerHTML = navHtml;
                 apiList.innerHTML = html;
+
                 const categoryGroups = apiList.querySelectorAll('.category-group');
                 categoryGroups.forEach((category, index) => {
                     category.classList.add('will-fade-in', 'fade-in');
@@ -842,15 +893,15 @@
                     }
 
                     const notifElement = document.createElement('div');
-                    notifElement.className = `p-3 rounded-xl border border-slate-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-slate-900/40 text-xs ${notif.read ? 'opacity-60' : ''}`;
+                    notifElement.className = `p-2.5 rounded-xl border border-slate-200/60 dark:border-slate-800/60 bg-white/40 dark:bg-slate-900/40 text-xs ${notif.read ? 'opacity-60' : ''}`;
                     notifElement.innerHTML = `
                         <div class="flex justify-between items-start gap-2">
                             <div class="flex-1 min-w-0">
-                                <div class="flex items-center mb-1">
+                                <div class="flex items-center mb-0.5">
                                     ${typeBadge}
-                                    <p class="font-bold text-slate-800 dark:text-slate-200 truncate">${notif.title || 'Tanpa Judul'}</p>
+                                    <p class="font-bold text-slate-800 dark:text-slate-200 truncate text-[11px]">${notif.title || 'Tanpa Judul'}</p>
                                 </div>
-                                <p class="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed line-clamp-2">${notif.message || '-'}</p>
+                                <p class="text-slate-600 dark:text-slate-400 text-[10px] leading-relaxed line-clamp-2">${notif.message || '-'}</p>
                             </div>
                             <span class="text-[9px] text-slate-400 flex-shrink-0">${formattedDate}</span>
                         </div>
