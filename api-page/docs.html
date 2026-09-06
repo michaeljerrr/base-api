@@ -144,7 +144,7 @@
     <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 glass-card rounded-none border-r border-y-0 border-l-0 transform -translate-x-full duration-300 ease-in-out z-[100] flex flex-col shadow-2xl">
         <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-100 flex items-center justify-center text-white dark:text-slate-900 font-black text-sm">Z</div>
+                <div class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-100 flex items-center justify-center text-white dark:text-slate-900 font-black text-sm flex-shrink-0">Z</div>
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">Zaxius Menu</span>
             </div>
             <button id="sidebarClose" class="p-2 glass-card hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl transition">
@@ -194,7 +194,7 @@
                 </button>
 
                 <a href="/" class="flex items-center gap-3 hover:opacity-90 transition">
-                    <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex-shrink-0">
                         <img src="/src/banner.gif" alt="Zaxius Banner GIF" class="h-8 w-auto object-cover block">
                     </div>
                     <div class="flex flex-col">
@@ -218,7 +218,7 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-6 py-8">
-        <!-- TWO COLUMN LAYOUT (SIDEBAR CATEGORIES + ENDPOINTS CONTENT) -->
+        <!-- TWO COLUMN LAYOUT -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
             <!-- LEFT SIDEBAR: NAVIGASI FOLDER / KATEGORI -->
@@ -226,13 +226,13 @@
                 <div class="glass-card p-4 sticky top-24 space-y-4">
                     <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
                         <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                            <i class="material-icons text-base text-slate-400">folder_open</i>
+                            <i class="material-icons text-base text-slate-400 flex-shrink-0">folder_open</i>
                             Categories
                         </span>
                         <span id="total-categories" class="text-[10px] font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full">0</span>
                     </div>
 
-                    <!-- SEARCH BAR DALAM SIDEBAR NAVIGASI -->
+                    <!-- SEARCH BAR -->
                     <div class="relative">
                         <i class="material-icons text-slate-400 text-sm absolute left-3 top-2.5">search</i>
                         <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 dark:border-slate-800 rounded-lg bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none">
@@ -240,7 +240,6 @@
 
                     <!-- LIST NAVIGASI KATEGORI -->
                     <nav id="folder-nav-list" class="space-y-1 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
-                        <!-- Dynamic Categories will be injected here -->
                         <div class="h-8 w-full skeleton rounded-lg mb-1"></div>
                         <div class="h-8 w-full skeleton rounded-lg mb-1"></div>
                         <div class="h-8 w-full skeleton rounded-lg"></div>
@@ -248,7 +247,7 @@
                 </div>
             </div>
 
-            <!-- RIGHT CONTENT: BANNER, NOTIFIKASI, & API ENDPOINTS -->
+            <!-- RIGHT CONTENT -->
             <div class="lg:col-span-9 space-y-6">
 
                 <!-- BANNER HERO & INFO -->
@@ -261,7 +260,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-3">
                                 <h2 class="text-xs font-extrabold text-slate-900 dark:text-slate-100 flex items-center tracking-wider uppercase">
-                                    <i class="material-icons text-sm mr-2 text-slate-500">notifications</i>
+                                    <i class="material-icons text-sm mr-2 text-slate-500 flex-shrink-0">notifications</i>
                                     Information
                                 </h2>
                                 <span id="unread-count" class="text-[9px] font-bold bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white px-2 py-0.5 rounded-full hidden">0</span>
@@ -579,24 +578,26 @@
                     navHtml += `
                         <button onclick="scrollToCategory(${catIndex})" class="w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/40 hover:text-slate-900 dark:hover:text-slate-100 transition">
                             <span class="flex items-center gap-2 truncate">
-                                <i class="material-icons text-sm text-slate-400">folder</i>
+                                <i class="material-icons text-sm text-slate-400 flex-shrink-0">folder</i>
                                 ${category.name}
                             </span>
                             <span class="text-[10px] font-bold text-slate-400">(${category.items.length})</span>
                         </button>
                     `;
 
-                    // Inject Main Content Category Group
+                    // Inject Main Content Category Group (FIXED ICON DISTORTION HERE)
                     html += `
                     <div id="cat-group-${catIndex}" class="category-group" data-category="${category.name}">
                         <div class="glass-card overflow-hidden transition-all duration-300">
                             <button onclick="toggleCategory(${catIndex})" class="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-slate-100/30 dark:hover:bg-slate-800/20 transition-colors">
                                 <h2 class="font-bold flex items-center text-slate-800 dark:text-slate-100 text-xs tracking-wider uppercase">
-                                    <span class="material-icons text-sm mr-2.5 text-white bg-slate-900 dark:bg-slate-100 dark:text-slate-900 p-1 rounded-md">folder</span>
+                                    <div class="w-7 h-7 rounded-md bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 flex items-center justify-center mr-3 flex-shrink-0">
+                                        <i class="material-icons text-base">folder</i>
+                                    </div>
                                     <span class="truncate max-w-xs">${category.name}</span>
                                     <span class="ml-2 text-[11px] font-normal text-slate-400 dark:text-slate-500">(${category.items.length})</span>
                                 </h2>
-                                <span class="material-icons text-slate-400 transition-transform duration-150" id="category-icon-${catIndex}">expand_more</span>
+                                <span class="material-icons text-slate-400 transition-transform duration-150 flex-shrink-0" id="category-icon-${catIndex}">expand_more</span>
                             </button>
                             
                             <div id="category-${catIndex}" class="hidden border-t border-slate-200 dark:border-slate-800">`;
@@ -632,7 +633,7 @@
                             html += `
                                 <div class="pt-1">
                                     <div class="text-slate-900 dark:text-slate-100 font-extrabold text-xs mb-3 flex items-center tracking-wider uppercase">
-                                        <i class="material-icons text-sm mr-1.5 text-slate-400">play_arrow</i>
+                                        <i class="material-icons text-sm mr-1.5 text-slate-400 flex-shrink-0">play_arrow</i>
                                         TRY IT OUT
                                     </div>
                                     <div>
@@ -768,7 +769,7 @@
 
                                 <div class="mt-5 pt-3 border-t border-slate-200 dark:border-slate-800">
                                     <div class="text-slate-900 dark:text-slate-100 font-extrabold text-xs mb-2.5 flex items-center tracking-wider uppercase">
-                                        <i class="material-icons text-sm mr-1.5 text-slate-400">list</i>
+                                        <i class="material-icons text-sm mr-1.5 text-slate-400 flex-shrink-0">list</i>
                                         HTTP STATUS CODES
                                     </div>
                                     <div class="glass-card overflow-hidden">
