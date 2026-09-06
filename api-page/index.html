@@ -1,30 +1,20 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Dokumentasi API modern dan antarmuka pengujian yang interaktif. Jelajahi berbagai endpoint API kami dengan mudah.">
-    <meta name="keywords" content="API, Dokumentasi API, REST API, Zaxius APIs, Michael, Alat Pengembang">
-    <meta name="author" content="Michael">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://apizaxius.vercel.app">
-    <meta property="og:title" content="Zaxius APIs V1 - Dokumentasi API Modern">
-    <meta property="og:description" content="Jelajahi berbagai endpoint API kami dengan antarmuka yang modern dan mudah digunakan.">
-    <meta property="og:image" content="/src/banner.jpg">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://apizaxius.vercel.app">
-    <meta property="twitter:title" content="Zaxius APIs V1 - Dokumentasi API Modern">
-    <meta property="twitter:description" content="Jelajahi berbagai endpoint API kami dengan antarmuka yang modern dan mudah digunakan.">
-    <meta property="twitter:image" content="/src/banner.jpg">
-    <link rel="icon" href="https://apizaxius.vercel.app/src/foto.jpg" type="image/png">
-    <title id="page">Zaxius APIs V1.</title>
-
-    <script src="https://cdn.tailwindcss.com/"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zaxius API — Dashboard & Developer Platform">
+    <meta name="theme-color" content="#0f172a">
+    <title>Zaxius API — Dashboard</title>
+    <link rel="icon" href="/src/foto.jpg" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -41,80 +31,47 @@
 
     <style>
         :root {
-            /* Tema Monochrome Light */
-            --background: #f9fbff;
-            --foreground: #2c3e50;
-            --card: rgba(255, 255, 255, 0.7);
-            --card-foreground: #2c3e50;
-            --primary: #000000;
-            --primary-foreground: #ffffff;
-            --secondary: #64748b;
-            --accent: #000000;
-            --muted: rgba(241, 245, 249, 0.7);
-            --muted-foreground: #7f8c8d;
-            --border: rgba(0, 0, 0, 0.1);
-            --radius: 1.25rem;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.1);
-            --spotlight-color: rgba(0, 0, 0, 0.05);
-            --badge-bg: #000000;
-            --badge-text: #ffffff;
-            --icon-color: #000000;
-            --glass-border: rgba(0, 0, 0, 0.08);
+            --bg-light: #f8fafc;
+            --bg-dark: #090d16;
+            --glass-light: rgba(255, 255, 255, 0.75);
+            --glass-dark: rgba(15, 23, 42, 0.7);
+            --border-light: rgba(0, 0, 0, 0.08);
+            --border-dark: rgba(255, 255, 255, 0.08);
         }
 
-        body.dark {
-            /* Tema Monochrome Dark */
-            --background: #0f172a;
-            --foreground: #f8fafc;
-            --card: rgba(30, 41, 59, 0.65);
-            --card-foreground: #f8fafc;
-            --primary: #ffffff;
-            --primary-foreground: #0f172a;
-            --secondary: #94a3b8;
-            --accent: #ffffff;
-            --muted: rgba(51, 65, 85, 0.5);
-            --muted-foreground: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
-            --spotlight-color: rgba(255, 255, 255, 0.05);
-            --badge-bg: #ffffff;
-            --badge-text: #0f172a;
-            --icon-color: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.12);
+        ::-webkit-scrollbar {
+            display: none !important;
         }
 
         body {
-            background-color: var(--background);
-            color: var(--foreground);
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* Glassmorphism Monochrome Presets */
         .glass-card {
-            background: var(--card);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            border-radius: var(--radius);
+            background: var(--glass-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: 1rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .glass-card:hover {
-            box-shadow: var(--shadow-lg);
-            border-color: var(--border) !important;
+        html.dark .glass-card {
+            background: var(--glass-dark);
+            border-color: var(--border-dark);
         }
 
         .glass-header {
-            background: var(--card) !important;
+            background: var(--glass-light);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--glass-border) !important;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        html.dark .glass-header {
+            background: var(--glass-dark);
+            border-bottom-color: var(--border-dark);
         }
 
         #mouse-spotlight {
@@ -125,520 +82,228 @@
             height: 100%;
             pointer-events: none;
             z-index: -1;
-            background: radial-gradient(600px circle at 0px 0px, var(--spotlight-color), transparent 80%);
+            background: radial-gradient(600px circle at 0px 0px, rgba(255, 255, 255, 0.05), transparent 80%);
             transition: background 0.1s ease-out;
-        }
-
-        .bg-card-hover:hover {
-            transform: translateY(-3px);
-        }
-
-        .bg-primary {
-             background-color: var(--primary);
-             color: var(--primary-foreground);
-        }
-
-        .bg-primary:hover {
-            filter: brightness(1.1);
-            box-shadow: var(--shadow);
-        }
-
-        .text-primary { color: var(--primary); }
-        .text-foreground { color: var(--foreground); }
-        .text-muted-foreground { color: var(--muted-foreground); }
-
-        .border-primary { border-color: var(--primary); }
-        .border-default { border-color: var(--border); }
-
-        ::-webkit-scrollbar {
-            display: none !important;
-        }
-
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--background);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-        }
-
-        #loader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid var(--border);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-on-load {
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            transition-delay: var(--delay, 0s);
-        }
-
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .feature-icon {
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            border-color: var(--icon-color) !important;
-        }
-        .feature-icon i {
-            color: var(--icon-color) !important;
-        }
-        .bg-card-hover:hover .feature-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        .stat-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            border-radius: calc(var(--radius) - 0.4rem);
-            padding: 0.75rem 0;
-        }
-        .stat-item:hover {
-            transform: translateY(-3px);
-            background-color: var(--card);
-            box-shadow: var(--shadow);
-        }
-
-        .step-item {
-            transition: transform 0.3s ease;
-        }
-        .step-item:hover {
-            transform: translateX(6px);
-        }
-        .step-number {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-color: var(--icon-color) !important;
-            color: var(--icon-color) !important;
-        }
-        .step-item:hover .step-number {
-             transform: scale(1.1);
-             box-shadow: var(--shadow);
-        }
-
-        .dynamic-badge {
-            background-color: var(--badge-bg) !important;
-            color: var(--badge-text) !important;
-        }
-        .dynamic-title {
-            color: var(--foreground) !important;
-        }
-        .dynamic-btn {
-            background-color: var(--badge-bg) !important;
-            color: var(--badge-text) !important;
-        }
-        .dynamic-icon {
-            color: var(--icon-color) !important;
         }
     </style>
 </head>
-<body class="text-foreground antialiased font-mono min-h-screen relative overflow-x-hidden">
+
+<body class="bg-slate-50 dark:bg-[#090d16] text-slate-800 dark:text-slate-100 antialiased font-mono min-h-screen relative overflow-x-hidden transition-colors duration-300">
 
     <div id="mouse-spotlight"></div>
-    <div id="loader">
-        <div class="spinner"></div>
-    </div>
+
+    <!-- SIDEBAR DRAWER (NAVIGASI GARIS 3) -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 glass-card rounded-none border-r border-y-0 border-l-0 transform -translate-x-full duration-300 ease-in-out z-[100] flex flex-col shadow-2xl">
+        <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-100 flex items-center justify-center text-white dark:text-slate-900 font-black text-sm">Z</div>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">Zaxius Menu</span>
+            </div>
+            <button id="sidebarClose" class="p-2 glass-card hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl transition">
+                <i class="material-icons text-lg block">close</i>
+            </button>
+        </div>
+        <div class="p-6 flex-1 overflow-y-auto space-y-6">
+            <nav class="space-y-4">
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Main Navigation</p>
+                    <div class="space-y-2">
+                        <a href="/" class="flex items-center py-3 px-4 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm transition">
+                            <i class="material-icons text-base mr-3">dashboard</i> Dashboard
+                        </a>
+                        <a href="/docs" class="flex items-center py-3 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                            <i class="material-icons text-base mr-3">api</i> API Documentation
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Social & Contact</p>
+                    <div class="space-y-2">
+                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                            <i class="fa-brands fa-telegram text-base mr-3"></i> Contact Telegram
+                        </a>
+                        <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                            <i class="fa-brands fa-whatsapp text-base mr-3"></i> WhatsApp Channel
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="p-6 border-t border-slate-200 dark:border-slate-800">
+            <p class="text-[10px] text-slate-400 text-center">Zaxius API &copy; 2026</p>
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm opacity-0 invisible duration-300 ease-in-out z-[90]"></div>
 
     <!-- HEADER NAVIGATION -->
-    <header class="sticky top-0 z-40 glass-header py-3.5 transition-all">
-        <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
-            <!-- BANNER GIF DI HEADER KIRI -->
-            <div class="flex items-center">
-                <a href="/" class="block overflow-hidden rounded-xl border border-default shadow-md hover:opacity-90 transition">
-                    <img src="/src/banner.gif" alt="Zaxius Banner GIF" class="h-8 w-auto object-cover block">
+    <header class="glass-header sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- NAVIGASI GARIS 3 (HAMBURGER) -->
+                <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition flex items-center justify-center">
+                    <i class="material-icons text-xl block">menu</i>
+                </button>
+
+                <a href="/" class="flex items-center gap-3 hover:opacity-90 transition">
+                    <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <img src="/src/banner.gif" alt="Zaxius Banner GIF" class="h-8 w-auto object-cover block">
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-sm font-extrabold text-slate-900 dark:text-slate-100 leading-none">Zaxius API</h1>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Developer Platform</p>
+                    </div>
                 </a>
             </div>
             
-            <!-- Switch Dark / Light Mode -->
-            <div class="flex items-center space-x-4">
-                <button id="theme-toggle" type="button" class="p-2.5 text-sm text-muted-foreground hover:text-foreground rounded-xl focus:outline-none transition-all duration-200 glass-card">
-                    <i id="theme-toggle-dark-icon" class="fas font-solid fa-moon hidden"></i>
-                    <i id="theme-toggle-light-icon" class="fas font-solid fa-sun hidden"></i>
+            <div class="flex items-center space-x-2">
+                <a href="/docs" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-bold rounded-xl shadow-md transition hover:opacity-90">
+                    <i class="material-icons text-sm">code</i>
+                    Docs
+                </a>
+
+                <button id="themeToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition">
+                    <i id="themeToggleDarkIcon" class="material-icons text-lg hidden block">dark_mode</i>
+                    <i id="themeToggleLightIcon" class="material-icons text-lg hidden block">light_mode</i>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 py-8 space-y-6">
-        
-        <!-- MAIN HERO BANNER & STATS INTEGRATED -->
-        <div class="glass-card p-6 relative overflow-hidden">
-            <div class="flex items-center justify-between mb-4 animate-on-load" style="animation-delay: 0.1s;">
-                <p class="text-muted-foreground text-xs font-bold tracking-widest uppercase">Hi Developer! Welcome To</p>
-                <!-- Live Status Indicator -->
-                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-bold text-emerald-500 backdrop-blur-md">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                    Operational
-                </div>
+    <main class="max-w-5xl mx-auto px-6 py-8 space-y-8">
+
+        <!-- HERO SECTION -->
+        <div class="glass-card p-8 md:p-10 text-center relative overflow-hidden space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[11px] font-bold">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                API Services Active & Running
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                <!-- Left Details -->
-                <div class="md:col-span-7 space-y-3">
-                    <h2 class="flex flex-wrap items-center gap-2 text-3xl md:text-4xl text-foreground font-black tracking-tight animate-on-load" style="animation-delay: 0.2s;">
-                        <span class="dynamic-title">Zaxius APIs</span>
-                        <span class="text-xs font-bold dynamic-badge px-3 py-1 rounded-lg whitespace-nowrap shadow-md">
-                            v1.0
-                        </span>
-                    </h2>
-                    <p class="text-muted-foreground text-xs leading-relaxed animate-on-load" style="animation-delay: 0.3s;">Powerful API platform for modern applications</p>
-
-                    <div class="pt-2 animate-on-load" style="animation-delay: 0.4s;">
-                        <a href="/docs" class="inline-flex items-center dynamic-btn px-6 py-3 rounded-xl text-xs font-bold tracking-wide transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
-                            <i class="fas fa-rocket mr-2 text-xs"></i>Explore Docs
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right Banner Image -->
-                <div class="md:col-span-5 animate-on-load" style="animation-delay: 0.15s;">
-                    <div class="overflow-hidden border border-default/60 shadow-xl rounded-2xl">
-                        <img src="https://apizaxius.vercel.app/src/banner.jpg" alt="Zaxius APIs Banner" class="w-full h-auto object-cover block hover:scale-105 transition-transform duration-500">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Integrated Stats Bar -->
-            <div class="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-default/40">
-                <div class="text-center stat-item border border-default/30 bg-slate-500/5">
-                    <div id="total-endpoints" class="text-2xl font-black text-foreground">0</div>
-                    <div class="text-[10px] uppercase font-bold tracking-wider text-muted-foreground mt-0.5">Endpoints</div>
-                </div>
-                <div class="text-center stat-item border border-default/30 bg-slate-500/5">
-                    <div id="total-categories" class="text-2xl font-black text-foreground">0</div>
-                    <div class="text-[10px] uppercase font-bold tracking-wider text-muted-foreground mt-0.5">Categories</div>
-                </div>
-                <div class="text-center stat-item border border-default/30 bg-slate-500/5">
-                    <div class="text-2xl font-black text-foreground">24/7</div>
-                    <div class="text-[10px] uppercase font-bold tracking-wider text-muted-foreground mt-0.5">Support</div>
-                </div>
-            </div>
-
-            <!-- Social Links -->
-            <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-semibold border-t border-default/40 pt-4 mt-5 animate-on-load" style="animation-delay: 0.5s;">
-                <a href="#features" class="text-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-                    <i class="fas fa-layer-group text-[10px] text-muted-foreground"></i> Features
+            <h1 class="text-2xl md:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+                Simple & Reliable Rest API
+            </h1>
+            <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+                Platform API RESTful siap pakai untuk berbagai kebutuhan pengembang seperti AI, Downloader, Media Processing, hingga Search Tools.
+            </p>
+            <div class="pt-2 flex flex-wrap justify-center gap-3">
+                <a href="/docs" class="px-6 py-3 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs rounded-xl shadow-lg hover:opacity-90 transition flex items-center gap-2">
+                    <i class="material-icons text-base">explore</i> Explore Documentation
                 </a>
-                <span class="text-muted-foreground/30">•</span>
-                <a href="https://github.com/" target="_blank" class="text-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-                    <i class="fab fa-github text-[10px] text-muted-foreground"></i> GitHub
-                </a>
-                <span class="text-muted-foreground/30">•</span>
-                <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="text-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-                    <i class="fab fa-whatsapp text-[10px] text-muted-foreground"></i> WhatsApp Channel
-                </a>
-                <span class="text-muted-foreground/30">•</span>
-                <a href="https://t.me/OnlyzsMichael" target="_blank" class="text-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-                    <i class="fab fa-telegram text-[10px] text-muted-foreground"></i> Contact Me
+                <a href="https://t.me/OnlyzsMichael" target="_blank" class="px-6 py-3 glass-card text-slate-800 dark:text-slate-200 font-semibold text-xs rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition flex items-center gap-2">
+                    <i class="fa-brands fa-telegram text-base"></i> Contact Owner
                 </a>
             </div>
         </div>
 
-        <script>
-        async function updateStats() {
-            try {
-                const response = await fetch('/src/openapi.json');
-                const data = await response.json();
-
-                const totalEndpoints = Object.keys(data.paths || {}).length;
-                const categories = new Set((data.tags || []).map(tag => tag.name));
-                const totalCategories = categories.size;
-
-                document.getElementById('total-endpoints').textContent = totalEndpoints;
-                document.getElementById('total-categories').textContent = totalCategories;
-            } catch (err) {
-                console.error('Gagal load openapi.json', err);
-            }
-        }
-        updateStats();
-        </script>
-
-        <!-- GRID DUA KOLOM (FEATURES & GETTING STARTED) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- KOLOM KIRI: FEATURES -->
-            <div class="space-y-3" id="features">
-                <h3 class="text-sm font-bold uppercase tracking-wider text-muted-foreground px-1 flex items-center gap-2">
-                    <i class="fas fa-star text-primary"></i> Key Features
-                </h3>
-                
-                <div class="glass-card bg-card-hover transition-all duration-300 animate-on-scroll">
-                    <div class="p-4 flex items-center">
-                        <div class="feature-icon border-2 rounded-xl w-10 h-10 flex items-center justify-center flex-shrink-0 mr-3.5 bg-slate-500/5">
-                            <i class="fas fa-bolt text-sm"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm text-foreground">Fast & Reliable</h3>
-                            <p class="text-[11px] text-muted-foreground mt-0.5">High-performance API endpoints with low latency</p>
-                        </div>
-                    </div>
+        <!-- STATS / FEATURE CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="glass-card p-5 space-y-1">
+                <div class="flex items-center justify-between text-slate-400">
+                    <span class="text-[10px] font-bold uppercase tracking-wider">Fast Response</span>
+                    <i class="material-icons text-base">bolt</i>
                 </div>
-
-                <div class="glass-card bg-card-hover transition-all duration-300 animate-on-scroll" style="--delay: 0.1s;">
-                    <div class="p-4 flex items-center">
-                        <div class="feature-icon border-2 rounded-xl w-10 h-10 flex items-center justify-center flex-shrink-0 mr-3.5 bg-slate-500/5">
-                            <i class="fas fa-shield-alt text-sm"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm text-foreground">Secure</h3>
-                            <p class="text-[11px] text-muted-foreground mt-0.5">Enterprise-grade security and encryption</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card bg-card-hover transition-all duration-300 animate-on-scroll" style="--delay: 0.2s;">
-                    <div class="p-4 flex items-center">
-                        <div class="feature-icon border-2 rounded-xl w-10 h-10 flex items-center justify-center flex-shrink-0 mr-3.5 bg-slate-500/5">
-                            <i class="fas fa-code text-sm"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm text-foreground">Easy Integration</h3>
-                            <p class="text-[11px] text-muted-foreground mt-0.5">Simple REST API with clear documentation</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card bg-card-hover transition-all duration-300 animate-on-scroll" style="--delay: 0.3s;">
-                    <div class="p-4 flex items-center">
-                        <div class="feature-icon border-2 rounded-xl w-10 h-10 flex items-center justify-center flex-shrink-0 mr-3.5 bg-slate-500/5">
-                            <i class="fas fa-chart-line text-sm"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm text-foreground">Analytics</h3>
-                            <p class="text-[11px] text-muted-foreground mt-0.5">Detailed usage analytics and monitoring</p>
-                        </div>
-                    </div>
-                </div>
+                <p class="text-xl font-extrabold text-slate-900 dark:text-slate-100">Low Latency</p>
+                <p class="text-[11px] text-slate-500">Optimized for high performance requests.</p>
             </div>
 
-            <!-- KOLOM KANAN: GETTING STARTED -->
-            <div class="space-y-3">
-                <h3 class="text-sm font-bold uppercase tracking-wider text-muted-foreground px-1 flex items-center gap-2">
-                    <i class="fas fa-compass text-primary"></i> Guide
-                </h3>
-
-                <div class="glass-card p-5 animate-on-scroll h-[calc(100%-2rem)] flex flex-col justify-between">
-                    <h3 class="flex items-center gap-2 font-extrabold text-base text-foreground pb-3 border-b border-default/40">
-                        <svg class="w-5 h-5 dynamic-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                        Getting Started
-                    </h3>
-
-                    <div class="space-y-4 my-auto py-2">
-                        <div class="flex items-start gap-3 step-item">
-                            <div class="step-number border-2 border-dashed w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-xs rounded-xl bg-slate-500/5">1</div>
-                            <div>
-                                <h4 class="font-bold text-xs text-foreground mb-0.5">Choose Your Category</h4>
-                                <p class="text-[11px] text-muted-foreground leading-relaxed">Browse through available API categories on sidebar and select what you need.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-3 step-item">
-                            <div class="step-number border-2 border-dashed w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-xs rounded-xl bg-slate-500/5">2</div>
-                            <div>
-                                <h4 class="font-bold text-xs text-foreground mb-0.5">Read the Docs</h4>
-                                <p class="text-[11px] text-muted-foreground leading-relaxed">Check endpoint parameters, response format, and example usage.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-3 step-item">
-                            <div class="step-number border-2 border-dashed w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold text-xs rounded-xl bg-slate-500/5">3</div>
-                            <div>
-                                <h4 class="font-bold text-xs text-foreground mb-0.5">Make Your Request</h4>
-                                <p class="text-[11px] text-muted-foreground leading-relaxed">Send HTTP requests and integrate the JSON response into your app.</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="glass-card p-5 space-y-1">
+                <div class="flex items-center justify-between text-slate-400">
+                    <span class="text-[10px] font-bold uppercase tracking-wider">Availability</span>
+                    <i class="material-icons text-base">dns</i>
                 </div>
-            </div>
-        </div>
-
-        <!-- EXAMPLE RESPONSE & FAQ GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- EXAMPLE RESPONSE -->
-            <div class="glass-card p-5 animate-on-scroll">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs font-bold text-foreground flex items-center gap-2">
-                        <i class="fas fa-terminal text-primary"></i> Example Response
-                    </span>
-                    <span class="text-[10px] text-muted-foreground font-mono bg-slate-500/10 border border-default/30 px-2 py-0.5 rounded-md">JSON</span>
-                </div>
-                <pre class="bg-slate-950 text-emerald-400 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-slate-800 shadow-inner"><code>{
-  "status": true,
-  "creator": "Michael",
-  "result": {
-    "message": "Welcome to Zaxius API Services!"
-  }
-}</code></pre>
+                <p class="text-xl font-extrabold text-slate-900 dark:text-slate-100">99.9% Uptime</p>
+                <p class="text-[11px] text-slate-500">Reliable endpoints for your applications.</p>
             </div>
 
-            <!-- FAQ SECTION -->
-            <div class="glass-card p-5 animate-on-scroll">
-                <h3 class="flex items-center gap-2 font-extrabold text-sm text-foreground mb-4 pb-2 border-b border-default/40">
-                    <i class="fas fa-question-circle text-primary text-base"></i> Frequently Asked Questions
-                </h3>
-                <div class="space-y-3 text-xs">
-                    <div class="pb-2.5 border-b border-default/30">
-                        <p class="font-bold text-foreground mb-0.5">Q: Apakah API ini gratis digunakan?</p>
-                        <p class="text-muted-foreground leading-relaxed">A: Ya, endpoint publik dapat diakses secara gratis oleh developer.</p>
-                    </div>
-                    <div>
-                        <p class="font-bold text-foreground mb-0.5">Q: Bagaimana cara menguji endpoint-nya?</p>
-                        <p class="text-muted-foreground leading-relaxed">A: Kamu bisa langsung mencoba fitur 'Try It Out' interaktif di halaman Explore Docs.</p>
-                    </div>
+            <div class="glass-card p-5 space-y-1">
+                <div class="flex items-center justify-between text-slate-400">
+                    <span class="text-[10px] font-bold uppercase tracking-wider">Integration</span>
+                    <i class="material-icons text-base">code</i>
                 </div>
+                <p class="text-xl font-extrabold text-slate-900 dark:text-slate-100">Multi Language</p>
+                <p class="text-[11px] text-slate-500">Supports cURL, JS, Python, and Node.js.</p>
             </div>
         </div>
 
         <!-- FOOTER -->
-        <div class="flex flex-col mt-10 text-center space-y-2 animate-on-scroll pb-6">
-          <p class="text-muted-foreground font-medium" style="font-size: 0.75rem; line-height: 1rem;">
-            © <span id="year"></span> Zaxius APIs — All Rights Reserved.
-          </p>
-          <p class="text-muted-foreground space-x-3" style="font-size: 0.75rem; line-height: 1rem;">
-            <a href="/privacy-policy" class="hover:underline hover:text-foreground transition-colors">Privacy Policy</a>
-            <span aria-hidden="true" class="opacity-40">|</span>
-            <a href="/terms-of-service" class="hover:underline hover:text-foreground transition-colors">Terms of Service</a>
-          </p>
+        <div class="flex flex-col text-center pb-8 border-t border-slate-200 dark:border-slate-800/60 pt-6">
+            <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">© 2026 Zaxius API — Interactive Developer Documentation.</p>
         </div>
     </main>
 
-    <!-- FLOATING SCROLL TO TOP -->
-    <button id="scrollToTopBtn" type="button" class="fixed bottom-6 right-6 p-3.5 glass-card text-foreground rounded-full shadow-2xl opacity-0 invisible transition-all duration-300 hover:scale-110 z-50">
-        <i class="fas fa-arrow-up text-xs"></i>
-    </button>
-
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const loader = document.getElementById('loader');
-            loader.classList.add('hidden');
-
-            document.getElementById("year").textContent = new Date().getFullYear();
-
-            const spotlight = document.getElementById('mouse-spotlight');
-            if (spotlight) {
-                document.addEventListener('mousemove', (e) => {
-                    const isDark = document.body.classList.contains('dark');
-                    const color = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
-                    spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, ${color}, transparent 80%)`;
-                });
-            }
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observerCallback = (entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            };
-
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-            document.querySelectorAll('.animate-on-scroll').forEach(target => {
-                observer.observe(target);
+        // Spotlight Effect
+        const spotlight = document.getElementById('mouse-spotlight');
+        if (spotlight) {
+            document.addEventListener('mousemove', (e) => {
+                const isDark = document.documentElement.classList.contains('dark');
+                const color = isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.03)';
+                spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, ${color}, transparent 80%)`;
             });
+        }
 
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
+        // Sidebar Controls
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
 
-            // Logika Switch Mode
-            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-            const themeToggleBtn = document.getElementById('theme-toggle');
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('opacity-0', 'invisible');
+            document.body.classList.add('overflow-hidden');
+        }
 
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.body.classList.add('dark');
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('opacity-0', 'invisible');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        sidebarToggle.addEventListener('click', openSidebar);
+        sidebarClose.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSidebar();
+        });
+
+        // Dark/Light Theme Switcher
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeToggleDarkIcon = document.getElementById('themeToggleDarkIcon');
+        const themeToggleLightIcon = document.getElementById('themeToggleLightIcon');
+
+        function initTheme() {
+            const userTheme = localStorage.getItem('color-theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (userTheme === 'dark' || (!userTheme && systemDark)) {
                 document.documentElement.classList.add('dark');
                 themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
             } else {
-                document.body.classList.remove('dark');
                 document.documentElement.classList.remove('dark');
                 themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
             }
+        }
 
-            themeToggleBtn.addEventListener('click', function() {
-                themeToggleDarkIcon.classList.toggle('hidden');
-                themeToggleLightIcon.classList.toggle('hidden');
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                themeToggleDarkIcon.classList.add('hidden');
+                themeToggleLightIcon.classList.remove('hidden');
+            }
+        });
 
-                if (document.body.classList.contains('dark')) {
-                    document.body.classList.remove('dark');
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.body.classList.add('dark');
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
-            });
-
-            // Scroll To Top
-            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    scrollToTopBtn.classList.remove('opacity-0', 'invisible');
-                } else {
-                    scrollToTopBtn.classList.add('opacity-0', 'invisible');
-                }
-            });
-
-            scrollToTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
         });
     </script>
 </body>
