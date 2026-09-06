@@ -1,700 +1,944 @@
-{
-  "openapi": "3.0.0",
-  "info": {
-    "title": "Zaxius",
-    "author": "Michael",
-    "version": "v1.0.0"
-  },
-  "servers": [
-    { "url": "/" }
-  ],
-  "tags": [
-    { "name": "AI" },
-    { "name": "Anime" },
-    { "name": "Downloader" },
-    { "name": "Search" },
-    { "name": "Image" },
-    { "name": "Maker" },
-    { "name": "Tools" },
-    { "name": "Stalker" },
-    { "name": "News" }
-  ],
-  "paths": {
-    "/ai/quillbot": {
-      "get": {
-        "tags": ["AI"],
-        "parameters": [
-          {
-            "name": "message",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "Hai perkenalkan dirimu"
-            }
-          }
-        ],
-        "responses": {
-          "200": {},
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/anime/waifu": {
-      "get": {
-        "tags": ["Anime"],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary",
-                  "example": "Binary image data"
-                }
-              }
-            }
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": false },
-                    "error": { "type": "string", "example": "Gagal mengambil waifu." }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/download/capcut": {
-      "get": {
-        "tags": ["Downloader"],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string", "format": "uri" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "result": {
-                      "type": "object",
-                      "properties": {
-                        "title": { "type": "string", "example": "Template Name" },
-                        "thumbnail": { "type": "string", "format": "uri" },
-                        "video": { "type": "string", "format": "uri" },
-                        "author": { "type": "string", "example": "Author Name" },
-                        "avatar": { "type": "string", "format": "uri" },
-                        "duration": { "type": "number", "example": 15 },
-                        "likes": { "type": "integer", "example": 1200 },
-                        "uses": { "type": "integer", "example": 300 }
-                      }
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse through our collection of code snippets, scripts, and tools. Find what you need or discover something new.">
+    <meta name="theme-color" content="#0f172a">
+    <title>Zaxius API — Interactive Docs</title>
+    <link rel="icon" href="/src/foto.jpg" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/json.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/javascript.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['Ubuntu Mono', 'monospace'],
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
                     }
-                  }
                 }
-              }
             }
-          },
-          "400": {},
-          "500": {}
         }
-      }
-    },
-    "/download/pinterest": {
-      "get": {
-        "tags": ["Downloader"],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "https://pin.it/lOPdveAO7"
+    </script>
+
+    <style>
+        :root {
+            --bg-light: #f8fafc;
+            --bg-dark: #090d16;
+            --glass-light: rgba(255, 255, 255, 0.7);
+            --glass-dark: rgba(15, 23, 42, 0.65);
+            --border-light: rgba(0, 0, 0, 0.08);
+            --border-dark: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: var(--glass-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html.dark .glass-card {
+            background: var(--glass-dark);
+            border-color: var(--border-dark);
+        }
+
+        .glass-header {
+            background: var(--glass-light);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        html.dark .glass-header {
+            background: var(--glass-dark);
+            border-bottom-color: var(--border-dark);
+        }
+
+        /* Interactive Elements */
+        .copy-btn {
+            @apply text-slate-400 hover:text-slate-900 dark:hover:text-white p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-150;
+        }
+
+        .block-title {
+            @apply text-xs font-bold tracking-wider text-slate-600 dark:text-slate-400 mb-2 flex items-center justify-between uppercase;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .will-fade-in { opacity: 0; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.98); }
+        }
+
+        .fade-out { animation: fadeOut 0.2s ease-out forwards; }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        html.dark .skeleton {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .tab-active {
+            @apply bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 font-bold border-transparent !important;
+        }
+
+        #mouse-spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(600px circle at 0px 0px, rgba(255, 255, 255, 0.05), transparent 80%);
+            transition: background 0.1s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 dark:bg-[#090d16] text-slate-800 dark:text-slate-100 antialiased font-mono min-h-screen relative overflow-x-hidden transition-colors duration-300">
+
+    <div id="mouse-spotlight"></div>
+
+    <!-- SIDEBAR DRAWER -->
+    <aside id="sidebar" class="fixed top-0 right-0 h-full w-72 glass-card rounded-none border-l border-y-0 border-r-0 transform translate-x-full duration-300 ease-in-out z-[100] flex flex-col">
+        <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Navigation</span>
+            <button id="sidebarClose" class="p-2 glass-card hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl transition">
+                <i class="material-icons text-lg block">close</i>
+            </button>
+        </div>
+        <div class="p-6 flex-1 overflow-y-auto space-y-6">
+            <nav class="space-y-4">
+                <div class="space-y-2">
+                    <a href="/" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <i class="material-icons text-base mr-3">dashboard</i> Dashboard
+                    </a>
+                </div>
+
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Links & Contact</p>
+                    <div class="space-y-2">
+                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                            <i class="material-icons text-base mr-3">arrow_outward</i> Contact Telegram
+                        </a>
+                        <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                            <i class="material-icons text-base mr-3">arrow_outward</i> WhatsApp Channel
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm opacity-0 invisible duration-300 ease-in-out z-[90]"></div>
+
+    <!-- HEADER NAVIGATION -->
+    <header class="glass-header sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="/" class="block overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:opacity-90 transition">
+                    <img src="/src/banner.gif" alt="Zaxius Banner GIF" class="h-8 w-auto object-cover block">
+                </a>
+                <div class="flex flex-col">
+                    <h1 class="text-sm font-extrabold text-slate-900 dark:text-slate-100 leading-none">Zaxius API</h1>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Interactive Docs</p>
+                </div>
+                <span class="px-2.5 py-0.5 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 text-[10px] font-bold rounded-md shadow-sm">
+                    v1.0
+                </span>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button id="themeToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition">
+                    <i id="themeToggleDarkIcon" class="material-icons text-lg hidden block">dark_mode</i>
+                    <i id="themeToggleLightIcon" class="material-icons text-lg hidden block">light_mode</i>
+                </button>
+
+                <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition">
+                    <i class="material-icons text-lg block">menu</i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-8 space-y-6">
+
+        <!-- BANNER SECTION -->
+        <div class="overflow-hidden border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg bg-white dark:bg-slate-900">
+            <img src="https://apizaxius.vercel.app/src/banner2.jpg" alt="Zaxius API Banner" class="w-full h-auto object-cover block hover:scale-105 transition-transform duration-500">
+        </div>
+
+        <!-- INFORMASI / NOTIFIKASI -->
+        <div class="glass-card p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-sm font-extrabold text-slate-900 dark:text-slate-100 flex items-center tracking-wide uppercase">
+                    <i class="material-icons text-base mr-2 text-slate-500">notifications</i>
+                    Information Center
+                </h2>
+                <span id="unread-count" class="text-[10px] font-bold bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white px-2 py-0.5 rounded-full hidden">0</span>
+            </div>
+            <div id="notifications-list" class="space-y-3">
+                <!-- Skeleton Loader Notification -->
+                <div class="p-4 glass-card space-y-2">
+                    <div class="h-3 w-1/3 skeleton rounded-lg"></div>
+                    <div class="h-2 w-3/4 skeleton rounded-lg"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEARCH INPUT -->
+        <div class="glass-card p-2">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="material-icons text-slate-400 text-lg">search</i>
+                </div>
+                <input type="text" id="searchInput" placeholder="Search API endpoints..." class="w-full pl-11 pr-4 py-3 text-xs border-0 bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none">
+            </div>
+        </div>
+
+        <!-- DAFTAR ENDPOINT API -->
+        <div id="content" class="space-y-4">
+            <div id="noResults" class="glass-card text-center py-12" style="display: none;">
+                <p class="text-xs text-slate-500 dark:text-slate-400">No matching API endpoints found.</p>
+            </div>
+
+            <div id="apiList" class="space-y-4">
+                <!-- Skeleton Loading API List -->
+                <div class="glass-card p-5 space-y-3">
+                    <div class="h-4 w-1/4 skeleton rounded-lg"></div>
+                    <div class="h-10 w-full skeleton rounded-xl"></div>
+                    <div class="h-10 w-full skeleton rounded-xl"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="flex flex-col mt-12 text-center pb-6">
+            <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">© 2026 Zaxius API — All Rights Reserved.</p>
+        </div>
+    </main>
+
+    <script>
+        // Spotlight Effect
+        const spotlight = document.getElementById('mouse-spotlight');
+        if (spotlight) {
+            document.addEventListener('mousemove', (e) => {
+                const isDark = document.documentElement.classList.contains('dark');
+                const color = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.04)';
+                spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, ${color}, transparent 80%)`;
+            });
+        }
+
+        // Sidebar Controls
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function openSidebar() {
+            sidebar.classList.remove('translate-x-full');
+            overlay.classList.remove('opacity-0', 'invisible');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('translate-x-full');
+            overlay.classList.add('opacity-0', 'invisible');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        sidebarToggle.addEventListener('click', openSidebar);
+        sidebarClose.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSidebar();
+        });
+
+        // Copy Helper
+        async function copyToClipboard(text, buttonElement) {
+            if (!buttonElement) return;
+            const originalHTML = buttonElement.innerHTML;
+            try {
+                await navigator.clipboard.writeText(text);
+                buttonElement.textContent = 'Copied!';
+                setTimeout(() => { buttonElement.innerHTML = originalHTML; }, 1500);
+            } catch (e) {
+                console.error('Copy failed', e);
+                buttonElement.textContent = 'Failed!';
+                setTimeout(() => { buttonElement.innerHTML = originalHTML; }, 1500);
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "creator": { "type": "string", "example": "Z7:林 enterprise" },
-                    "result": {
-                      "type": "object",
-                      "properties": {
-                        "type": { "type": "string", "example": "video" },
-                        "title": { "type": "string", "example": "Art" },
-                        "author": { "type": "string", "example": "ShiroAMV7" },
-                        "username": { "type": "string", "example": "shiroamv7" },
-                        "media": { "type": "string", "example": "https://v1.pinimg.com/videos/iht/expMp4/..." },
-                        "pinterest_url": { "type": "string", "example": "https://pin.it/lOPdveAO7" }
-                      }
+        }
+
+        function hlHighlight(el) {
+            if (window.hljs) hljs.highlightElement(el);
+        }
+
+        function toggleCategory(index) {
+            const category = document.getElementById(`category-${index}`);
+            const icon = document.getElementById(`category-icon-${index}`);
+            const isHidden = category.classList.toggle('hidden');
+            icon.textContent = isHidden ? 'expand_more' : 'expand_less';
+        }
+
+        function toggleEndpoint(catIndex, endpointIndex) {
+            const endpoint = document.getElementById(`endpoint-${catIndex}-${endpointIndex}`);
+            const icon = document.getElementById(`endpoint-icon-${catIndex}-${endpointIndex}`);
+            const isHidden = endpoint.classList.toggle('hidden');
+            icon.textContent = isHidden ? 'expand_more' : 'expand_less';
+        }
+
+        // Snippet Switcher Generator
+        function generateCodeSnippets(method, fullUrl) {
+            const url = `${window.location.origin}${fullUrl}`;
+            
+            let curl = `curl -X ${method} "${url}"`;
+            let js = `fetch("${url}", {\n  method: "${method}"\n})`;
+            let py = `import requests\n\nresponse = requests.${method.toLowerCase()}("${url}")\nprint(response.json())`;
+            let node = `const axios = require('axios');\n\naxios.${method.toLowerCase()}('${url}')\n  .then(res => console.log(res.data))\n  .catch(err => console.error(err));`;
+
+            return { curl, js, py, node };
+        }
+
+        function switchSnippetTab(catIndex, endpointIndex, lang) {
+            const snippetBox = document.getElementById(`snippet-code-${catIndex}-${endpointIndex}`);
+            const tabs = document.querySelectorAll(`.tab-btn-${catIndex}-${endpointIndex}`);
+            
+            tabs.forEach(tab => tab.classList.remove('tab-active'));
+            document.getElementById(`tab-${lang}-${catIndex}-${endpointIndex}`).classList.add('tab-active');
+
+            const codeData = snippetBox.dataset;
+            let codeText = '';
+            let langClass = 'language-bash';
+
+            if (lang === 'curl') { codeText = codeData.curl; langClass = 'language-bash'; }
+            else if (lang === 'js') { codeText = codeData.js; langClass = 'language-javascript'; }
+            else if (lang === 'py') { codeText = codeData.py; langClass = 'language-python'; }
+            else if (lang === 'node') { codeText = codeData.node; langClass = 'language-javascript'; }
+
+            snippetBox.className = langClass;
+            snippetBox.textContent = codeText;
+            hlHighlight(snippetBox);
+        }
+
+        // Execute API Request
+        async function executeRequest(event, catIndex, endpointIndex, method, path) {
+            event.preventDefault();
+            const form = document.getElementById(`form-${catIndex}-${endpointIndex}`);
+            const responseDiv = document.getElementById(`response-${catIndex}-${endpointIndex}`);
+            const responseContent = document.getElementById(`response-content-${catIndex}-${endpointIndex}`);
+            const clearButton = document.getElementById(`clear-${catIndex}-${endpointIndex}`);
+
+            responseDiv.classList.remove('hidden');
+
+            const formData = new FormData(form);
+            const fetchOptions = { method: method.toUpperCase() };
+
+            let fullPath = path;
+
+            if (['POST', 'PUT', 'PATCH'].includes(fetchOptions.method)) {
+                fetchOptions.body = formData;
+            } else {
+                const params = new URLSearchParams();
+                for (const [key, value] of formData.entries()) {
+                    if (typeof value === 'string' && value) {
+                        params.append(key, value);
                     }
-                  }
                 }
-              }
-            }
-          },
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": false },
-                    "creator": { "type": "string", "example": "Z7:林 enterprise" },
-                    "error": { "type": "string", "example": "URL harus dari Pinterest / pin.it" }
-                  }
+                const queryString = params.toString();
+                if (queryString) {
+                    fullPath += (path.includes('?') ? '&' : '?') + queryString;
                 }
-              }
             }
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": false },
-                    "creator": { "type": "string", "example": "Z7:林 enterprise" },
-                    "error": { "type": "string", "example": "Gagal memproses request" }
-                  }
+
+            const snippets = generateCodeSnippets(fetchOptions.method, fullPath);
+
+            responseContent.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="block-title">
+                            <span><i class="material-icons text-sm mr-1.5 align-middle">code</i>CODE SNIPPETS</span>
+                            <button onclick="copyToClipboard(document.getElementById('snippet-code-${catIndex}-${endpointIndex}').innerText, this)" class="copy-btn"><i class="material-icons text-base align-middle">content_copy</i></button>
+                        </h4>
+                        <!-- Snippet Tabs -->
+                        <div class="flex items-center gap-1 mb-2 text-[11px] border-b border-slate-200 dark:border-slate-800">
+                            <button type="button" id="tab-curl-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'curl')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 rounded-t-lg border-t border-x border-slate-200 dark:border-slate-800 tab-active">cURL</button>
+                            <button type="button" id="tab-js-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'js')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 rounded-t-lg border-t border-x border-slate-200 dark:border-slate-800">JS Fetch</button>
+                            <button type="button" id="tab-py-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'py')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 rounded-t-lg border-t border-x border-slate-200 dark:border-slate-800">Python</button>
+                            <button type="button" id="tab-node-${catIndex}-${endpointIndex}" onclick="switchSnippetTab(${catIndex}, ${endpointIndex}, 'node')" class="tab-btn-${catIndex}-${endpointIndex} px-3 py-1.5 rounded-t-lg border-t border-x border-slate-200 dark:border-slate-800">Node.js</button>
+                        </div>
+                        <pre class="bg-slate-950 text-slate-100 p-3 rounded-xl text-xs overflow-auto"><code id="snippet-code-${catIndex}-${endpointIndex}" class="language-bash" data-curl="${snippets.curl.replace(/"/g, '&quot;')}" data-js="${snippets.js.replace(/"/g, '&quot;')}" data-py="${snippets.py.replace(/"/g, '&quot;')}" data-node="${snippets.node.replace(/"/g, '&quot;')}">${snippets.curl}</code></pre>
+                    </div>
+
+                    <div>
+                        <h4 class="block-title">
+                             <span><i class="material-icons text-sm mr-1.5 align-middle">storage</i>SERVER RESPONSE</span>
+                             <button onclick="copyToClipboard(document.getElementById('response-body-${catIndex}-${endpointIndex}').innerText, this)" class="copy-btn"><i class="material-icons text-base align-middle">content_copy</i></button>
+                        </h4>
+                        <div id="response-body-${catIndex}-${endpointIndex}" class="bg-slate-950 text-slate-100 p-3 rounded-xl text-xs">
+                            <div class="p-2 space-y-2">
+                                <div class="h-3 w-1/3 skeleton rounded-lg"></div>
+                                <div class="h-3 w-2/3 skeleton rounded-lg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const responseBodyDiv = document.getElementById(`response-body-${catIndex}-${endpointIndex}`);
+
+            try {
+                const response = await fetch(fullPath, fetchOptions);
+                const contentType = response.headers.get('content-type') || '';
+
+                let responseBodyContent = '';
+                if (!response.ok) {
+                    const errText = await response.text().catch(() => '');
+                    throw new Error(`${response.status} ${response.statusText}\n${errText}`);
                 }
-              }
+
+                if (contentType.includes('application/json')) {
+                    const data = await response.json();
+                    responseBodyContent = `<pre class="max-h-80 overflow-auto"><code class="language-json">${JSON.stringify(data, null, 2)}</code></pre>`;
+                    setTimeout(() => hlHighlight(responseBodyDiv.querySelector('code')), 0);
+                } else if (contentType.startsWith('image/')) {
+                    const blob = await response.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+                    responseBodyContent = `<img src="${imageUrl}" class="max-w-full h-auto rounded-xl">`;
+                } else {
+                    const text = await response.text();
+                    responseBodyContent = `<pre class="max-h-80 overflow-auto">${text}</pre>`;
+                }
+                responseBodyDiv.innerHTML = responseBodyContent;
+
+            } catch (err) {
+                let errMessage = String(err);
+                if (err.message && err.message.startsWith('404')) {
+                    errMessage = `Error 404: Not Found.\n\nEndpoint tidak ditemukan. Pastikan URL dan parameter sudah benar.`;
+                }
+                responseBodyDiv.innerHTML = `<pre class="text-rose-400 max-h-80 overflow-auto">${errMessage}</pre>`;
             }
-          }
+            clearButton.classList.remove('hidden');
         }
-      }
-    },
-    "/download/tiktok": {
-      "get": {
-        "tags": ["Downloader"],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string", "format": "uri" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "result": {
-                      "type": "object",
-                      "properties": {
-                        "url": { "type": "string", "example": "https://tikwm.com/video.mp4" },
-                        "title": { "type": "string", "example": "Judul Video TikTok" },
-                        "author": { "type": "string", "example": "Username TikTok" },
-                        "thumb": { "type": "string", "format": "uri", "example": "https://tikwm.com/thumb.jpg" },
-                        "video_sd": { "type": "string", "format": "uri", "example": "https://tikwm.com/video_sd.mp4" },
-                        "video_hd": { "type": "string", "format": "uri", "example": "https://tikwm.com/video_hd.mp4" },
-                        "music": { "type": "string", "format": "uri", "example": "https://tikwm.com/music.mp3" }
-                      }
+
+        function clearResponse(catIndex, endpointIndex) {
+            const responseDiv = document.getElementById(`response-${catIndex}-${endpointIndex}`);
+            const responseContent = document.getElementById(`response-content-${catIndex}-${endpointIndex}`);
+            const clearButton = document.getElementById(`clear-${catIndex}-${endpointIndex}`);
+
+            responseDiv.classList.add('fade-out');
+            clearButton.classList.add('hidden');
+
+            setTimeout(() => {
+                responseContent.innerHTML = '';
+                responseDiv.classList.add('hidden');
+                responseDiv.classList.remove('fade-out');
+            }, 200);
+        }
+
+        // Load APIs dari OpenAPI Spec
+        async function loadApis() {
+            const apiList = document.getElementById('apiList');
+            try {
+                const response = await fetch('/src/openapi.json');
+                const data = await response.json();
+
+                const categories = {};
+                if (data.tags) {
+                    data.tags.forEach(tag => {
+                        categories[tag.name] = { name: tag.name, items: [] };
+                    });
+                }
+
+                Object.keys(data.paths).forEach(path => {
+                    const pathItem = data.paths[path];
+                    Object.keys(pathItem).forEach(method => {
+                        const endpoint = pathItem[method];
+                        const tagName = endpoint.tags && endpoint.tags.length > 0 ? endpoint.tags[0] : 'Uncategorized';
+
+                        if (!categories[tagName]) {
+                            categories[tagName] = { name: tagName, items: [] };
+                        }
+
+                        categories[tagName].items.push({
+                            path: path,
+                            method: method.toUpperCase(),
+                            name: endpoint.summary || '',
+                            desc: endpoint.description || '',
+                            status: endpoint.deprecated ? 'deprecated' : 'ready',
+                            parameters: endpoint.parameters,
+                            requestBody: endpoint.requestBody
+                        });
+                    });
+                });
+
+                let html = '';
+                Object.values(categories).forEach((category, catIndex) => {
+                    if (category.items.length === 0) return;
+
+                    html += `
+                    <div class="category-group" data-category="${category.name}">
+                        <div class="glass-card overflow-hidden transition-all duration-300">
+                            <button onclick="toggleCategory(${catIndex})" class="w-full px-5 py-4 text-left flex items-center justify-between transition-colors">
+                                <h2 class="font-bold flex items-center text-slate-800 dark:text-slate-100 text-sm">
+                                    <span class="material-icons text-sm mr-3 text-white bg-slate-900 dark:bg-slate-100 dark:text-slate-900 p-1.5 rounded-lg">folder</span>
+                                    <span class="truncate max-w-xs">${category.name}</span>
+                                    <span class="ml-2 text-xs font-normal text-slate-400">(${category.items.length})</span>
+                                </h2>
+                                <span class="material-icons text-slate-400 transition-transform duration-150" id="category-icon-${catIndex}">expand_more</span>
+                            </button>
+                            
+                            <div id="category-${catIndex}" class="hidden border-t border-slate-200 dark:border-slate-800">`;
+
+                    category.items.forEach((item, endpointIndex) => {
+                        const method = item.method;
+                        const path = item.path;
+                        const statusClass = item.status === 'deprecated' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
+                        const methodClass = method === 'DELETE' ? 'bg-rose-600' : (method === 'PUT' ? 'bg-amber-600' : 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900');
+
+                        html += `
+                            <div id="${item.path.split('/').pop()}" class="border-b last:border-b-0 border-slate-200 dark:border-slate-800/60 api-item" 
+                                 data-method="${method}" data-path="${path}" data-alias="${item.name}" 
+                                 data-description="${item.desc}" data-category="${category.name}">
+                                <button onclick="toggleEndpoint(${catIndex}, ${endpointIndex})" class="w-full px-5 py-3.5 text-left flex items-center justify-between hover:bg-slate-100/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <div class="flex items-center min-w-0 flex-1">
+                                        <span class="inline-block px-2.5 py-1 text-[10px] font-extrabold tracking-wider rounded-md mr-3 flex-shrink-0 ${methodClass}">
+                                            ${method}
+                                        </span>
+                                        <div class="flex flex-col min-w-0 flex-1">
+                                            <span class="font-bold truncate max-w-[90%] font-mono text-xs text-slate-800 dark:text-slate-100" title="${path}">${path}</span>
+                                            <div class="flex items-center gap-2 mt-0.5">
+                                                ${item.name ? `<span class="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-[80%]" title="${item.name}">${item.name}</span>` : ''}
+                                                <span class="px-1.5 py-0.2 text-[9px] font-bold rounded ${statusClass}">${item.status}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="material-icons text-slate-400 transition-transform duration-150 flex-shrink-0" id="endpoint-icon-${catIndex}-${endpointIndex}">expand_more</span>
+                                </button>
+                                
+                                <div id="endpoint-${catIndex}-${endpointIndex}" class="hidden bg-slate-100/40 dark:bg-slate-900/40 p-5 border-t border-slate-200 dark:border-slate-800 space-y-4">
+                                    ${item.desc ? `<div class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">${item.desc}</div>` : ''}`;
+
+                        if (item.status !== 'deprecated') {
+                            html += `
+                                <div class="pt-2">
+                                    <div class="text-slate-900 dark:text-slate-100 font-extrabold text-xs mb-3 flex items-center tracking-wider">
+                                        <i class="material-icons text-sm mr-1.5">play_arrow</i>
+                                        TRY IT OUT
+                                    </div>
+                                    <div>
+                                        <form id="form-${catIndex}-${endpointIndex}" onsubmit="executeRequest(event, ${catIndex}, ${endpointIndex}, '${method}', '${path}')">
+                                            <div class="mb-4 space-y-3">`;
+
+                            if (item.parameters) {
+                                item.parameters.forEach(param => {
+                                    const schema = param.schema || {};
+                                    const isReq = !!param.required;
+                                    const label = `${param.name} ${isReq ? '<span class="text-rose-500">*</span>' : ''}`;
+                                    const desc = param.description ? `<div class="text-[10px] text-slate-400 mt-1">${param.description}</div>` : '';
+                                    const placeholder = (schema.example ?? schema.default ?? '') + '';
+
+                                    if (Array.isArray(schema.enum) && schema.enum.length) {
+                                        html += `
+                                            <div>
+                                              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">${label}</label>
+                                              <select name="${param.name}" class="w-full px-3.5 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-xs focus:outline-none focus:border-slate-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100" ${isReq ? 'required' : ''}>
+                                                ${schema.enum.map(v => `<option value="${String(v)}">${String(v)}</option>`).join('')}
+                                              </select>
+                                              ${desc}
+                                            </div>`;
+                                    } else {
+                                        let type = (schema.type === 'number' || schema.type === 'integer') ? 'number' : 'text';
+                                        if (schema.type === 'boolean') {
+                                            html += `
+                                              <div>
+                                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">${label}</label>
+                                                <select name="${param.name}" class="w-full px-3.5 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-xs focus:outline-none focus:border-slate-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100" ${isReq ? 'required' : ''}>
+                                                  <option value="true">true</option>
+                                                  <option value="false">false</option>
+                                                </select>
+                                                ${desc}
+                                              </div>`;
+                                        } else {
+                                            html += `
+                                              <div>
+                                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">${label}</label>
+                                                <input type="${type}" name="${param.name}"
+                                                  class="w-full px-3.5 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-xs focus:outline-none focus:border-slate-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400"
+                                                  placeholder="${placeholder.replace(/"/g,'&quot;')}" ${isReq ? 'required' : ''}>
+                                                ${desc}
+                                              </div>`;
+                                        }
+                                    }
+                                });
+                            }
+
+                            if (item.requestBody && item.requestBody.content) {
+                                const content = item.requestBody.content;
+
+                                if (content['multipart/form-data']) {
+                                    const schema = content['multipart/form-data'].schema || { properties: {} };
+                                    const required = schema.required || [];
+                                    Object.keys(schema.properties || {}).forEach(propName => {
+                                        const prop = schema.properties[propName] || {};
+                                        const isRequired = required.includes(propName);
+                                        const label = `${propName} ${isRequired ? '<span class="text-rose-500">*</span>' : ''}`;
+                                        const desc = prop.description ? `<div class="text-[10px] text-slate-400 mt-1">${prop.description}</div>` : '';
+                                        const placeholder = (prop.example ?? prop.default ?? '') + '';
+                                        const isFile = prop.format === 'binary';
+
+                                        if (isFile) {
+                                            let accept = '';
+                                            const propDesc = (prop.description || '').toLowerCase();
+                                            if (propName.toLowerCase().includes('image') || propDesc.includes('gambar')) {
+                                                accept = 'accept="image/*"';
+                                            } else if (propName.toLowerCase().includes('video') || propDesc.includes('vidio')) {
+                                                accept = 'accept="video/*"';
+                                            }
+                                            html += `
+                                                <div>
+                                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">${label}</label>
+                                                    <input type="file" name="${propName}" ${accept}
+                                                        class="w-full px-3.5 py-2 border border-slate-200 dark:border-slate-800 rounded-xl text-xs focus:outline-none focus:border-slate-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                                                        ${isRequired ? 'required' : ''}>
+                                                    ${desc}
+                                                </div>`;
+                                        } else if (Array.isArray(prop.enum) && prop.enum.length) {
+                                            html += `
+                                                <div>
+                                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">${label}</label>
+                                                    <select name="${propName}" class="w-full px-3.5 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-xs focus:outline-none focus:border-slate-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100" ${isRequired ? 'required' : ''}>
+                                                        ${prop.enum.map(v => `<option value="${String(v)}">${String(v)}</option>`).join('')}
+                                                    </select>
+                                                    ${desc}
+                                                </div>`;
+                                        } else {
+                                            let inputType = 'text';
+                                            if (prop.type === 'number' || prop.type === 'integer') {
+                                                inputType = 'number';
+                                            }
+                                            html += `
+                                                <div>
+                                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">${label}</label>
+                                                    <input type="${inputType}" name="${propName}"
+                                                        class="w-full px-3.5 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-xs focus:outline-none focus:border-slate-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400"
+                                                        placeholder="${placeholder.replace(/"/g, '&quot;')}" ${isRequired ? 'required' : ''}>
+                                                    ${desc}
+                                                </div>`;
+                                        }
+                                    });
+                                }
+
+                                if (content['application/json']) {
+                                    html += `
+                                          <div>
+                                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Body (application/json)</label>
+                                            <textarea name="__raw_json__" rows="5" class="w-full px-3.5 py-2.5 border border-slate-200 dark:border-slate-800 rounded-xl text-xs focus:outline-none focus:border-slate-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-mono placeholder:text-slate-400" placeholder='{"key":"value"}'></textarea>
+                                            <div class="text-[10px] text-slate-400 mt-1">Masukkan JSON valid.</div>
+                                          </div>`;
+                                }
+                            }
+
+                            html += `
+                                            </div>
+                                            <div class="flex items-center gap-2 pt-1">
+                                                <button type="submit" class="bg-slate-900 dark:bg-slate-100 hover:opacity-90 font-bold text-white dark:text-slate-900 px-5 py-2.5 rounded-xl text-xs transition shadow-md">Execute</button>
+                                                <button type="button" id="clear-${catIndex}-${endpointIndex}" onclick="clearResponse(${catIndex}, ${endpointIndex})" class="hidden glass-card hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold text-slate-900 dark:text-slate-100 px-5 py-2.5 rounded-xl text-xs transition">Clear</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>`;
+                        } else {
+                            html += `<div class="text-amber-500 text-xs p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20">Endpoint ini tidak digunakan lagi (deprecated).</div>`;
+                        }
+
+                        html += `
+                                <div id="response-${catIndex}-${endpointIndex}" class="hidden mt-4">
+                                    <div id="response-content-${catIndex}-${endpointIndex}" class="glass-card p-4 text-xs"></div>
+                                </div>
+
+                                <div class="mt-5 pt-3 border-t border-slate-200 dark:border-slate-800">
+                                    <div class="text-slate-900 dark:text-slate-100 font-extrabold text-xs mb-2.5 flex items-center tracking-wider">
+                                        <i class="material-icons text-sm mr-1.5">list</i>
+                                        HTTP STATUS CODES
+                                    </div>
+                                    <div class="glass-card overflow-hidden">
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-xs">
+                                                <thead class="bg-slate-100/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+                                                    <tr>
+                                                        <th class="px-4 py-2.5 text-left font-bold text-slate-700 dark:text-slate-300">Code</th>
+                                                        <th class="px-4 py-2.5 text-left font-bold text-slate-700 dark:text-slate-300">Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                                    <tr class="hover:bg-slate-100/30 dark:hover:bg-slate-800/30">
+                                                        <td class="px-4 py-2"><span class="font-mono font-bold text-emerald-500">200</span></td>
+                                                        <td class="px-4 py-2 text-slate-500 dark:text-slate-400">OK - Request successful</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-slate-100/30 dark:hover:bg-slate-800/30">
+                                                        <td class="px-4 py-2"><span class="font-mono font-bold text-rose-500">400</span></td>
+                                                        <td class="px-4 py-2 text-slate-500 dark:text-slate-400">Bad Request - Invalid parameters</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-slate-100/30 dark:hover:bg-slate-800/30">
+                                                        <td class="px-4 py-2"><span class="font-mono font-bold text-rose-500">401</span></td>
+                                                        <td class="px-4 py-2 text-slate-500 dark:text-slate-400">Unauthorized - Missing/Invalid API key</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-slate-100/30 dark:hover:bg-slate-800/30">
+                                                        <td class="px-4 py-2"><span class="font-mono font-bold text-rose-500">404</span></td>
+                                                        <td class="px-4 py-2 text-slate-500 dark:text-slate-400">Not Found - Resource could not be found</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-slate-100/30 dark:hover:bg-slate-800/30">
+                                                        <td class="px-4 py-2"><span class="font-mono font-bold text-amber-500">429</span></td>
+                                                        <td class="px-4 py-2 text-slate-500 dark:text-slate-400">Too Many Requests - Rate limit exceeded</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-slate-100/30 dark:hover:bg-slate-800/30">
+                                                        <td class="px-4 py-2"><span class="font-mono font-bold text-rose-500">500</span></td>
+                                                        <td class="px-4 py-2 text-slate-500 dark:text-slate-400">Internal Server Error</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>`;
+                    });
+                    html += `</div></div></div>`;
+                });
+
+                apiList.innerHTML = html;
+                const categoryGroups = apiList.querySelectorAll('.category-group');
+                categoryGroups.forEach((category, index) => {
+                    category.classList.add('will-fade-in', 'fade-in');
+                    category.style.animationDelay = `${index * 70}ms`;
+                });
+            } catch (error) {
+                apiList.innerHTML = '<p class="text-rose-500 text-xs glass-card p-4">Failed to load API data.</p>';
+                console.error('Error loading API data:', error);
+            }
+        }
+
+        // Notification Loader
+        async function loadNotifications() {
+            const notificationsList = document.getElementById('notifications-list');
+            const unreadCountBadge = document.getElementById('unread-count');
+
+            const fallbackNotifications = [
+                {
+                    title: "Selamat Datang di Zaxius API v1.0",
+                    message: "Nikmati dokumentasi interaktif API kami. Silakan coba fitur Try It Out pada endpoint yang tersedia.",
+                    date: "2026-08-12",
+                    type: "info",
+                    read: false
+                }
+            ];
+
+            try {
+                let notifications = [];
+                
+                const res = await fetch(`/notifications.json?t=${Date.now()}`).catch(() => null);
+                if (res && res.ok) {
+                    notifications = await res.json();
+                } else {
+                    const fallbackRes = await fetch(`/api-page/notifications.json?t=${Date.now()}`).catch(() => null);
+                    if (fallbackRes && fallbackRes.ok) {
+                        notifications = await fallbackRes.json();
+                    } else {
+                        notifications = fallbackNotifications;
                     }
-                  }
                 }
-              }
-            }
-          },
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/download/youtube": {
-      "get": {
-        "tags": ["Downloader"],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "https://youtu.be/M7y9sIvMGjw"
-            }
-          }
-        ],
-        "responses": {
-          "200": {},
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/download/instagram": {
-      "get": {
-        "tags": ["Downloader"],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "https://www.instagram.com/reel/DarifkCPcVA/"
-            }
-          }
-        ],
-        "responses": {
-          "200": {},
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/search/lyrics": {
-      "get": {
-        "tags": ["Search"],
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "bulan madu"
-            }
-          }
-        ],
-        "responses": {
-          "200": {},
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/search/pinterest": {
-      "get": {
-        "tags": ["Search"],
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "cat"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 5,
-              "example": 5
-            }
-          }
-        ],
-        "responses": {
-          "200": {},
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/image/bluearchive": {
-      "get": {
-        "tags": ["Image"],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "images": {
-                      "type": "array",
-                      "items": { "type": "string", "format": "uri" }
+
+                if (!Array.isArray(notifications)) {
+                    notifications = notifications ? [notifications] : [];
+                }
+
+                notificationsList.innerHTML = '';
+                let unreadCount = 0;
+
+                notifications.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+                notifications.forEach((notif, index) => {
+                    if (!notif.read) unreadCount++;
+
+                    let typeBadge = '';
+                    if (notif.type === 'update') {
+                        typeBadge = '<span class="text-[9px] font-extrabold bg-blue-500/10 text-blue-500 border border-blue-500/20 px-1.5 py-0.5 rounded-md mr-2">UPDATE</span>';
+                    } else if (notif.type === 'warning') {
+                        typeBadge = '<span class="text-[9px] font-extrabold bg-amber-500/10 text-amber-500 border border-amber-500/20 px-1.5 py-0.5 rounded-md mr-2">WARNING</span>';
+                    } else if (notif.type === 'info') {
+                        typeBadge = '<span class="text-[9px] font-extrabold bg-slate-500/10 text-slate-400 border border-slate-500/20 px-1.5 py-0.5 rounded-md mr-2">INFO</span>';
                     }
-                  }
-                }
-              }
-            }
-          },
-          "500": {}
-        }
-      }
-    },
-    "/image/loli": {
-      "get": {
-        "tags": ["Image"],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "500": {}
-        }
-      }
-    },
-    "/image/mpls": {
-      "get": {
-        "tags": ["Image"],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uri"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/image/papayang": {
-      "get": {
-        "tags": ["Image"],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "images": {
-                      "type": "array",
-                      "items": { "type": "string", "format": "uri" }
+
+                    let formattedDate = '-';
+                    if (notif.date) {
+                        const parsedDate = new Date(notif.date);
+                        if (!isNaN(parsedDate.getTime())) {
+                            formattedDate = parsedDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' });
+                        } else {
+                            formattedDate = notif.date;
+                        }
                     }
-                  }
+
+                    const notifElement = document.createElement('div');
+                    notifElement.className = `glass-card p-4 text-xs will-fade-in fade-in transition-opacity ${notif.read ? 'opacity-60' : ''}`;
+                    notifElement.style.animationDelay = `${index * 50}ms`;
+                    notifElement.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1 pr-3">
+                                <div class="flex items-center mb-1">
+                                    ${typeBadge}
+                                    <p class="font-bold text-slate-800 dark:text-slate-200">${notif.title || 'Tanpa Judul'}</p>
+                                </div>
+                                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${notif.message || '-'}</p>
+                            </div>
+                            <div class="flex flex-col items-end flex-shrink-0 space-y-1">
+                                <span class="text-[10px] text-slate-400">${formattedDate}</span>
+                                ${!notif.read ? '<span class="inline-block w-2 h-2 bg-emerald-500 rounded-full" title="Belum dibaca"></span>' : ''}
+                            </div>
+                        </div>
+                    `;
+                    notificationsList.appendChild(notifElement);
+                });
+
+                if (unreadCount > 0) {
+                    unreadCountBadge.textContent = unreadCount;
+                    unreadCountBadge.classList.remove('hidden');
+                } else {
+                    unreadCountBadge.classList.add('hidden');
                 }
-              }
-            }
-          },
-          "500": {}
-        }
-      }
-    },
-    "/image/wallpaper": {
-      "get": {
-        "tags": ["Image"],
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "Naruto"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "example": 5
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "images": {
-                      "type": "array",
-                      "items": { "type": "string", "format": "uri" }
-                    }
-                  }
+
+                if (notifications.length === 0) {
+                    notificationsList.innerHTML = '<p class="text-center text-slate-400 text-xs py-4 glass-card">Tidak ada notifikasi saat ini.</p>';
                 }
-              }
+
+            } catch (error) {
+                console.error('Gagal memuat notifikasi:', error);
+                notificationsList.innerHTML = `
+                    <div class="p-4 text-center glass-card">
+                        <p class="text-rose-500 text-xs mb-2">Gagal memuat notifikasi</p>
+                        <button onclick="loadNotifications()" class="text-[10px] glass-card px-3 py-1 text-slate-700 dark:text-slate-300">Coba Lagi</button>
+                    </div>`;
+                unreadCountBadge.classList.add('hidden');
             }
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "boolean", "example": false },
-                    "message": { "type": "string", "example": "Error message here" }
-                  }
+        }
+
+        // Search Filter
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const apiItems = document.querySelectorAll('.api-item');
+            const categories = document.querySelectorAll('.category-group');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            apiItems.forEach(item => {
+                const path = item.dataset.path.toLowerCase();
+                const alias = item.dataset.alias.toLowerCase();
+                const description = item.dataset.description.toLowerCase();
+                const category = item.dataset.category.toLowerCase();
+
+                if (path.includes(searchTerm) || alias.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
                 }
-              }
+            });
+
+            categories.forEach(category => {
+                const visibleItems = category.querySelectorAll('.api-item:not([style*="display: none"])');
+                category.style.display = visibleItems.length > 0 ? '' : 'none';
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        });
+
+        // Dark/Light Theme Switcher Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeToggleDarkIcon = document.getElementById('themeToggleDarkIcon');
+        const themeToggleLightIcon = document.getElementById('themeToggleLightIcon');
+
+        function initTheme() {
+            const userTheme = localStorage.getItem('color-theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (userTheme === 'dark' || (!userTheme && systemDark)) {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
             }
-          }
         }
-      }
-    },
-    "/maker/brat": {
-      "get": {
-        "tags": ["Maker"],
-        "parameters": [
-          {
-            "name": "text",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "Hello Dunia"
+
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                themeToggleDarkIcon.classList.add('hidden');
+                themeToggleLightIcon.classList.remove('hidden');
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/maker/brathd": {
-      "get": {
-        "tags": ["Maker"],
-        "parameters": [
-          {
-            "name": "text",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "hai"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/maker/fakedana": {
-      "get": {
-        "tags": ["Maker"],
-        "parameters": [
-          {
-            "name": "nominal",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "10000"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/maker/iqc": {
-      "get": {
-        "tags": ["Maker"],
-        "parameters": [
-          {
-            "name": "text",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "halo"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/tools/ssweb": {
-      "get": {
-        "tags": ["Tools"],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "https://google.com"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "image/png": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/stalker/pinterest": {
-      "get": {
-        "tags": ["Stalker"],
-        "parameters": [
-          {
-            "name": "username",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "yuliii___"
-            }
-          }
-        ],
-        "responses": {
-          "200": {},
-          "400": {},
-          "500": {}
-        }
-      }
-    },
-    "/news/detik": {
-      "get": {
-        "tags": ["News"],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "berita": { "type": "string", "example": "Judul berita terpopuler Detik" },
-                      "berita_url": { "type": "string", "format": "uri", "example": "https://news.detik.com/berita/..." },
-                      "berita_thumb": { "type": "string", "format": "uri", "nullable": true, "example": "https://akcdn.detik.net.id/...jpg" },
-                      "berita_diupload": { "type": "string", "example": "Senin, 25 Nov 2024 10:30 WIB" }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {}
-        }
-      }
-    },
-    "/news/kontan": {
-      "get": {
-        "tags": ["News"],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "berita": { "type": "string", "example": "Rupiah menguat terhadap dolar AS pada perdagangan pagi ini" },
-                      "berita_url": { "type": "string", "format": "uri", "example": "https://www.kontan.co.id/news/rupiah-menguat" },
-                      "berita_thumb": { "type": "string", "format": "uri", "nullable": true, "example": "https://img.kontan.co.id/thumb.jpg" },
-                      "berita_jenis": { "type": "string", "example": "Makro Ekonomi" },
-                      "berita_diupload": { "type": "string", "example": "2 jam lalu" }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {}
-        }
-      }
-    }
-  }
-}
+        });
+
+        // Initialize Page
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            loadApis();
+            loadNotifications();
+        });
+    </script>
+</body>
+</html>
