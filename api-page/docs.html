@@ -71,7 +71,7 @@
         }
 
         .glass-card:hover {
-            border-color: rgba(245, 158, 11, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .glass-header {
@@ -140,7 +140,7 @@
             transition: background 0.1s ease-out;
         }
 
-        /* LIGHTWEIGHT LOGO PULSE */
+        /* LIGHTWEIGHT LOGO PULSE MONOKROM */
         @keyframes pulseLogo {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -151,14 +151,14 @@
             will-change: transform;
         }
 
-        /* LIGHTWEIGHT GLOW DENGAN ACCELERATION */
-        @keyframes donateGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
-            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.45); }
+        /* GLOW HITAM PUTIH SLEEK */
+        @keyframes donateGlowMono {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
+            50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.25); }
         }
 
-        .donate-glow {
-            animation: donateGlow 3s infinite ease-in-out;
+        .donate-glow-mono {
+            animation: donateGlowMono 3s infinite ease-in-out;
         }
 
         /* FADE SLIDE UP UNTUK KONTEN */
@@ -183,21 +183,21 @@
 
     <div id="mouse-spotlight"></div>
 
-    <!-- POP-UP MODAL DONASI (STYLE KAYA LOADING SCREEN & QRIS BESAR) -->
-    <div id="donateModalOverlay" class="fixed inset-0 bg-black/75 backdrop-blur-md opacity-0 invisible transition-all duration-300 z-[180] flex items-center justify-center p-4">
-        <div id="donateModalContent" class="glass-card max-w-md w-full p-6 md:p-8 text-center relative transform scale-95 transition-all duration-300 shadow-2xl border-2 border-amber-500/30 donate-glow transform-gpu">
+    <!-- POP-UP MODAL DONASI (STYLE HITAM-PUTIH / MONOKROM SLEEK) -->
+    <div id="donateModalOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-md opacity-0 invisible transition-all duration-300 z-[180] flex items-center justify-center p-4">
+        <div id="donateModalContent" class="glass-card max-w-md w-full p-6 md:p-8 text-center relative transform scale-95 transition-all duration-300 shadow-2xl border-2 border-slate-300 dark:border-slate-700 donate-glow-mono transform-gpu">
             
-            <button id="closeDonateModal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100 transition p-1 z-10 active:scale-90">
+            <button id="closeDonateModal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition p-1 z-10 active:scale-90">
                 <i class="material-icons text-xl block">close</i>
             </button>
 
-            <!-- ICON DENGAN BADGE HIJAU PING -->
+            <!-- ICON MONOKROM DENGAN BADGE STATUS -->
             <div class="relative w-16 h-16 mx-auto mb-4">
-                <div class="w-full h-full rounded-2xl bg-amber-500/10 border-2 border-amber-500/30 text-amber-500 flex items-center justify-center shadow-lg animate-pulse-logo">
+                <div class="w-full h-full rounded-2xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 flex items-center justify-center shadow-lg animate-pulse-logo">
                     <i class="material-icons text-3xl">favorite</i>
                 </div>
-                <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-slate-50 dark:border-[#090d16] flex items-center justify-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-slate-900 dark:bg-slate-100 border-2 border-slate-50 dark:border-[#090d16] flex items-center justify-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-100 dark:bg-slate-900 animate-ping"></span>
                 </div>
             </div>
 
@@ -208,8 +208,8 @@
                 </p>
             </div>
 
-            <!-- TAB SWITCHER -->
-            <div class="flex rounded-xl bg-slate-200/80 dark:bg-slate-800/80 p-1 mb-5 font-sans text-xs">
+            <!-- TAB SWITCHER MONOKROM -->
+            <div class="flex rounded-xl bg-slate-200 dark:bg-slate-800 p-1 mb-5 font-sans text-xs border border-slate-300 dark:border-slate-700">
                 <button type="button" id="tabQrisBtn" onclick="switchDonateTab('qris')" class="flex-1 py-2 rounded-lg font-bold bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 transition shadow-sm active:scale-[0.98]">
                     QRIS All Payment
                 </button>
@@ -220,38 +220,38 @@
 
             <!-- TAB CONTENT: QRIS -->
             <div id="donateQrisContent" class="space-y-3">
-                <div class="p-3 bg-white rounded-2xl border-2 border-slate-300 dark:border-slate-700 inline-block shadow-2xl relative overflow-hidden group">
+                <div class="p-3 bg-white rounded-2xl border-2 border-slate-900 dark:border-slate-100 inline-block shadow-2xl relative overflow-hidden group">
                     <img src="https://u.pone.rs/mktdomwx.jpg" alt="QRIS Zaxius API" class="w-64 h-64 md:w-72 md:h-72 object-cover rounded-xl mx-auto block transition-transform duration-300 group-hover:scale-[1.02]">
                 </div>
-                <p class="text-[11px] text-slate-400 font-sans font-medium">Scan QRIS menggunakan BCA, GoPay, OVO, ShopeePay, DANA, dll.</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans font-medium">Scan QRIS menggunakan BCA, GoPay, OVO, ShopeePay, DANA, dll.</p>
             </div>
 
             <!-- TAB CONTENT: DANA -->
             <div id="donateDanaContent" class="hidden space-y-3 font-sans py-4">
-                <div class="p-5 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-left space-y-3 shadow-sm">
+                <div class="p-5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-left space-y-3 shadow-sm">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-extrabold uppercase text-sky-500 tracking-wider flex items-center gap-1.5">
+                        <span class="text-xs font-extrabold uppercase text-slate-900 dark:text-slate-100 tracking-wider flex items-center gap-1.5">
                             <i class="material-icons text-base">account_balance_wallet</i> DANA E-Wallet
                         </span>
                         <span class="text-xs font-bold text-slate-400">a.n P******</span>
                     </div>
-                    <div class="flex items-center justify-between bg-white dark:bg-slate-900 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner">
+                    <div class="flex items-center justify-between bg-white dark:bg-slate-950 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-800 shadow-inner">
                         <span id="danaNumberText" class="font-mono text-base font-extrabold text-slate-900 dark:text-slate-100">085709066454</span>
-                        <button onclick="copyToClipboard('085709066454', this)" class="text-xs text-sky-500 hover:text-sky-400 font-bold flex items-center gap-1 transition active:scale-95">
+                        <button onclick="copyToClipboard('085709066454', this)" class="text-xs text-slate-900 dark:text-slate-100 hover:opacity-80 font-bold flex items-center gap-1 transition active:scale-95">
                             <i class="material-icons text-base">content_copy</i> Salin
                         </button>
                     </div>
                 </div>
-                <p class="text-[11px] text-slate-400 font-sans">Transfer langsung via aplikasi DANA ke nomor di atas.</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans">Transfer langsung via aplikasi DANA ke nomor di atas.</p>
             </div>
 
-            <!-- DEKORASI PROGRESS BAR -->
+            <!-- DEKORASI PROGRESS BAR MONOKROM -->
             <div class="w-36 h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mx-auto mt-6">
-                <div class="h-full bg-amber-500 rounded-full animate-[pulse_1.5s_infinite]"></div>
+                <div class="h-full bg-slate-900 dark:bg-slate-100 rounded-full animate-[pulse_1.5s_infinite]"></div>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800/60">
-                <button id="dismissDonateModal" class="w-full py-2 text-xs font-bold text-slate-400 hover:text-slate-200 transition font-sans active:scale-95">
+            <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800">
+                <button id="dismissDonateModal" class="w-full py-2 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition font-sans active:scale-95">
                     Nanti Saja
                 </button>
             </div>
@@ -323,7 +323,8 @@
             </div>
             
             <div class="flex items-center space-x-2">
-                <button onclick="showDonatePopup()" class="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-amber-500/20 active:scale-95 transition transform-gpu">
+                <!-- TOMBOL DONASI MONOKROM -->
+                <button onclick="showDonatePopup()" class="px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-bold rounded-xl flex items-center gap-1.5 hover:opacity-90 active:scale-95 transition transform-gpu shadow-sm">
                     <i class="material-icons text-sm">favorite</i> Donasi
                 </button>
 
@@ -357,7 +358,7 @@
                     <!-- SEARCH BAR -->
                     <div class="relative">
                         <i class="material-icons text-slate-400 text-sm absolute left-3 top-2.5">search</i>
-                        <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 dark:border-slate-800 rounded-lg bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition">
+                        <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 dark:border-slate-800 rounded-lg bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-slate-500 transition">
                     </div>
 
                     <!-- LIST NAVIGASI KATEGORI -->
