@@ -290,7 +290,7 @@
     },
     "/image/waifu": {
   "get": {
-    "tags": ["Anime / Image"],
+    "tags": ["Image"],
     "responses": {
       "200": {
         "content": {
