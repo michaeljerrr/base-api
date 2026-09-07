@@ -48,13 +48,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* HARDWARE ACCELERATED GLASS CARDS */
         .glass-card {
             background: var(--glass-light);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-light);
             border-radius: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+            will-change: transform;
         }
 
         html.dark .glass-card {
@@ -62,10 +64,14 @@
             border-color: var(--border-dark);
         }
 
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
         .glass-header {
             background: var(--glass-light);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-light);
         }
 
@@ -86,18 +92,72 @@
             transition: background 0.1s ease-out;
         }
 
-        /* LOADING SCREEN ANIMATION */
+        /* LIGHTWEIGHT MOBILE ANIMATIONS */
         #preloader {
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
         }
 
         @keyframes pulseLogo {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.06); }
+            50% { transform: scale(1.05); }
         }
 
         .animate-pulse-logo {
-            animation: pulseLogo 2s infinite ease-in-out;
+            animation: pulseLogo 2.5s infinite ease-in-out;
+            will-change: transform;
+        }
+
+        /* SHIMMER EFFECT UNTUK TOMBOL WA */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        .animate-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animate-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s infinite;
+        }
+
+        /* STAGGERED FADE SLIDE UP ANIMATION FOR CARDS */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        /* DELAY CLASSES */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* GLOW EFFECT UNTUK MODAL WA */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.45); }
+        }
+
+        .wa-glow {
+            animation: pulseGlow 3s infinite ease-in-out;
         }
     </style>
 </head>
@@ -129,13 +189,13 @@
     </div>
 
     <!-- POP-UP MODAL JOIN WHATSAPP CHANNEL -->
-    <div id="waModalOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-md opacity-0 invisible transition-all duration-300 z-[180] flex items-center justify-center p-4">
-        <div id="waModalContent" class="glass-card max-w-sm w-full p-6 text-center relative transform scale-95 transition-all duration-300 shadow-2xl border border-emerald-500/30">
-            <button id="closeWaModal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100 transition p-1">
+    <div id="waModalOverlay" class="fixed inset-0 bg-black/75 backdrop-blur-md opacity-0 invisible transition-all duration-300 z-[180] flex items-center justify-center p-4">
+        <div id="waModalContent" class="glass-card max-w-sm w-full p-6 text-center relative transform scale-95 transition-all duration-300 shadow-2xl border border-emerald-500/40 wa-glow transform-gpu">
+            <button id="closeWaModal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100 transition p-1 active:scale-90">
                 <i class="material-icons text-lg block">close</i>
             </button>
 
-            <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center mx-auto mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 flex items-center justify-center mx-auto mb-4 animate-pulse-logo">
                 <i class="fa-brands fa-whatsapp text-3xl"></i>
             </div>
 
@@ -145,10 +205,10 @@
             </p>
 
             <div class="space-y-2.5 font-sans">
-                <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" id="joinWaBtn" class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" id="joinWaBtn" class="animate-shimmer w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 transform-gpu">
                     <i class="fa-brands fa-whatsapp text-base"></i> Gabung Sekarang
                 </a>
-                <button id="dismissWaModal" class="w-full py-2.5 px-4 text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
+                <button id="dismissWaModal" class="w-full py-2.5 px-4 text-xs font-semibold text-slate-400 hover:text-slate-200 active:scale-[0.98] transition">
                     Nanti Saja
                 </button>
             </div>
@@ -158,13 +218,13 @@
     <div id="mouse-spotlight"></div>
 
     <!-- SIDEBAR DRAWER (NAVIGASI GARIS 3) -->
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 glass-card rounded-none border-r border-y-0 border-l-0 transform -translate-x-full duration-300 ease-in-out z-[100] flex flex-col shadow-2xl">
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 glass-card rounded-none border-r border-y-0 border-l-0 transform -translate-x-full duration-300 ease-in-out z-[100] flex flex-col shadow-2xl transform-gpu">
         <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-100 flex items-center justify-center text-white dark:text-slate-900 font-black text-sm flex-shrink-0">Z</div>
+                <div class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-100 flex items-center justify-center text-white dark:text-slate-900 font-black text-sm flex-shrink-0 shadow-sm">Z</div>
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">Zaxius Menu</span>
             </div>
-            <button id="sidebarClose" class="p-2 glass-card hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl transition">
+            <button id="sidebarClose" class="p-2 glass-card hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl transition active:scale-90">
                 <i class="material-icons text-lg block">close</i>
             </button>
         </div>
@@ -173,10 +233,10 @@
                 <div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Main Navigation</p>
                     <div class="space-y-2">
-                        <a href="/" class="flex items-center py-3 px-4 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm transition">
+                        <a href="/" class="flex items-center py-3 px-4 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm transition active:scale-[0.98]">
                             <i class="material-icons text-base mr-3">dashboard</i> Dashboard
                         </a>
-                        <a href="/docs" class="flex items-center py-3 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <a href="/docs" class="flex items-center py-3 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition active:scale-[0.98]">
                             <i class="material-icons text-base mr-3">api</i> Explore Docs
                         </a>
                     </div>
@@ -185,13 +245,13 @@
                 <div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Links & Contact</p>
                     <div class="space-y-2">
-                        <a href="https://github.com" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <a href="https://github.com" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition active:scale-[0.98]">
                             <i class="fa-brands fa-github text-base mr-3"></i> GitHub
                         </a>
-                        <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition active:scale-[0.98]">
                             <i class="fa-brands fa-whatsapp text-base mr-3"></i> WhatsApp Channel
                         </a>
-                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition active:scale-[0.98]">
                             <i class="fa-brands fa-telegram text-base mr-3"></i> Contact Me
                         </a>
                     </div>
@@ -209,11 +269,11 @@
     <header class="glass-header sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition flex items-center justify-center">
+                <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition active:scale-95 flex items-center justify-center">
                     <i class="material-icons text-xl block">menu</i>
                 </button>
 
-                <a href="/" class="flex items-center gap-3 hover:opacity-90 transition">
+                <a href="/" class="flex items-center gap-3 hover:opacity-90 transition transform-gpu active:scale-95">
                     <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex-shrink-0">
                         <img src="/src/banner.gif" alt="Zaxius Banner GIF" class="h-8 w-auto object-cover block">
                     </div>
@@ -225,7 +285,7 @@
             </div>
             
             <div class="flex items-center space-x-2">
-                <button id="themeToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition">
+                <button id="themeToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition active:scale-95">
                     <i id="themeToggleDarkIcon" class="material-icons text-lg hidden block">dark_mode</i>
                     <i id="themeToggleLightIcon" class="material-icons text-lg hidden block">light_mode</i>
                 </button>
@@ -236,34 +296,34 @@
     <main class="max-w-5xl mx-auto px-6 py-8 space-y-8">
 
         <!-- HERO BANNER SECTION -->
-        <div class="glass-card p-6 md:p-8 relative overflow-hidden space-y-6">
+        <div class="glass-card p-6 md:p-8 relative overflow-hidden space-y-6 animate-fade-up delay-1 transform-gpu">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 <div class="md:col-span-7 space-y-4">
                     <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-mono">
                         Interactive REST API Documentation for Developers. Akses endpoint siap pakai mulai dari AI, Media Downloader, hingga Utility Tools dengan respons cepat, stabil, dan dokumentasi interaktif.
                     </p>
                     <div>
-                        <a href="/docs" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs rounded-xl shadow-lg hover:opacity-90 transition">
+                        <a href="/docs" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition transform-gpu">
                             <i class="material-icons text-base">rocket_launch</i> Explore Docs
                         </a>
                     </div>
                 </div>
-                <div class="md:col-span-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
-                    <img src="/src/banner.jpg" alt="Zaxius Banner" class="w-full h-36 md:h-40 object-cover block hover:scale-105 transition-transform duration-500">
+                <div class="md:col-span-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md group">
+                    <img src="/src/banner.jpg" alt="Zaxius Banner" class="w-full h-36 md:h-40 object-cover block group-hover:scale-105 transition-transform duration-500">
                 </div>
             </div>
 
             <!-- STATS COUNTER -->
             <div class="grid grid-cols-3 gap-3 pt-2 border-t border-slate-200/60 dark:border-slate-800/60">
-                <div class="glass-card p-3 text-center">
+                <div class="glass-card p-3 text-center hover:scale-[1.02] transition-transform">
                     <p id="stat-endpoints" class="text-lg md:text-xl font-extrabold text-slate-900 dark:text-slate-100">0</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">ENDPOINTS</p>
                 </div>
-                <div class="glass-card p-3 text-center">
+                <div class="glass-card p-3 text-center hover:scale-[1.02] transition-transform">
                     <p id="stat-categories" class="text-lg md:text-xl font-extrabold text-slate-900 dark:text-slate-100">0</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">CATEGORIES</p>
                 </div>
-                <div class="glass-card p-3 text-center">
+                <div class="glass-card p-3 text-center hover:scale-[1.02] transition-transform">
                     <p class="text-lg md:text-xl font-extrabold text-slate-900 dark:text-slate-100">24/7</p>
                     <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">SUPPORT</p>
                 </div>
@@ -288,7 +348,7 @@
         </div>
 
         <!-- TWO COLUMN SECTION: KEY FEATURES & GUIDE -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 animate-fade-up delay-2 transform-gpu">
             
             <!-- LEFT: KEY FEATURES -->
             <div class="md:col-span-5 space-y-3">
@@ -296,7 +356,7 @@
                     <i class="material-icons text-sm">star</i> KEY FEATURES
                 </h2>
 
-                <div class="glass-card p-4 flex items-center gap-3">
+                <div class="glass-card p-4 flex items-center gap-3 hover:translate-x-1 transition-transform">
                     <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
                         <i class="material-icons text-lg text-slate-800 dark:text-slate-100">flash_on</i>
                     </div>
@@ -306,7 +366,7 @@
                     </div>
                 </div>
 
-                <div class="glass-card p-4 flex items-center gap-3">
+                <div class="glass-card p-4 flex items-center gap-3 hover:translate-x-1 transition-transform">
                     <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
                         <i class="material-icons text-lg text-slate-800 dark:text-slate-100">shield</i>
                     </div>
@@ -316,7 +376,7 @@
                     </div>
                 </div>
 
-                <div class="glass-card p-4 flex items-center gap-3">
+                <div class="glass-card p-4 flex items-center gap-3 hover:translate-x-1 transition-transform">
                     <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
                         <i class="material-icons text-lg text-slate-800 dark:text-slate-100">code</i>
                     </div>
@@ -326,7 +386,7 @@
                     </div>
                 </div>
 
-                <div class="glass-card p-4 flex items-center gap-3">
+                <div class="glass-card p-4 flex items-center gap-3 hover:translate-x-1 transition-transform">
                     <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
                         <i class="material-icons text-lg text-slate-800 dark:text-slate-100">analytics</i>
                     </div>
@@ -384,7 +444,7 @@
         </div>
 
         <!-- TWO COLUMN SECTION: EXAMPLE RESPONSE & FAQ -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 animate-fade-up delay-3 transform-gpu">
 
             <!-- LEFT: EXAMPLE RESPONSE -->
             <div class="md:col-span-5 space-y-3">
@@ -430,7 +490,7 @@
         </div>
 
         <!-- FOOTER -->
-        <div class="flex flex-col text-center pb-8 border-t border-slate-200 dark:border-slate-800/60 pt-6">
+        <div class="flex flex-col text-center pb-8 border-t border-slate-200 dark:border-slate-800/60 pt-6 animate-fade-up delay-4">
             <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">© 2026 Zaxius API — Interactive Developer Documentation.</p>
         </div>
     </main>
@@ -444,13 +504,12 @@
         const joinWaBtn = document.getElementById('joinWaBtn');
 
         function showWaPopup() {
-            // Tampilkan pop-up jika pengguna belum pernah menutup/join di sesi ini
             if (!sessionStorage.getItem('wa_popup_shown')) {
                 setTimeout(() => {
                     waModalOverlay.classList.remove('opacity-0', 'invisible');
                     waModalContent.classList.remove('scale-95');
                     waModalContent.classList.add('scale-100');
-                }, 500); // Tampil 0.5 detik setelah preloader selesai
+                }, 400);
             }
         }
 
@@ -472,7 +531,7 @@
                 setTimeout(() => {
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
-                    showWaPopup(); // Memanggil pop-up setelah loading usai
+                    showWaPopup();
                 }, 3000);
             }
         });
