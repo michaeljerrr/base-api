@@ -85,10 +85,48 @@
             background: radial-gradient(600px circle at 0px 0px, rgba(255, 255, 255, 0.05), transparent 80%);
             transition: background 0.1s ease-out;
         }
+
+        /* LOADING SCREEN ANIMATION */
+        #preloader {
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .animate-pulse-logo {
+            animation: pulseLogo 2s infinite ease-in-out;
+        }
     </style>
 </head>
 
 <body class="bg-slate-50 dark:bg-[#090d16] text-slate-800 dark:text-slate-100 antialiased font-mono min-h-screen relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- PRELOADER / LOADING SCREEN -->
+    <div id="preloader" class="fixed inset-0 z-[200] bg-slate-50 dark:bg-[#090d16] flex flex-col items-center justify-center p-4">
+        <div class="flex flex-col items-center space-y-5 text-center">
+            <div class="relative">
+                <div class="w-24 h-24 rounded-3xl overflow-hidden border-2 border-slate-300 dark:border-slate-700 shadow-2xl animate-pulse-logo">
+                    <img src="/src/foto.jpg" alt="Zaxius API Logo" class="w-full h-full object-cover block">
+                </div>
+                <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-slate-50 dark:border-[#090d16] flex items-center justify-center">
+                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <h1 class="text-xl font-black text-slate-900 dark:text-slate-100 tracking-tight font-mono">Zaxius API</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-sans">Developer Documentation Platform</p>
+            </div>
+
+            <!-- LOADING BAR -->
+            <div class="w-48 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mt-2">
+                <div class="h-full bg-slate-900 dark:bg-slate-100 rounded-full animate-[pulse_1s_infinite]"></div>
+            </div>
+        </div>
+    </div>
 
     <div id="mouse-spotlight"></div>
 
@@ -371,6 +409,17 @@
     </main>
 
     <script>
+        // PRELOADER LOGIC
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                }, 400); // Tampil singkat lalu memudar halus
+            }
+        });
+
         // Spotlight Effect
         const spotlight = document.getElementById('mouse-spotlight');
         if (spotlight) {
