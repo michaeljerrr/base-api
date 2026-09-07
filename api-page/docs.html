@@ -54,13 +54,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* HARDWARE ACCELERATED GLASS CARDS */
         .glass-card {
             background: var(--glass-light);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-light);
             border-radius: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+            will-change: transform;
         }
 
         html.dark .glass-card {
@@ -68,10 +70,14 @@
             border-color: var(--border-dark);
         }
 
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
         .glass-header {
             background: var(--glass-light);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-light);
         }
 
@@ -81,7 +87,7 @@
         }
 
         .copy-btn {
-            @apply text-slate-400 hover:text-slate-900 dark:hover:text-white p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-150;
+            @apply text-slate-400 hover:text-slate-900 dark:hover:text-white p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-150 active:scale-90;
         }
 
         .block-title {
@@ -134,7 +140,7 @@
             transition: background 0.1s ease-out;
         }
 
-        /* STYLE LOGO PULSE SESUAI PRELOADER LOADING SCREEN */
+        /* LIGHTWEIGHT LOGO PULSE */
         @keyframes pulseLogo {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -142,6 +148,33 @@
 
         .animate-pulse-logo {
             animation: pulseLogo 2.5s infinite ease-in-out;
+            will-change: transform;
+        }
+
+        /* LIGHTWEIGHT GLOW DENGAN ACCELERATION */
+        @keyframes donateGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.45); }
+        }
+
+        .donate-glow {
+            animation: donateGlow 3s infinite ease-in-out;
+        }
+
+        /* FADE SLIDE UP UNTUK KONTEN */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
 </head>
@@ -150,15 +183,15 @@
 
     <div id="mouse-spotlight"></div>
 
-    <!-- POP-UP MODAL DONASI (STYLE KAYA LOADING SCREEN & QRIS LEBIH BESAR) -->
+    <!-- POP-UP MODAL DONASI (STYLE KAYA LOADING SCREEN & QRIS BESAR) -->
     <div id="donateModalOverlay" class="fixed inset-0 bg-black/75 backdrop-blur-md opacity-0 invisible transition-all duration-300 z-[180] flex items-center justify-center p-4">
-        <div id="donateModalContent" class="glass-card max-w-md w-full p-6 md:p-8 text-center relative transform scale-95 transition-all duration-300 shadow-2xl border-2 border-slate-300 dark:border-slate-700/80">
+        <div id="donateModalContent" class="glass-card max-w-md w-full p-6 md:p-8 text-center relative transform scale-95 transition-all duration-300 shadow-2xl border-2 border-amber-500/30 donate-glow transform-gpu">
             
-            <button id="closeDonateModal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100 transition p-1 z-10">
+            <button id="closeDonateModal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-100 transition p-1 z-10 active:scale-90">
                 <i class="material-icons text-xl block">close</i>
             </button>
 
-            <!-- ICON DENGAN BADGE HIJAU PING (SESUAI LOADING SCREEN) -->
+            <!-- ICON DENGAN BADGE HIJAU PING -->
             <div class="relative w-16 h-16 mx-auto mb-4">
                 <div class="w-full h-full rounded-2xl bg-amber-500/10 border-2 border-amber-500/30 text-amber-500 flex items-center justify-center shadow-lg animate-pulse-logo">
                     <i class="material-icons text-3xl">favorite</i>
@@ -177,15 +210,15 @@
 
             <!-- TAB SWITCHER -->
             <div class="flex rounded-xl bg-slate-200/80 dark:bg-slate-800/80 p-1 mb-5 font-sans text-xs">
-                <button type="button" id="tabQrisBtn" onclick="switchDonateTab('qris')" class="flex-1 py-2 rounded-lg font-bold bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 transition shadow-sm">
+                <button type="button" id="tabQrisBtn" onclick="switchDonateTab('qris')" class="flex-1 py-2 rounded-lg font-bold bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 transition shadow-sm active:scale-[0.98]">
                     QRIS All Payment
                 </button>
-                <button type="button" id="tabDanaBtn" onclick="switchDonateTab('dana')" class="flex-1 py-2 rounded-lg font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition">
+                <button type="button" id="tabDanaBtn" onclick="switchDonateTab('dana')" class="flex-1 py-2 rounded-lg font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition active:scale-[0.98]">
                     E-Wallet DANA
                 </button>
             </div>
 
-            <!-- TAB CONTENT: QRIS (UKURAN BESAR & BINGKAI STYLED) -->
+            <!-- TAB CONTENT: QRIS -->
             <div id="donateQrisContent" class="space-y-3">
                 <div class="p-3 bg-white rounded-2xl border-2 border-slate-300 dark:border-slate-700 inline-block shadow-2xl relative overflow-hidden group">
                     <img src="https://u.pone.rs/mktdomwx.jpg" alt="QRIS Zaxius API" class="w-64 h-64 md:w-72 md:h-72 object-cover rounded-xl mx-auto block transition-transform duration-300 group-hover:scale-[1.02]">
@@ -204,7 +237,7 @@
                     </div>
                     <div class="flex items-center justify-between bg-white dark:bg-slate-900 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-inner">
                         <span id="danaNumberText" class="font-mono text-base font-extrabold text-slate-900 dark:text-slate-100">085709066454</span>
-                        <button onclick="copyToClipboard('085709066454', this)" class="text-xs text-sky-500 hover:text-sky-400 font-bold flex items-center gap-1 transition">
+                        <button onclick="copyToClipboard('085709066454', this)" class="text-xs text-sky-500 hover:text-sky-400 font-bold flex items-center gap-1 transition active:scale-95">
                             <i class="material-icons text-base">content_copy</i> Salin
                         </button>
                     </div>
@@ -212,27 +245,27 @@
                 <p class="text-[11px] text-slate-400 font-sans">Transfer langsung via aplikasi DANA ke nomor di atas.</p>
             </div>
 
-            <!-- DEKORASI PROGRESS BAR (SERUPA LOADING SCREEN) -->
+            <!-- DEKORASI PROGRESS BAR -->
             <div class="w-36 h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mx-auto mt-6">
                 <div class="h-full bg-amber-500 rounded-full animate-[pulse_1.5s_infinite]"></div>
             </div>
 
             <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-800/60">
-                <button id="dismissDonateModal" class="w-full py-2 text-xs font-bold text-slate-400 hover:text-slate-200 transition font-sans">
+                <button id="dismissDonateModal" class="w-full py-2 text-xs font-bold text-slate-400 hover:text-slate-200 transition font-sans active:scale-95">
                     Nanti Saja
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MAIN SIDEBAR DRAWER (NAVIGASI GARIS 3) -->
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 glass-card rounded-none border-r border-y-0 border-l-0 transform -translate-x-full duration-300 ease-in-out z-[100] flex flex-col shadow-2xl">
+    <!-- MAIN SIDEBAR DRAWER -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 glass-card rounded-none border-r border-y-0 border-l-0 transform -translate-x-full duration-300 ease-in-out z-[100] flex flex-col shadow-2xl transform-gpu">
         <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-100 flex items-center justify-center text-white dark:text-slate-900 font-black text-sm flex-shrink-0">Z</div>
+                <div class="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-100 flex items-center justify-center text-white dark:text-slate-900 font-black text-sm flex-shrink-0 shadow-sm">Z</div>
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">Zaxius Menu</span>
             </div>
-            <button id="sidebarClose" class="p-2 glass-card hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl transition">
+            <button id="sidebarClose" class="p-2 glass-card hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl transition active:scale-90">
                 <i class="material-icons text-lg block">close</i>
             </button>
         </div>
@@ -241,10 +274,10 @@
                 <div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Main Navigation</p>
                     <div class="space-y-2">
-                        <a href="/" class="flex items-center py-3 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <a href="/" class="flex items-center py-3 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition active:scale-[0.98]">
                             <i class="material-icons text-base mr-3">dashboard</i> Dashboard
                         </a>
-                        <a href="/docs" class="flex items-center py-3 px-4 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm transition">
+                        <a href="/docs" class="flex items-center py-3 px-4 text-xs font-bold rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm transition active:scale-[0.98]">
                             <i class="material-icons text-base mr-3">api</i> API Documentation
                         </a>
                     </div>
@@ -253,10 +286,10 @@
                 <div>
                     <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Social & Contact</p>
                     <div class="space-y-2">
-                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition active:scale-[0.98]">
                             <i class="fa-brands fa-telegram text-base mr-3"></i> Contact Telegram
                         </a>
-                        <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                        <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition active:scale-[0.98]">
                             <i class="fa-brands fa-whatsapp text-base mr-3"></i> WhatsApp Channel
                         </a>
                     </div>
@@ -274,11 +307,11 @@
     <header class="glass-header sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition flex items-center justify-center">
+                <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition active:scale-95 flex items-center justify-center">
                     <i class="material-icons text-xl block">menu</i>
                 </button>
 
-                <a href="/" class="flex items-center gap-3 hover:opacity-90 transition">
+                <a href="/" class="flex items-center gap-3 hover:opacity-90 transition transform-gpu active:scale-95">
                     <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex-shrink-0">
                         <img src="/src/banner.gif" alt="Zaxius Banner GIF" class="h-8 w-auto object-cover block">
                     </div>
@@ -290,7 +323,7 @@
             </div>
             
             <div class="flex items-center space-x-2">
-                <button onclick="showDonatePopup()" class="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-amber-500/20 transition">
+                <button onclick="showDonatePopup()" class="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-amber-500/20 active:scale-95 transition transform-gpu">
                     <i class="material-icons text-sm">favorite</i> Donasi
                 </button>
 
@@ -298,7 +331,7 @@
                     v1.0.0
                 </span>
 
-                <button id="themeToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition">
+                <button id="themeToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition active:scale-95">
                     <i id="themeToggleDarkIcon" class="material-icons text-lg hidden block">dark_mode</i>
                     <i id="themeToggleLightIcon" class="material-icons text-lg hidden block">light_mode</i>
                 </button>
@@ -310,8 +343,8 @@
         <!-- TWO COLUMN LAYOUT -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-            <!-- LEFT SIDEBAR: NAVIGASI FOLDER / KATEGORI -->
-            <div class="lg:col-span-3 space-y-4">
+            <!-- LEFT SIDEBAR: CATEGORIES NAV -->
+            <div class="lg:col-span-3 space-y-4 animate-fade-up">
                 <div class="glass-card p-4 sticky top-24 space-y-4">
                     <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
                         <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
@@ -324,7 +357,7 @@
                     <!-- SEARCH BAR -->
                     <div class="relative">
                         <i class="material-icons text-slate-400 text-sm absolute left-3 top-2.5">search</i>
-                        <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 dark:border-slate-800 rounded-lg bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none">
+                        <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 dark:border-slate-800 rounded-lg bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition">
                     </div>
 
                     <!-- LIST NAVIGASI KATEGORI -->
@@ -340,7 +373,7 @@
             <div class="lg:col-span-9 space-y-6">
 
                 <!-- BANNER HERO & INFO -->
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 animate-fade-up">
                     <div class="md:col-span-7 overflow-hidden border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg bg-white dark:bg-slate-900 relative group flex items-center justify-center min-h-[140px]">
                         <img src="https://apizaxius.vercel.app/src/banner2.jpg" alt="Zaxius API Banner" class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -417,13 +450,13 @@
             if (type === 'qris') {
                 donateQrisContent.classList.remove('hidden');
                 donateDanaContent.classList.add('hidden');
-                tabQrisBtn.className = "flex-1 py-2 rounded-lg font-bold bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 transition shadow-sm";
-                tabDanaBtn.className = "flex-1 py-2 rounded-lg font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition";
+                tabQrisBtn.className = "flex-1 py-2 rounded-lg font-bold bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 transition shadow-sm active:scale-[0.98]";
+                tabDanaBtn.className = "flex-1 py-2 rounded-lg font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition active:scale-[0.98]";
             } else {
                 donateDanaContent.classList.remove('hidden');
                 donateQrisContent.classList.add('hidden');
-                tabDanaBtn.className = "flex-1 py-2 rounded-lg font-bold bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 transition shadow-sm";
-                tabQrisBtn.className = "flex-1 py-2 rounded-lg font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition";
+                tabDanaBtn.className = "flex-1 py-2 rounded-lg font-bold bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 transition shadow-sm active:scale-[0.98]";
+                tabQrisBtn.className = "flex-1 py-2 rounded-lg font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition active:scale-[0.98]";
             }
         }
 
@@ -705,7 +738,7 @@
                 categoryList.forEach((category, catIndex) => {
                     // Inject Left Nav Item
                     navHtml += `
-                        <button onclick="scrollToCategory(${catIndex})" class="w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/40 hover:text-slate-900 dark:hover:text-slate-100 transition">
+                        <button onclick="scrollToCategory(${catIndex})" class="w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/40 hover:text-slate-900 dark:hover:text-slate-100 transition active:scale-[0.98]">
                             <span class="flex items-center gap-2 truncate">
                                 <i class="material-icons text-sm text-slate-400 flex-shrink-0">folder</i>
                                 ${category.name}
@@ -717,7 +750,7 @@
                     // Inject Main Content Category Group
                     html += `
                     <div id="cat-group-${catIndex}" class="category-group" data-category="${category.name}">
-                        <div class="glass-card overflow-hidden transition-all duration-300">
+                        <div class="glass-card overflow-hidden transition-all duration-300 hover:translate-x-1">
                             <button onclick="toggleCategory(${catIndex})" class="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-slate-100/30 dark:hover:bg-slate-800/20 transition-colors">
                                 <h2 class="font-bold flex items-center text-slate-800 dark:text-slate-100 text-xs tracking-wider uppercase">
                                     <div class="w-7 h-7 rounded-md bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 flex items-center justify-center mr-3 flex-shrink-0">
@@ -881,8 +914,8 @@
                             html += `
                                             </div>
                                             <div class="flex items-center gap-2 pt-1">
-                                                <button type="submit" class="bg-slate-900 dark:bg-slate-100 hover:opacity-90 font-bold text-white dark:text-slate-900 px-5 py-2.5 rounded-xl text-xs transition shadow-md">Execute</button>
-                                                <button type="button" id="clear-${catIndex}-${endpointIndex}" onclick="clearResponse(${catIndex}, ${endpointIndex})" class="hidden glass-card hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold text-slate-900 dark:text-slate-100 px-5 py-2.5 rounded-xl text-xs transition">Clear</button>
+                                                <button type="submit" class="bg-slate-900 dark:bg-slate-100 hover:opacity-90 font-bold text-white dark:text-slate-900 px-5 py-2.5 rounded-xl text-xs transition shadow-md active:scale-95">Execute</button>
+                                                <button type="button" id="clear-${catIndex}-${endpointIndex}" onclick="clearResponse(${catIndex}, ${endpointIndex})" class="hidden glass-card hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold text-slate-900 dark:text-slate-100 px-5 py-2.5 rounded-xl text-xs transition active:scale-95">Clear</button>
                                             </div>
                                         </form>
                                     </div>
@@ -953,7 +986,7 @@
                 const categoryGroups = apiList.querySelectorAll('.category-group');
                 categoryGroups.forEach((category, index) => {
                     category.classList.add('will-fade-in', 'fade-in');
-                    category.style.animationDelay = `${index * 60}ms`;
+                    category.style.animationDelay = `${index * 50}ms`;
                 });
             } catch (error) {
                 apiList.innerHTML = '<p class="text-rose-500 text-xs glass-card p-4">Failed to load API data.</p>';
