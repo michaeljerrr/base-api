@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Browse through our collection of code snippets, scripts, and tools. Find what you need or discover something new.">
+    <meta name="description" content="Powerful API platform for modern applications">
     <meta name="theme-color" content="#0f172a">
     <title>Zaxius API — Dashboard</title>
     <link rel="icon" href="/src/foto.jpg" type="image/png">
@@ -112,19 +112,22 @@
                             <i class="material-icons text-base mr-3">dashboard</i> Dashboard
                         </a>
                         <a href="/docs" class="flex items-center py-3 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
-                            <i class="material-icons text-base mr-3">api</i> API Documentation
+                            <i class="material-icons text-base mr-3">api</i> Explore Docs
                         </a>
                     </div>
                 </div>
 
                 <div>
-                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Social & Contact</p>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mb-3">Links & Contact</p>
                     <div class="space-y-2">
-                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
-                            <i class="fa-brands fa-telegram text-base mr-3"></i> Contact Telegram
+                        <a href="https://github.com" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                            <i class="fa-brands fa-github text-base mr-3"></i> GitHub
                         </a>
                         <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
                             <i class="fa-brands fa-whatsapp text-base mr-3"></i> WhatsApp Channel
+                        </a>
+                        <a href="https://t.me/OnlyzsMichael" target="_blank" class="flex items-center py-2.5 px-4 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition">
+                            <i class="fa-brands fa-telegram text-base mr-3"></i> Contact Me
                         </a>
                     </div>
                 </div>
@@ -141,7 +144,6 @@
     <header class="glass-header sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- NAVIGASI GARIS 3 (HAMBURGER) -->
                 <button id="sidebarToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition flex items-center justify-center">
                     <i class="material-icons text-xl block">menu</i>
                 </button>
@@ -158,11 +160,6 @@
             </div>
             
             <div class="flex items-center space-x-2">
-                <a href="/docs" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-bold rounded-xl shadow-md transition hover:opacity-90">
-                    <i class="material-icons text-sm">code</i>
-                    Docs
-                </a>
-
                 <button id="themeToggle" class="p-2.5 glass-card text-slate-600 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 rounded-xl transition">
                     <i id="themeToggleDarkIcon" class="material-icons text-lg hidden block">dark_mode</i>
                     <i id="themeToggleLightIcon" class="material-icons text-lg hidden block">light_mode</i>
@@ -173,61 +170,198 @@
 
     <main class="max-w-5xl mx-auto px-6 py-8 space-y-8">
 
-        <!-- BANNER IMAGE HERO SECTION -->
-        <div class="overflow-hidden border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg bg-white dark:bg-slate-900">
-            <img src="/src/banner.jpg" alt="Zaxius API Banner" class="w-full h-auto object-cover block hover:scale-105 transition-transform duration-500">
+        <!-- HERO BANNER SECTION -->
+        <div class="glass-card p-6 md:p-8 relative overflow-hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div class="md:col-span-7 space-y-4">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-mono">
+                        Powerful API platform for modern applications
+                    </p>
+                    <div>
+                        <a href="/docs" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs rounded-xl shadow-lg hover:opacity-90 transition">
+                            <i class="material-icons text-base">rocket_launch</i> Explore Docs
+                        </a>
+                    </div>
+                </div>
+                <div class="md:col-span-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
+                    <img src="/src/banner.jpg" alt="Zaxius Banner" class="w-full h-36 md:h-40 object-cover block hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+
+            <!-- STATS COUNTER -->
+            <div class="grid grid-cols-3 gap-3 pt-2 border-t border-slate-200/60 dark:border-slate-800/60">
+                <div class="glass-card p-3 text-center">
+                    <p id="stat-endpoints" class="text-lg md:text-xl font-extrabold text-slate-900 dark:text-slate-100">0</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">ENDPOINTS</p>
+                </div>
+                <div class="glass-card p-3 text-center">
+                    <p id="stat-categories" class="text-lg md:text-xl font-extrabold text-slate-900 dark:text-slate-100">0</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">CATEGORIES</p>
+                </div>
+                <div class="glass-card p-3 text-center">
+                    <p class="text-lg md:text-xl font-extrabold text-slate-900 dark:text-slate-100">24/7</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">SUPPORT</p>
+                </div>
+            </div>
+
+            <!-- QUICK LINKS -->
+            <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-slate-600 dark:text-slate-400 pt-1">
+                <span class="flex items-center gap-1.5"><i class="material-icons text-sm">layers</i> Features</span>
+                <span>•</span>
+                <a href="https://github.com" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-100 transition flex items-center gap-1.5">
+                    <i class="fa-brands fa-github text-sm"></i> GitHub
+                </a>
+                <span>•</span>
+                <a href="https://whatsapp.com/channel/0029VbC9ECDI7BeCUG0owP14" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-100 transition flex items-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Channel
+                </a>
+                <span>•</span>
+                <a href="https://t.me/OnlyzsMichael" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-100 transition flex items-center gap-1.5">
+                    <i class="fa-brands fa-telegram text-sm"></i> Contact Me
+                </a>
+            </div>
         </div>
 
-        <!-- HERO SECTION DESKRIPSI -->
-        <div class="glass-card p-8 md:p-10 text-center relative overflow-hidden space-y-4">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[11px] font-bold">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                API Services Active & Running
+        <!-- TWO COLUMN SECTION: KEY FEATURES & GUIDE -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            <!-- LEFT: KEY FEATURES -->
+            <div class="md:col-span-5 space-y-3">
+                <h2 class="text-xs font-extrabold tracking-wider uppercase text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                    <i class="material-icons text-sm">star</i> KEY FEATURES
+                </h2>
+
+                <div class="glass-card p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
+                        <i class="material-icons text-lg text-slate-800 dark:text-slate-100">flash_on</i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 dark:text-slate-100">Fast & Reliable</h3>
+                        <p class="text-[10px] text-slate-500">High-performance API endpoints with low latency</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
+                        <i class="material-icons text-lg text-slate-800 dark:text-slate-100">shield</i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 dark:text-slate-100">Secure</h3>
+                        <p class="text-[10px] text-slate-500">Enterprise-grade security and encryption</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
+                        <i class="material-icons text-lg text-slate-800 dark:text-slate-100">code</i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 dark:text-slate-100">Easy Integration</h3>
+                        <p class="text-[10px] text-slate-500">Simple REST API with clear documentation</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300/50 dark:border-slate-700/50 flex items-center justify-center flex-shrink-0">
+                        <i class="material-icons text-lg text-slate-800 dark:text-slate-100">analytics</i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-900 dark:text-slate-100">Analytics</h3>
+                        <p class="text-[10px] text-slate-500">Detailed usage analytics and monitoring</p>
+                    </div>
+                </div>
             </div>
-            <h1 class="text-2xl md:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
-                Simple & Reliable Rest API
-            </h1>
-            <p class="text-xs md:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                Browse through our collection of code snippets, scripts, and tools. Find what you need or discover something new. Platform API RESTful siap pakai untuk berbagai kebutuhan pengembang seperti AI, Downloader, Media Processing, hingga Search Tools.
-            </p>
-            <div class="pt-2 flex flex-wrap justify-center gap-3">
-                <a href="/docs" class="px-6 py-3 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs rounded-xl shadow-lg hover:opacity-90 transition flex items-center gap-2">
-                    <i class="material-icons text-base">explore</i> Explore Documentation
-                </a>
-                <a href="https://t.me/OnlyzsMichael" target="_blank" class="px-6 py-3 glass-card text-slate-800 dark:text-slate-200 font-semibold text-xs rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition flex items-center gap-2">
-                    <i class="fa-brands fa-telegram text-base"></i> Contact Owner
-                </a>
+
+            <!-- RIGHT: GUIDE -->
+            <div class="md:col-span-7 space-y-3">
+                <h2 class="text-xs font-extrabold tracking-wider uppercase text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                    <i class="material-icons text-sm">explore</i> GUIDE
+                </h2>
+
+                <div class="glass-card p-6 space-y-6">
+                    <h3 class="text-sm font-extrabold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                        <i class="material-icons text-base">bolt</i> Getting Started
+                    </h3>
+
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full border-2 border-dashed border-slate-400 dark:border-slate-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                1
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200">Choose Your Category</h4>
+                                <p class="text-[10px] text-slate-500 leading-relaxed">Browse through available API categories on sidebar and select what you need.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full border-2 border-dashed border-slate-400 dark:border-slate-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                2
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200">Read the Docs</h4>
+                                <p class="text-[10px] text-slate-500 leading-relaxed">Check endpoint parameters, response format, and example usage.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full border-2 border-dashed border-slate-400 dark:border-slate-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                3
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200">Make Your Request</h4>
+                                <p class="text-[10px] text-slate-500 leading-relaxed">Send HTTP requests and integrate the JSON response into your app.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- STATS / FEATURE CARDS -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="glass-card p-5 space-y-1">
-                <div class="flex items-center justify-between text-slate-400">
-                    <span class="text-[10px] font-bold uppercase tracking-wider">Fast Response</span>
-                    <i class="material-icons text-base">bolt</i>
+        <!-- TWO COLUMN SECTION: EXAMPLE RESPONSE & FAQ -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+            <!-- LEFT: EXAMPLE RESPONSE -->
+            <div class="md:col-span-5 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xs font-extrabold tracking-wider uppercase text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                        <i class="material-icons text-sm">code</i> Example Response
+                    </h2>
+                    <span class="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[9px] font-bold rounded">JSON</span>
                 </div>
-                <p class="text-xl font-extrabold text-slate-900 dark:text-slate-100">Low Latency</p>
-                <p class="text-[11px] text-slate-500">Optimized for high performance requests.</p>
+
+                <div class="bg-slate-950 text-slate-100 p-4 rounded-2xl border border-slate-800 text-xs font-mono overflow-x-auto leading-relaxed shadow-xl">
+<pre><code>{
+  <span class="text-sky-400">"status"</span>: <span class="text-emerald-400">true</span>,
+  <span class="text-sky-400">"creator"</span>: <span class="text-amber-300">"Michael"</span>,
+  <span class="text-sky-400">"result"</span>: {
+    <span class="text-sky-400">"message"</span>: <span class="text-amber-300">"Welcome to Zaxius API Services!"</span>
+  }
+}</code></pre>
+                </div>
             </div>
 
-            <div class="glass-card p-5 space-y-1">
-                <div class="flex items-center justify-between text-slate-400">
-                    <span class="text-[10px] font-bold uppercase tracking-wider">Availability</span>
-                    <i class="material-icons text-base">dns</i>
+            <!-- RIGHT: FREQUENTLY ASKED QUESTIONS -->
+            <div class="md:col-span-7 space-y-3">
+                <div class="glass-card p-6 space-y-5">
+                    <h2 class="text-xs font-extrabold tracking-wider uppercase text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                        <i class="material-icons text-base">help_outline</i> Frequently Asked Questions
+                    </h2>
+
+                    <div class="space-y-4 text-xs divide-y divide-slate-200 dark:divide-slate-800/80">
+                        <div class="space-y-1">
+                            <p class="font-bold text-slate-900 dark:text-slate-100">Q: Apakah API ini gratis digunakan?</p>
+                            <p class="text-slate-500 text-[11px] leading-relaxed">A: Ya, endpoint publik dapat diakses secara gratis oleh developer.</p>
+                        </div>
+
+                        <div class="pt-3 space-y-1">
+                            <p class="font-bold text-slate-900 dark:text-slate-100">Q: Bagaimana cara menguji endpoint-nya?</p>
+                            <p class="text-slate-500 text-[11px] leading-relaxed">A: Kamu bisa langsung mencoba fitur 'Try It Out' interaktif di halaman Explore Docs.</p>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-xl font-extrabold text-slate-900 dark:text-slate-100">99.9% Uptime</p>
-                <p class="text-[11px] text-slate-500">Reliable endpoints for your applications.</p>
             </div>
 
-            <div class="glass-card p-5 space-y-1">
-                <div class="flex items-center justify-between text-slate-400">
-                    <span class="text-[10px] font-bold uppercase tracking-wider">Integration</span>
-                    <i class="material-icons text-base">code</i>
-                </div>
-                <p class="text-xl font-extrabold text-slate-900 dark:text-slate-100">Multi Language</p>
-                <p class="text-[11px] text-slate-500">Supports cURL, JS, Python, and Node.js.</p>
-            </div>
         </div>
 
         <!-- FOOTER -->
@@ -273,6 +407,35 @@
             if (e.key === 'Escape') closeSidebar();
         });
 
+        // Dynamic OpenAPI Stats Fetcher
+        async function fetchStats() {
+            try {
+                const response = await fetch('/src/openapi.json');
+                const data = await response.json();
+                
+                let endpointCount = 0;
+                const categories = new Set();
+
+                if (data.paths) {
+                    Object.keys(data.paths).forEach(path => {
+                        const methods = data.paths[path];
+                        Object.keys(methods).forEach(method => {
+                            endpointCount++;
+                            const tags = methods[method].tags;
+                            if (tags && tags.length > 0) {
+                                tags.forEach(tag => categories.add(tag));
+                            }
+                        });
+                    });
+                }
+
+                document.getElementById('stat-endpoints').textContent = endpointCount;
+                document.getElementById('stat-categories').textContent = categories.size || (data.tags ? data.tags.length : 0);
+            } catch (err) {
+                console.error('Failed to load stats:', err);
+            }
+        }
+
         // Dark/Light Theme Switcher
         const themeToggleBtn = document.getElementById('themeToggle');
         const themeToggleDarkIcon = document.getElementById('themeToggleDarkIcon');
@@ -309,6 +472,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
+            fetchStats();
         });
     </script>
 </body>
