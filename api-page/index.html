@@ -409,14 +409,14 @@
     </main>
 
     <script>
-        // PRELOADER LOGIC
+        // PRELOADER LOGIC (3 DETIK)
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
                 setTimeout(() => {
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
-                }, 400); // Tampil singkat lalu memudar halus
+                }, 3000); // Tepat 3 detik
             }
         });
 
