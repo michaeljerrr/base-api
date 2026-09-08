@@ -88,7 +88,7 @@ module.exports = function(app) {
 
       res.status(200).json({
         status: 200,
-        creator: "OnlyzsMichael",
+        creator: "Michael",
         success: true,
         results: result
       });
@@ -148,7 +148,7 @@ module.exports = function(app) {
       if (!url) {
         return res.status(400).json({
           status: 400,
-          creator: "OnlyzsMichael",
+          creator: "Michael",
           success: false,
           message: "Parameter 'url' wajib diisi."
         });
@@ -165,7 +165,7 @@ module.exports = function(app) {
     } catch (error) {
       res.status(500).json({
         status: 500,
-        creator: "OnlyzsMichael",
+        creator: "Michael",
         success: false,
         message: error.message || "Gagal mengunduh media."
       });
