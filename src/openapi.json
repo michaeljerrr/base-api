@@ -41,6 +41,32 @@
         }
       }
     },
+    "/downloader/aio": {
+  "get": {
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mengambil data media"
+      },
+      "400": {
+        "description": "Parameter url tidak ditemukan"
+      },
+      "500": {
+        "description": "Gagal mengambil data media"
+      }
+    }
+  }
+},
     "/download/capcut": {
       "get": {
         "tags": ["Downloader"],
