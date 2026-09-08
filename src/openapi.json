@@ -247,14 +247,6 @@
         "schema": {
           "type": "string"
         }
-      },
-      {
-        "name": "text",
-        "in": "query",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
       }
     ],
     "responses": {
