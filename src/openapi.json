@@ -239,22 +239,18 @@
     "/search/spotify": {
   "get": {
     "tags": ["Search"],
-    "summary": "Spotify Search & Play",
-    "description": "Mencari musik dari Spotify berdasarkan kata kunci judul lagu atau URL track Spotify.",
     "parameters": [
       {
         "name": "query",
         "in": "query",
-        "description": "Judul lagu yang ingin dicari (contoh: love yourself)",
         "required": false,
         "schema": {
           "type": "string"
         }
       },
       {
-        "name": "url",
+        "name": "text",
         "in": "query",
-        "description": "URL langsung ke track Spotify",
         "required": false,
         "schema": {
           "type": "string"
