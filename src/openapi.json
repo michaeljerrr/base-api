@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Zaxius",
-    "author": "Michael",
+    "author": "OnlyzsMichael",
     "version": "v1.0.0"
   },
   "servers": [
@@ -29,8 +29,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "Hai perkenalkan dirimu"
+              "type": "string"
             }
           }
         ],
@@ -42,31 +41,31 @@
       }
     },
     "/downloader/aio": {
-  "get": {
-    "tags": ["Downloader"],
-    "parameters": [
-      {
-        "name": "url",
-        "in": "query",
-        "required": true,
-        "schema": {
-          "type": "string"
+      "get": {
+        "tags": ["Downloader"],
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil data media"
+          },
+          "400": {
+            "description": "Parameter url tidak ditemukan"
+          },
+          "500": {
+            "description": "Gagal mengambil data media"
+          }
         }
       }
-    ],
-    "responses": {
-      "200": {
-        "description": "Berhasil mengambil data media"
-      },
-      "400": {
-        "description": "Parameter url tidak ditemukan"
-      },
-      "500": {
-        "description": "Gagal mengambil data media"
-      }
-    }
-  }
-},
+    },
     "/download/capcut": {
       "get": {
         "tags": ["Downloader"],
@@ -85,18 +84,18 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": true },
+                    "status": { "type": "boolean" },
                     "result": {
                       "type": "object",
                       "properties": {
-                        "title": { "type": "string", "example": "Template Name" },
+                        "title": { "type": "string" },
                         "thumbnail": { "type": "string", "format": "uri" },
                         "video": { "type": "string", "format": "uri" },
-                        "author": { "type": "string", "example": "Author Name" },
+                        "author": { "type": "string" },
                         "avatar": { "type": "string", "format": "uri" },
-                        "duration": { "type": "number", "example": 15 },
-                        "likes": { "type": "integer", "example": 1200 },
-                        "uses": { "type": "integer", "example": 300 }
+                        "duration": { "type": "number" },
+                        "likes": { "type": "integer" },
+                        "uses": { "type": "integer" }
                       }
                     }
                   }
@@ -118,8 +117,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "https://pin.it/lOPdveAO7"
+              "type": "string"
             }
           }
         ],
@@ -130,17 +128,17 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": true },
-                    "creator": { "type": "string", "example": "Z7:林 enterprise" },
+                    "status": { "type": "boolean" },
+                    "creator": { "type": "string" },
                     "result": {
                       "type": "object",
                       "properties": {
-                        "type": { "type": "string", "example": "video" },
-                        "title": { "type": "string", "example": "Art" },
-                        "author": { "type": "string", "example": "ShiroAMV7" },
-                        "username": { "type": "string", "example": "shiroamv7" },
-                        "media": { "type": "string", "example": "https://v1.pinimg.com/videos/iht/expMp4/..." },
-                        "pinterest_url": { "type": "string", "example": "https://pin.it/lOPdveAO7" }
+                        "type": { "type": "string" },
+                        "title": { "type": "string" },
+                        "author": { "type": "string" },
+                        "username": { "type": "string" },
+                        "media": { "type": "string" },
+                        "pinterest_url": { "type": "string" }
                       }
                     }
                   }
@@ -154,9 +152,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": false },
-                    "creator": { "type": "string", "example": "Z7:林 enterprise" },
-                    "error": { "type": "string", "example": "URL harus dari Pinterest / pin.it" }
+                    "status": { "type": "boolean" },
+                    "creator": { "type": "string" },
+                    "error": { "type": "string" }
                   }
                 }
               }
@@ -168,9 +166,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": false },
-                    "creator": { "type": "string", "example": "Z7:林 enterprise" },
-                    "error": { "type": "string", "example": "Gagal memproses request" }
+                    "status": { "type": "boolean" },
+                    "creator": { "type": "string" },
+                    "error": { "type": "string" }
                   }
                 }
               }
@@ -197,17 +195,17 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": true },
+                    "status": { "type": "boolean" },
                     "result": {
                       "type": "object",
                       "properties": {
-                        "url": { "type": "string", "example": "https://tikwm.com/video.mp4" },
-                        "title": { "type": "string", "example": "Judul Video TikTok" },
-                        "author": { "type": "string", "example": "Username TikTok" },
-                        "thumb": { "type": "string", "format": "uri", "example": "https://tikwm.com/thumb.jpg" },
-                        "video_sd": { "type": "string", "format": "uri", "example": "https://tikwm.com/video_sd.mp4" },
-                        "video_hd": { "type": "string", "format": "uri", "example": "https://tikwm.com/video_hd.mp4" },
-                        "music": { "type": "string", "format": "uri", "example": "https://tikwm.com/music.mp3" }
+                        "url": { "type": "string" },
+                        "title": { "type": "string" },
+                        "author": { "type": "string" },
+                        "thumb": { "type": "string", "format": "uri" },
+                        "video_sd": { "type": "string", "format": "uri" },
+                        "video_hd": { "type": "string", "format": "uri" },
+                        "music": { "type": "string", "format": "uri" }
                       }
                     }
                   }
@@ -229,8 +227,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "https://youtu.be/M7y9sIvMGjw"
+              "type": "string"
             }
           }
         ],
@@ -250,8 +247,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "https://www.instagram.com/reel/DarifkCPcVA/"
+              "type": "string"
             }
           }
         ],
@@ -263,31 +259,31 @@
       }
     },
     "/search/spotify": {
-  "get": {
-    "tags": ["Search"],
-    "parameters": [
-      {
-        "name": "query",
-        "in": "query",
-        "required": false,
-        "schema": {
-          "type": "string"
+      "get": {
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan hasil pencarian dan detail lagu"
+          },
+          "400": {
+            "description": "Parameter query atau url tidak diberikan"
+          },
+          "500": {
+            "description": "Gagal mengambil data lagu"
+          }
         }
       }
-    ],
-    "responses": {
-      "200": {
-        "description": "Berhasil mendapatkan hasil pencarian dan detail lagu"
-      },
-      "400": {
-        "description": "Parameter query atau url tidak diberikan"
-      },
-      "500": {
-        "description": "Gagal mengambil data lagu"
-      }
-    }
-  }
-},
+    },
     "/search/lyrics": {
       "get": {
         "tags": ["Search"],
@@ -297,8 +293,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "bulan madu"
+              "type": "string"
             }
           }
         ],
@@ -318,8 +313,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "cat"
+              "type": "string"
             }
           },
           {
@@ -328,8 +322,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": 5,
-              "example": 5
+              "default": 5
             }
           }
         ],
@@ -341,31 +334,31 @@
       }
     },
     "/image/waifu": {
-  "get": {
-    "tags": ["Image"],
-    "responses": {
-      "200": {
-        "content": {
-          "image/jpeg": {
-            "schema": {
-              "type": "string",
-              "format": "binary"
+      "get": {
+        "tags": ["Image"],
+        "responses": {
+          "200": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
             }
           },
-          "image/png": {
-            "schema": {
-              "type": "string",
-              "format": "binary"
-            }
+          "500": {
+            "description": "Gagal mengambil gambar"
           }
         }
-      },
-      "500": {
-        "description": "Gagal mengambil gambar"
       }
-    }
-  }
-},
+    },
     "/image/bluearchive": {
       "get": {
         "tags": ["Image"],
@@ -376,7 +369,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": true },
+                    "status": { "type": "boolean" },
                     "images": {
                       "type": "array",
                       "items": { "type": "string", "format": "uri" }
@@ -448,7 +441,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": true },
+                    "status": { "type": "boolean" },
                     "images": {
                       "type": "array",
                       "items": { "type": "string", "format": "uri" }
@@ -471,8 +464,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": "Naruto"
+              "type": "string"
             }
           },
           {
@@ -480,8 +472,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 5
+              "type": "integer"
             }
           }
         ],
@@ -492,7 +483,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": true },
+                    "status": { "type": "boolean" },
                     "images": {
                       "type": "array",
                       "items": { "type": "string", "format": "uri" }
@@ -508,8 +499,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "boolean", "example": false },
-                    "message": { "type": "string", "example": "Error message here" }
+                    "status": { "type": "boolean" },
+                    "message": { "type": "string" }
                   }
                 }
               }
@@ -527,8 +518,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "Hello Dunia"
+              "type": "string"
             }
           }
         ],
@@ -557,8 +547,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "hai"
+              "type": "string"
             }
           }
         ],
@@ -587,8 +576,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "10000"
+              "type": "string"
             }
           }
         ],
@@ -617,8 +605,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "halo"
+              "type": "string"
             }
           }
         ],
@@ -647,8 +634,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "https://google.com"
+              "type": "string"
             }
           }
         ],
@@ -677,8 +663,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "yuliii___"
+              "type": "string"
             }
           }
         ],
@@ -701,10 +686,10 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "berita": { "type": "string", "example": "Judul berita terpopuler Detik" },
-                      "berita_url": { "type": "string", "format": "uri", "example": "https://news.detik.com/berita/..." },
-                      "berita_thumb": { "type": "string", "format": "uri", "nullable": true, "example": "https://akcdn.detik.net.id/...jpg" },
-                      "berita_diupload": { "type": "string", "example": "Senin, 25 Nov 2024 10:30 WIB" }
+                      "berita": { "type": "string" },
+                      "berita_url": { "type": "string", "format": "uri" },
+                      "berita_thumb": { "type": "string", "format": "uri", "nullable": true },
+                      "berita_diupload": { "type": "string" }
                     }
                   }
                 }
@@ -727,11 +712,11 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "berita": { "type": "string", "example": "Rupiah menguat terhadap dolar AS pada perdagangan pagi ini" },
-                      "berita_url": { "type": "string", "format": "uri", "example": "https://www.kontan.co.id/news/rupiah-menguat" },
-                      "berita_thumb": { "type": "string", "format": "uri", "nullable": true, "example": "https://img.kontan.co.id/thumb.jpg" },
-                      "berita_jenis": { "type": "string", "example": "Makro Ekonomi" },
-                      "berita_diupload": { "type": "string", "example": "2 jam lalu" }
+                      "berita": { "type": "string" },
+                      "berita_url": { "type": "string", "format": "uri" },
+                      "berita_thumb": { "type": "string", "format": "uri", "nullable": true },
+                      "berita_jenis": { "type": "string" },
+                      "berita_diupload": { "type": "string" }
                     }
                   }
                 }
